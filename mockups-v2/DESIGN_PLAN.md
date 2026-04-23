@@ -1,4 +1,4 @@
-# Design Plan — FactureX Phase 4 (Étendu v2)
+# Design Plan — FactureSmart Phase 4 (Étendu v2)
 
 **Version** : 2.1 — Scope élargi + Nouveaux écrans produits
 **Date** : 23 Avril 2026
@@ -185,7 +185,7 @@
 
 1. **Ares** : produire les écrans restants (26)
 2. **MiniClaw** : revue technique + implémentation React/Tailwind
-3. **Commit** sur repo `JayMung/FactureX`
+3. **Commit** sur repo `JayMung/FactureSmart`
 
 ---
 
