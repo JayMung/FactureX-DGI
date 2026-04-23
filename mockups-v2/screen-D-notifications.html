@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications & Activité — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            primary: { 600: '#2563eb', 700: '#1d4ed8' },
+            fx: { blue: '#0056D6' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .notif-unread { border-left: 3px solid #0056D6; background: #eff6ff; }
+    .slide-in { animation: slideIn 0.3s ease-out; }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex">
+
+  <!-- Sidebar (reuse from previous) -->
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-20">
+    <div class="px-6 py-5 border-b border-gray-100">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-primary-600 rounded-xl flex items-center justify-center flex-shrink-0">
+          <i class="ri-file-paper-2-line text-white text-base"></i>
+        </div>
+        <div>
+          <span class="text-gray-900 text-base font-bold">FactureX</span>
+          <span class="block text-[10px] text-gray-400 font-medium -mt-0.5">DGI — RDC</span>
+        </div>
+      </div>
+    </div>
+    <nav class="flex-1 px-3 py-4 space-y-1">
+      <div class="px-3 py-2 mb-2"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Navigation</span></div>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+        <i class="ri-dashboard-line text-lg text-gray-500"></i> Dashboard
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+        <i class="ri-file-list-3-line text-lg text-gray-500"></i> Factures
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+        <i class="ri-user-line text-lg text-gray-500"></i> Clients
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+        <i class="ri-bar-chart-2-line text-lg text-gray-500"></i> Rapports
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+        <i class="ri-settings-3-line text-lg text-gray-500"></i> Paramètres
+      </a>
+    </nav>
+    <div class="border-t border-gray-100 p-4">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <span class="text-primary-700 text-sm font-bold">JP</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-gray-900 truncate">Jean Pambu</p>
+          <p class="text-xs text-gray-400 truncate">Administrateur</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 ml-64 flex flex-col min-h-screen">
+    <header class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">Notifications</h1>
+        <p class="text-sm text-gray-500">5 non lues — 23 Avril 2026</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="text-xs font-medium text-primary-600 hover:text-primary-700 border border-primary-200 px-3 py-1.5 rounded-lg hover:bg-primary-50 transition-colors">
+          Tout marquer comme lu
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-1 p-8">
+      <div class="flex gap-6 max-w-4xl">
+
+        <!-- Notification list -->
+        <div class="flex-1 space-y-3">
+
+          <!-- Unread: DGI Validated -->
+          <div class="notif-unread slide-in bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="ri-shield-check-line text-green-600 text-lg"></i>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <p class="text-sm font-bold text-gray-900">Facture validée par la DGI</p>
+                  <span class="text-[10px] text-gray-400">il y a 2 min</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-2">La facture <span class="font-semibold text-gray-700">#FX-2026-0142</span> destinée à Congo Freight SPRL a été validée. Code d'authentification reçu.</p>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] font-mono text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">DGI-2026-0422-00142-AUTH</span>
+                  <button class="text-[10px] font-medium text-primary-600 hover:text-primary-700">Voir la facture →</button>
+                </div>
+              </div>
+              <div class="w-2 h-2 bg-primary-600 rounded-full flex-shrink-0 mt-2"></div>
+            </div>
+          </div>
+
+          <!-- Unread: Rejection -->
+          <div class="notif-unread slide-in bg-white rounded-2xl border border-gray-100 p-4 shadow-sm" style="animation-delay:0.05s">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="ri-error-warning-line text-red-600 text-lg"></i>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <p class="text-sm font-bold text-gray-900">Facture rejetée par la DGI</p>
+                  <span class="text-[10px] text-gray-400">il y a 1h</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-2">La facture <span class="font-semibold text-gray-700">#FX-2026-0139</span> pour Africaplast Industries a été rejetée. Motif : montant HT incoherent avec les lignes.</p>
+                <div class="flex items-center gap-2">
+                  <button class="text-[10px] font-medium text-red-600 hover:text-red-700 border border-red-200 px-2 py-1 rounded-lg hover:bg-red-50">Corriger →</button>
+                </div>
+              </div>
+              <div class="w-2 h-2 bg-primary-600 rounded-full flex-shrink-0 mt-2"></div>
+            </div>
+          </div>
+
+          <!-- Unread: Payment reminder -->
+          <div class="notif-unread slide-in bg-white rounded-2xl border border-gray-100 p-4 shadow-sm" style="animation-delay:0.1s">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="ri-notification-3-line text-amber-600 text-lg"></i>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <p class="text-sm font-bold text-gray-900">Rappel : facture en attente depuis 7 jours</p>
+                  <span class="text-[10px] text-gray-400">il y a 3h</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-2">La facture <span class="font-semibold text-gray-700">#FX-2026-0141</span> (CDF 12.4M) pour Minexco SARL est toujours en attente de validation DGI.</p>
+                <div class="flex items-center gap-2">
+                  <button class="text-[10px] font-medium text-primary-600 hover:text-primary-700">Suivre →</button>
+                </div>
+              </div>
+              <div class="w-2 h-2 bg-primary-600 rounded-full flex-shrink-0 mt-2"></div>
+            </div>
+          </div>
+
+          <!-- Read: New user -->
+          <div class="slide-in bg-white rounded-2xl border border-gray-100 p-4 shadow-sm" style="animation-delay:0.15s">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="ri-user-add-line text-primary-600 text-lg"></i>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <p class="text-sm font-semibold text-gray-700">Nouveau membre ajouté</p>
+                  <span class="text-[10px] text-gray-400">Hier</span>
+                </div>
+                <p class="text-xs text-gray-500">Marie Kabongo (comptable) a rejoint votre espace.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Read: Weekly report -->
+          <div class="slide-in bg-white rounded-2xl border border-gray-100 p-4 shadow-sm" style="animation-delay:0.2s">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="ri-bar-chart-box-line text-primary-600 text-lg"></i>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <p class="text-sm font-semibold text-gray-700">Rapport hebdomadaire prêt</p>
+                  <span class="text-[10px] text-gray-400">Hier</span>
+                </div>
+                <p class="text-xs text-gray-500">Votre rapport fiscal de la semaine est disponible : 38 factures émises, CDF 42.3M de CA.</p>
+                <button class="text-[10px] font-medium text-primary-600 hover:text-primary-700 mt-1">Voir le rapport →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Read: DGI maintenance -->
+          <div class="slide-in bg-white rounded-2xl border border-gray-100 p-4 shadow-sm" style="animation-delay:0.25s">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 bg-gray-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="ri-server-line text-gray-500 text-lg"></i>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <p class="text-sm font-semibold text-gray-700">Maintenance DGI prévue</p>
+                  <span class="text-[10px] text-gray-400">22 Avr</span>
+                </div>
+                <p class="text-xs text-gray-500">Une maintenance des serveurs DGI est prévue le 25/04 de 02h à 04h UTC. Les transmissions seront suspendues.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right panel: Activity timeline -->
+        <div class="w-80 flex-shrink-0">
+          <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm sticky top-24">
+            <h3 class="text-sm font-bold text-gray-900 mb-4">Activité récente</h3>
+            <div class="space-y-4">
+              <div class="flex gap-3">
+                <div class="flex flex-col items-center">
+                  <div class="w-2 h-2 bg-green-500 rounded-full mt-1.5"></div>
+                  <div class="w-px h-10 bg-gray-200"></div>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-700 font-medium">Facture #0142 validée DGI</p>
+                  <p class="text-[10px] text-gray-400">il y a 2 min</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex flex-col items-center">
+                  <div class="w-2 h-2 bg-primary-500 rounded-full mt-1.5"></div>
+                  <div class="w-px h-10 bg-gray-200"></div>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-700 font-medium">Connexion depuis Kinshasa</p>
+                  <p class="text-[10px] text-gray-400">il y a 15 min</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex flex-col items-center">
+                  <div class="w-2 h-2 bg-amber-500 rounded-full mt-1.5"></div>
+                  <div class="w-px h-10 bg-gray-200"></div>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-700 font-medium">Facture #0141 envoyée DGI</p>
+                  <p class="text-[10px] text-gray-400">il y a 1h</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex flex-col items-center">
+                  <div class="w-2 h-2 bg-red-500 rounded-full mt-1.5"></div>
+                  <div class="w-px h-10 bg-gray-200"></div>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-700 font-medium">Facture #0139 rejetée</p>
+                  <p class="text-[10px] text-gray-400">il y a 1h</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex flex-col items-center">
+                  <div class="w-2 h-2 bg-primary-300 rounded-full mt-1.5"></div>
+                  <div class="w-px h-10 bg-gray-200"></div>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-700 font-medium">Nouvelle facture créée</p>
+                  <p class="text-[10px] text-gray-400">il y a 2h</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex flex-col items-center">
+                  <div class="w-2 h-2 bg-gray-300 rounded-full mt-1.5"></div>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-700 font-medium">Rapport hebdomadaire généré</p>
+                  <p class="text-[10px] text-gray-400">Hier</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POS & Reçu — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+          colors: { fx: { blue: '#0056D6' } }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .receipt-shadow { box-shadow: 0 4px 30px rgba(0,0,0,0.12); }
+    .fade-up { animation: fadeUp 0.4s ease-out; }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
+    @media print {
+      body { background: white !important; }
+      .no-print { display: none !important; }
+      .receipt-paper { box-shadow: none !important; border: 1px solid #e2e8f0 !important; }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- Printer config -->
+  <div class="max-w-4xl mx-auto p-8">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">Configuration POS & Impression</h1>
+    <p class="text-sm text-gray-500 mb-8">Paramètres imprimante et aperçu ticket de vente</p>
+
+    <div class="grid grid-cols-2 gap-6">
+
+      <!-- Printer settings -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm fade-up">
+        <h2 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <i class="ri-printer-line text-primary-600 text-lg"></i> Paramètres imprimante
+        </h2>
+        <div class="space-y-4">
+          <div>
+            <label class="text-xs font-semibold text-gray-500 block mb-1.5">Type de ticket</label>
+            <div class="flex gap-2">
+              <button class="flex-1 py-2.5 border-2 border-primary-300 bg-primary-50 text-primary-700 rounded-xl text-sm font-semibold">Ticket 80mm</button>
+              <button class="flex-1 py-2.5 border border-gray-200 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-50">A4</button>
+            </div>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-500 block mb-1.5">Imprimante détectée</label>
+            <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100">
+              <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center"><i class="ri-printer-fill text-green-600 text-base"></i></div>
+              <div class="flex-1">
+                <p class="text-sm font-semibold text-gray-900">Epson TM-T88VI</p>
+                <p class="text-xs text-gray-400">USB / Ready</p>
+              </div>
+              <span class="text-xs font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">OK</span>
+            </div>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-500 block mb-1.5">Format QR Code</label>
+            <div class="flex gap-2">
+              <button class="flex-1 py-2 border border-gray-200 text-gray-600 rounded-xl text-xs font-medium hover:bg-gray-50">Petit</button>
+              <button class="flex-1 py-2 border-2 border-primary-300 bg-primary-50 text-primary-700 rounded-xl text-xs font-semibold">Moyen</button>
+              <button class="flex-1 py-2 border border-gray-200 text-gray-600 rounded-xl text-xs font-medium hover:bg-gray-50">Grand</button>
+            </div>
+          </div>
+          <button class="w-full py-2.5 border border-gray-200 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-50 flex items-center justify-center gap-2">
+            <i class="ri-settings-3-line"></i> Paramètres avancés
+          </button>
+        </div>
+      </div>
+
+      <!-- POS quick invoice -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm fade-up" style="animation-delay:0.1s">
+        <h2 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <i class="ri-flashlight-line text-amber-500 text-lg"></i> Mode PDV — Vente rapide
+        </h2>
+        <div class="mb-4">
+          <label class="text-xs font-semibold text-gray-500 block mb-1.5">Sélectionner client</label>
+          <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-xl border border-gray-100 cursor-pointer hover:border-primary-200 transition-colors">
+            <div class="w-7 h-7 bg-primary-100 rounded-lg flex items-center justify-center"><i class="ri-user-line text-primary-600 text-xs"></i></div>
+            <div class="flex-1">
+              <p class="text-sm font-medium text-gray-700">Client anonyme</p>
+            </div>
+            <i class="ri-arrow-down-s-line text-gray-400"></i>
+          </div>
+        </div>
+        <div class="space-y-2 mb-4">
+          <div class="flex items-center justify-between p-2.5 bg-gray-50 rounded-xl text-sm">
+            <div><span class="font-medium text-gray-900">Articles diverses</span><span class="text-gray-400 text-xs ml-2">×3</span></div>
+            <span class="font-semibold text-gray-700">CDF 150 000</span>
+          </div>
+        </div>
+        <div class="border-t border-gray-100 pt-3 mb-4 space-y-1.5">
+          <div class="flex justify-between text-xs text-gray-500"><span>Sous-total</span><span>CDF 150 000</span></div>
+          <div class="flex justify-between text-xs text-gray-500"><span>TVA (18%)</span><span>CDF 27 000</span></div>
+          <div class="flex justify-between text-sm font-bold text-gray-900 pt-1.5 border-t border-gray-100"><span>TOTAL</span><span>CDF 177 000</span></div>
+        </div>
+        <button class="w-full py-3 bg-primary-600 text-white rounded-xl text-sm font-bold shadow-sm hover:bg-primary-700 transition-colors flex items-center justify-center gap-2">
+          <i class="ri-bill-line"></i> IMPRIMER TICKET
+        </button>
+      </div>
+    </div>
+
+    <!-- Receipt preview (80mm) -->
+    <div class="mt-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-base font-bold text-gray-900">Aperçu ticket 80mm</h2>
+        <button class="px-4 py-2 bg-primary-600 text-white rounded-xl text-xs font-semibold hover:bg-primary-700 shadow-sm no-print flex items-center gap-2">
+          <i class="ri-printer-line"></i> Imprimer
+        </button>
+      </div>
+
+      <!-- Receipt paper -->
+      <div class="flex justify-center">
+        <div class="receipt-paper bg-white w-[280px] min-h-[500px] rounded-xl border border-gray-200 receipt-shadow p-4 font-mono fade-up" style="animation-delay:0.15s">
+          <!-- Header -->
+          <div class="text-center mb-3">
+            <p class="text-[10px] font-bold text-gray-900 uppercase tracking-wider">Mon Entreprise SARL</p>
+            <p class="text-[8px] text-gray-500 mt-0.5">NIF: 1 234 567-8-9-00001</p>
+            <p class="text-[8px] text-gray-500">RCCM: 12345-KIN</p>
+            <p class="text-[8px] text-gray-500">Avenue du Commerce, Kinshasa</p>
+          </div>
+
+          <div class="border-t border-b border-dashed border-gray-300 py-2 mb-3 text-center">
+            <p class="text-[8px] text-gray-600">TICKET DE CAISSE</p>
+            <p class="text-[9px] font-bold text-gray-900">#T-2026-0488</p>
+            <p class="text-[8px] text-gray-500">23/04/2026 14:32</p>
+          </div>
+
+          <!-- Items -->
+          <div class="space-y-1.5 text-[9px]">
+            <div class="flex justify-between leading-tight">
+              <div>
+                <p class="font-semibold text-gray-900">Articles diverses</p>
+                <p class="text-gray-500">3 × CDF 50 000</p>
+              </div>
+              <span class="font-semibold text-gray-900">CDF 150 000</span>
+            </div>
+            <div class="flex justify-between leading-tight">
+              <div>
+                <p class="font-semibold text-gray-900">Service transport</p>
+                <p class="text-gray-500">1 × CDF 20 000</p>
+              </div>
+              <span class="font-semibold text-gray-900">CDF 20 000</span>
+            </div>
+          </div>
+
+          <div class="border-t border-dashed border-gray-300 my-2.5"></div>
+
+          <!-- Totals -->
+          <div class="space-y-1 text-[9px]">
+            <div class="flex justify-between"><span class="text-gray-500">Montant HT</span><span class="text-gray-700">CDF 170 000</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">TVA 18%</span><span class="text-gray-700">CDF 30 600</span></div>
+            <div class="flex justify-between font-bold text-[10px] border-t border-gray-200 pt-1.5 mt-1.5">
+              <span class="text-gray-900">TOTAL TTC</span>
+              <span class="text-gray-900">CDF 200 600</span>
+            </div>
+          </div>
+
+          <div class="border-t border-dashed border-gray-300 my-2.5"></div>
+
+          <!-- QR Code area -->
+          <div class="text-center mb-3">
+            <div class="w-24 h-24 bg-gray-100 rounded-lg mx-auto flex items-center justify-center mb-1.5">
+              <!-- QR code placeholder -->
+              <svg viewBox="0 0 100 100" class="w-20 h-20" fill="currentColor">
+                <rect x="0" y="0" width="30" height="30" fill="#1e293b"/>
+                <rect x="5" y="5" width="20" height="20" fill="white"/>
+                <rect x="10" y="10" width="10" height="10" fill="#1e293b"/>
+                <rect x="70" y="0" width="30" height="30" fill="#1e293b"/>
+                <rect x="75" y="5" width="20" height="20" fill="white"/>
+                <rect x="80" y="10" width="10" height="10" fill="#1e293b"/>
+                <rect x="0" y="70" width="30" height="30" fill="#1e293b"/>
+                <rect x="5" y="75" width="20" height="20" fill="white"/>
+                <rect x="10" y="80" width="10" height="10" fill="#1e293b"/>
+                <rect x="35" y="35" width="30" height="30" fill="#1e293b"/>
+                <rect x="40" y="40" width="20" height="20" fill="white"/>
+                <rect x="45" y="45" width="10" height="10" fill="#1e293b"/>
+                <rect x="70" y="70" width="5" height="5" fill="#1e293b"/>
+                <rect x="80" y="75" width="5" height="5" fill="#1e293b"/>
+                <rect x="75" y="85" width="5" height="5" fill="#1e293b"/>
+                <rect x="90" y="70" width="5" height="5" fill="#1e293b"/>
+                <rect x="70" y="90" width="5" height="5" fill="#1e293b"/>
+                <rect x="85" y="80" width="5" height="10" fill="#1e293b"/>
+                <rect x="35" y="0" width="5" height="20" fill="#1e293b"/>
+                <rect x="50" y="5" width="5" height="15" fill="#1e293b"/>
+                <rect x="60" y="10" width="5" height="20" fill="#1e293b"/>
+                <rect x="0" y="50" width="15" height="5" fill="#1e293b"/>
+                <rect x="20" y="55" width="10" height="5" fill="#1e293b"/>
+                <rect x="55" y="70" width="10" height="5" fill="#1e293b"/>
+              </svg>
+            </div>
+            <p class="text-[7px] text-gray-400 uppercase tracking-wider">Scanner pour vérifier</p>
+          </div>
+
+          <!-- Footer -->
+          <div class="text-center border-t border-dashed border-gray-300 pt-2">
+            <p class="text-[7px] text-gray-400">Code: T-2026-0488-DGI</p>
+            <p class="text-[7px] text-gray-400 mt-0.5">Merci de votre visite !</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

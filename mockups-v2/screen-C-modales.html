@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modales & États — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            primary: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a' },
+            fx: { blue: '#0056D6', success: '#10B981', warning: '#F59E0B', danger: '#EF4444' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .modal-overlay { animation: fadeIn 0.2s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .modal-box { animation: scaleIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.92) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    .toast-slide { animation: toastSlide 0.3s ease-out; }
+    @keyframes toastSlide { from { opacity: 0; transform: translateY(-12px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .spinner { animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .skeleton { animation: shimmer 1.5s ease-in-out infinite; background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%); background-size: 200% 100%; }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .slide-up { animation: slideUp 0.3s ease-out; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-100 p-8">
+
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">Modales & États interactifs</h1>
+    <p class="text-gray-500 mb-8">Tous les états intermédiaires, modales et feedback UI</p>
+
+    <!-- SECTION 1: Modals -->
+    <h2 class="text-lg font-bold text-gray-700 mb-4 mt-8 uppercase tracking-wide">1. Modales de confirmation</h2>
+    <div class="grid grid-cols-3 gap-6">
+
+      <!-- Modal: Delete confirmation -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">Modal — Suppression facture</h3>
+        <p class="text-xs text-gray-400 mb-4">C1: Confirmation avant suppression</p>
+        <div class="modal-box bg-white rounded-2xl shadow-2xl border border-gray-100 max-w-sm mx-auto">
+          <div class="p-6">
+            <div class="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <i class="ri-delete-bin-line text-red-500 text-2xl"></i>
+            </div>
+            <h3 class="text-base font-bold text-gray-900 text-center mb-2">Supprimer cette facture ?</h3>
+            <p class="text-xs text-gray-500 text-center mb-6">Cette action est irréversible. La facture #FX-2026-0139 sera définitivement supprimée.</p>
+            <div class="flex gap-3">
+              <button class="flex-1 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">Annuler</button>
+              <button class="flex-1 py-2.5 bg-red-500 text-white rounded-xl text-sm font-semibold hover:bg-red-600 transition-colors shadow-sm">Supprimer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: Send to DGI -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">Modal — Envoi DGI</h3>
+        <p class="text-xs text-gray-400 mb-4">C2: Récapitulatif avant transmission</p>
+        <div class="modal-box bg-white rounded-2xl shadow-2xl border border-gray-100 max-w-sm mx-auto">
+          <div class="p-6">
+            <div class="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <i class="ri-send-plane-line text-primary-600 text-2xl"></i>
+            </div>
+            <h3 class="text-base font-bold text-gray-900 text-center mb-2">Envoyer pour validation DGI</h3>
+            <div class="bg-gray-50 rounded-xl p-3 mb-4 space-y-2">
+              <div class="flex justify-between text-xs"><span class="text-gray-500">N° Facture</span><span class="font-semibold text-gray-700">#FX-2026-0143</span></div>
+              <div class="flex justify-between text-xs"><span class="text-gray-500">Montant TTC</span><span class="font-semibold text-gray-700">CDF 4 130 000</span></div>
+              <div class="flex justify-between text-xs"><span class="text-gray-500">Client</span><span class="font-semibold text-gray-700">Congo Freight SPRL</span></div>
+            </div>
+            <p class="text-xs text-amber-600 bg-amber-50 rounded-lg p-2 mb-4 border border-amber-200">
+              <i class="ri-error-warning-line align-middle mr-1"></i> Une fois envoyée, la facture ne pourra plus être modifiée.
+            </p>
+            <div class="flex gap-3">
+              <button class="flex-1 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50">Annuler</button>
+              <button class="flex-1 py-2.5 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700 shadow-sm">Envoyer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: Quick add client -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">Modal — Ajout client rapide</h3>
+        <p class="text-xs text-gray-400 mb-4">C4: Mini-formulaire dans modale</p>
+        <div class="modal-box bg-white rounded-2xl shadow-2xl border border-gray-100 max-w-sm mx-auto">
+          <div class="p-6">
+            <h3 class="text-base font-bold text-gray-900 mb-4">Nouveau client</h3>
+            <div class="space-y-3 mb-5">
+              <input type="text" placeholder="Nom / Raison sociale" class="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-100 focus:border-primary-300">
+              <input type="text" placeholder="NIF" class="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-100 focus:border-primary-300">
+              <input type="text" placeholder="Adresse" class="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-100 focus:border-primary-300">
+            </div>
+            <div class="flex gap-3">
+              <button class="flex-1 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50">Fermer</button>
+              <button class="flex-1 py-2.5 bg-primary-600 text-white rounded-xl text-sm font-semibold hover:bg-primary-700 shadow-sm">Ajouter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: Error states & Toasts -->
+    <h2 class="text-lg font-bold text-gray-700 mb-4 mt-10 uppercase tracking-wide">2. États erreur & Toasts</h2>
+    <div class="grid grid-cols-3 gap-6">
+
+      <!-- Error modal -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">Modal — Erreur réseau</h3>
+        <p class="text-xs text-gray-400 mb-4">C5: Perte de connexion</p>
+        <div class="modal-box bg-white rounded-2xl shadow-2xl border border-red-200 max-w-sm mx-auto overflow-hidden">
+          <div class="bg-red-50 p-4 border-b border-red-100 flex items-center gap-3">
+            <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <i class="ri-wifi-off-line text-red-500 text-base"></i>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-red-700">Connexion perdue</p>
+              <p class="text-xs text-red-500">Vérification en cours...</p>
+            </div>
+          </div>
+          <div class="p-4">
+            <p class="text-xs text-gray-500">Les modifications sont enregistrées localement. Elles seront synchronisées automatiquement dès la reconnexion.</p>
+            <div class="flex gap-2 mt-3">
+              <div class="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                <div class="h-full bg-primary-500 rounded-full" style="width:60%"></div>
+              </div>
+              <span class="text-xs text-gray-400">60%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error 500 -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">Erreur 500</h3>
+        <p class="text-xs text-gray-400 mb-4">I6: Erreur serveur</p>
+        <div class="bg-gray-50 rounded-2xl p-6 text-center border border-gray-100">
+          <div class="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <i class="ri-error-warning-fill text-red-400 text-3xl"></i>
+          </div>
+          <h3 class="text-base font-bold text-gray-900 mb-1">Erreur serveur</h3>
+          <p class="text-xs text-gray-500 mb-4">Une erreur inattendue s'est produite.<br>Notre équipe a été notifiée.</p>
+          <button class="px-5 py-2 bg-primary-600 text-white rounded-xl text-sm font-semibold hover:bg-primary-700 shadow-sm">
+            <i class="ri-refresh-line mr-1"></i> Réessayer
+          </button>
+        </div>
+      </div>
+
+      <!-- Toast success -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">Toast — Succès</h3>
+        <p class="text-xs text-gray-400 mb-4">C8: Notification éphémère</p>
+        <div class="toast-slide bg-white rounded-xl shadow-lg border border-green-200 p-4 flex items-center gap-3 max-w-sm mx-auto">
+          <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <i class="ri-check-line text-green-600 text-base"></i>
+          </div>
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-gray-900">Facture envoyée</p>
+            <p class="text-xs text-gray-500">Transmise à la DGI avec succès</p>
+          </div>
+          <button class="text-gray-400 hover:text-gray-600"><i class="ri-close-line"></i></button>
+        </div>
+      </div>
+
+      <!-- Toast error -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">Toast — Erreur</h3>
+        <p class="text-xs text-gray-400 mb-4">C9: Notification erreur</p>
+        <div class="toast-slide bg-white rounded-xl shadow-lg border border-red-200 p-4 flex items-center gap-3 max-w-sm mx-auto">
+          <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <i class="ri-close-circle-line text-red-500 text-base"></i>
+          </div>
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-gray-900">Échec de l'envoi</p>
+            <p class="text-xs text-gray-500 font-mono">Code: DGI-ERR-001</p>
+          </div>
+          <button class="text-gray-400 hover:text-gray-600"><i class="ri-close-line"></i></button>
+        </div>
+      </div>
+
+      <!-- Loading modal -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">Modal — Chargement</h3>
+        <p class="text-xs text-gray-400 mb-4">C11: Spinner sur action longue</p>
+        <div class="modal-box bg-white rounded-2xl shadow-2xl border border-gray-100 max-w-sm mx-auto">
+          <div class="p-8 text-center">
+            <div class="w-12 h-12 border-4 border-primary-100 border-t-primary-600 rounded-full spinner mx-auto mb-4"></div>
+            <p class="text-sm font-semibold text-gray-900 mb-1">Transmission en cours</p>
+            <p class="text-xs text-gray-400">Envoi vers les serveurs DGI...</p>
+            <div class="mt-4 flex justify-center gap-2 text-xs text-gray-400">
+              <div class="w-2 h-2 bg-primary-600 rounded-full dot-pulse"></div>
+              <div class="w-2 h-2 bg-primary-600 rounded-full dot-pulse" style="animation-delay:0.2s"></div>
+              <div class="w-2 h-2 bg-primary-600 rounded-full dot-pulse" style="animation-delay:0.4s"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Maintenance -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">Maintenance DGI</h3>
+        <p class="text-xs text-gray-400 mb-4">I8: Serveur DGI indisponible</p>
+        <div class="bg-amber-50 rounded-2xl p-6 text-center border border-amber-200">
+          <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <i class="ri-server-line text-amber-500 text-3xl"></i>
+          </div>
+          <h3 class="text-base font-bold text-amber-800 mb-1">Maintenance DGI</h3>
+          <p class="text-xs text-amber-600 mb-3">Le serveur DGI est en maintenance.<br>Réessayez dans 30 minutes.</p>
+          <span class="text-xs font-semibold text-amber-700 bg-amber-100 px-3 py-1 rounded-full">⏱ Prévue: 14:30 UTC</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION 3: Empty states -->
+    <h2 class="text-lg font-bold text-gray-700 mb-4 mt-10 uppercase tracking-wide">3. États vides</h2>
+    <div class="grid grid-cols-3 gap-6">
+
+      <!-- Empty: No invoices -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">État vide — Aucune facture</h3>
+        <p class="text-xs text-gray-400 mb-4">I3: Call-to-action d'invite</p>
+        <div class="bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
+          <div class="w-20 h-20 bg-primary-50 rounded-3xl flex items-center justify-center mx-auto mb-4">
+            <i class="ri-file-list-3-line text-primary-300 text-4xl"></i>
+          </div>
+          <h3 class="text-base font-bold text-gray-900 mb-1">Aucune facture</h3>
+          <p class="text-xs text-gray-400 mb-4">Vous n'avez pas encore créé de facture.<br>Créez votre première facture en quelques clics.</p>
+          <button class="px-5 py-2.5 bg-primary-600 text-white rounded-xl text-sm font-semibold hover:bg-primary-700 shadow-sm">
+            <i class="ri-add-line mr-1"></i> Créer une facture
+          </button>
+        </div>
+      </div>
+
+      <!-- Empty: No results -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">État vide — Aucun résultat</h3>
+        <p class="text-xs text-gray-400 mb-4">I5: Recherche infructueuse</p>
+        <div class="bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
+          <div class="w-20 h-20 bg-gray-100 rounded-3xl flex items-center justify-center mx-auto mb-4">
+            <i class="ri-search-line text-gray-300 text-4xl"></i>
+          </div>
+          <h3 class="text-base font-bold text-gray-900 mb-1">Aucun résultat</h3>
+          <p class="text-xs text-gray-400 mb-4">Aucune facture ne correspond<br>à votre recherche.</p>
+          <button class="px-4 py-2 border border-gray-200 rounded-xl text-xs font-medium text-gray-600 hover:bg-gray-50">Réinitialiser les filtres</button>
+        </div>
+      </div>
+
+      <!-- Empty: No clients -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">État vide — Aucun client</h3>
+        <p class="text-xs text-gray-400 mb-4">I4: Liste clients vide</p>
+        <div class="bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
+          <div class="w-20 h-20 bg-blue-50 rounded-3xl flex items-center justify-center mx-auto mb-4">
+            <i class="ri-user-3-line text-blue-200 text-4xl"></i>
+          </div>
+          <h3 class="text-base font-bold text-gray-900 mb-1">Aucun client</h3>
+          <p class="text-xs text-gray-400 mb-4">Ajoutez vos clients pour<br>commencer à créer des factures.</p>
+          <button class="px-5 py-2.5 bg-primary-600 text-white rounded-xl text-sm font-semibold hover:bg-primary-700 shadow-sm">
+            <i class="ri-add-line mr-1"></i> Ajouter un client
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: Skeleton loaders -->
+    <h2 class="text-lg font-bold text-gray-700 mb-4 mt-10 uppercase tracking-wide">4. Skeletons & Loading</h2>
+    <div class="grid grid-cols-2 gap-6">
+
+      <!-- Skeleton table -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">Skeleton — Tableau factures</h3>
+        <p class="text-xs text-gray-400 mb-4">I1: Animation shimmer sur chargement</p>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="skeleton h-4 w-24 rounded-lg"></div>
+            <div class="skeleton h-4 w-32 rounded-lg"></div>
+            <div class="skeleton h-4 flex-1 rounded-lg"></div>
+            <div class="skeleton h-4 w-20 rounded-lg"></div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="skeleton h-10 w-10 rounded-full"></div>
+            <div class="skeleton h-4 w-40 rounded-lg"></div>
+            <div class="skeleton h-4 flex-1 rounded-lg"></div>
+            <div class="skeleton h-4 w-24 rounded-lg"></div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="skeleton h-10 w-10 rounded-full"></div>
+            <div class="skeleton h-4 w-36 rounded-lg"></div>
+            <div class="skeleton h-4 flex-1 rounded-lg"></div>
+            <div class="skeleton h-4 w-20 rounded-lg"></div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="skeleton h-10 w-10 rounded-full"></div>
+            <div class="skeleton h-4 w-44 rounded-lg"></div>
+            <div class="skeleton h-4 flex-1 rounded-lg"></div>
+            <div class="skeleton h-4 w-28 rounded-lg"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skeleton cards (dashboard) -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">Skeleton — Cards Dashboard</h3>
+        <p class="text-xs text-gray-400 mb-4">I2: Animation shimmer cards</p>
+        <div class="grid grid-cols-3 gap-4">
+          <div class="space-y-2 p-4 bg-gray-50 rounded-xl">
+            <div class="skeleton h-8 w-8 rounded-lg"></div>
+            <div class="skeleton h-3 w-16 rounded-lg"></div>
+            <div class="skeleton h-6 w-12 rounded-lg"></div>
+          </div>
+          <div class="space-y-2 p-4 bg-gray-50 rounded-xl">
+            <div class="skeleton h-8 w-8 rounded-lg"></div>
+            <div class="skeleton h-3 w-20 rounded-lg"></div>
+            <div class="skeleton h-6 w-16 rounded-lg"></div>
+          </div>
+          <div class="space-y-2 p-4 bg-gray-50 rounded-xl">
+            <div class="skeleton h-8 w-8 rounded-lg"></div>
+            <div class="skeleton h-3 w-14 rounded-lg"></div>
+            <div class="skeleton h-6 w-10 rounded-lg"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: 404 -->
+    <h2 class="text-lg font-bold text-gray-700 mb-4 mt-10 uppercase tracking-wide">5. Pages erreur</h2>
+    <div class="grid grid-cols-2 gap-6">
+      <!-- 404 -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">Erreur 404</h3>
+        <p class="text-xs text-gray-400 mb-4">I7: Page introuvable</p>
+        <div class="bg-gray-50 rounded-2xl p-10 text-center border border-gray-100">
+          <div class="text-7xl font-black text-gray-200 mb-2">404</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-1">Page introuvable</h3>
+          <p class="text-sm text-gray-400 mb-5">La page que vous recherchez n'existe pas<br>ou a été déplacée.</p>
+          <button class="px-6 py-2.5 bg-primary-600 text-white rounded-xl text-sm font-semibold hover:bg-primary-700 shadow-sm">
+            <i class="ri-home-4-line mr-1"></i> Retour à l'accueil
+          </button>
+        </div>
+      </div>
+
+      <!-- Offline -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-1">Hors ligne</h3>
+        <p class="text-xs text-gray-400 mb-4">C7: État offline</p>
+        <div class="bg-blue-50 rounded-2xl p-10 text-center border border-blue-100">
+          <div class="w-20 h-20 bg-blue-100 rounded-3xl flex items-center justify-center mx-auto mb-4">
+            <i class="ri-wifi-off-line text-blue-400 text-4xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-blue-900 mb-1">Vous êtes hors ligne</h3>
+          <p class="text-sm text-blue-600 mb-5">Vérifiez votre connexion Internet.<br>Vos données sont en sécurité.</p>
+          <div class="inline-flex items-center gap-2 bg-blue-100 text-blue-700 text-xs font-semibold px-4 py-2 rounded-full">
+            <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+            Tentative de reconnexion...
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
