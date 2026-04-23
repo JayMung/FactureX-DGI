@@ -31,6 +31,9 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Onboarding from "./pages/Onboarding";
 import SetupWizard from "./pages/SetupWizard";
+import TeamManagement from "./pages/TeamManagement";
+import UserEdit from "./pages/UserEdit";
+import UserInvite from "./pages/UserInvite";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 
@@ -81,6 +84,21 @@ const App = () => (
                 <Route path="/register" element={<Register />} />
                 <Route path="/onboarding" element={<Onboarding />} />
                 <Route path="/setup" element={<SetupWizard />} />
+                <Route path="/settings/team" element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <TeamManagement />
+                  </ProtectedRoute>
+                } />
+                <Route path="/settings/team/invite" element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <UserInvite />
+                  </ProtectedRoute>
+                } />
+                <Route path="/settings/team/edit/:id" element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <UserEdit />
+                  </ProtectedRoute>
+                } />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/admin-invitation" element={<AdminInvitation />} />
                 <Route path="/" element={
