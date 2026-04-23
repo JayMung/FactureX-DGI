@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historique — FAC-2026-0143 — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui']}}}}}</script>
+  <style>body{font-family:'Inter',system-ui,sans-serif}</style>
+</head>
+<body class="bg-gray-50 min-h-screen flex">
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full">
+    <div class="px-6 py-5 border-b border-gray-100"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-green-600 rounded-xl flex items-center justify-center"><i class="ri-file-paper-2-line text-white text-base"></i></div><span class="text-gray-900 text-base font-bold">FactureX</span></div></div>
+    <div class="flex-1 px-4 py-4 space-y-1">
+      <a href="screen-01-dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-dashboard-line text-lg text-gray-500"></i> Dashboard</a>
+      <a href="screen-02-factures.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-file-list-3-line text-lg text-gray-500"></i> Factures</a>
+    </div>
+  </aside>
+  <div class="flex-1 ml-64">
+    <header class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="screen-J2-invoice-detail-full.html" class="w-9 h-9 bg-gray-100 rounded-xl flex items-center justify-center text-gray-500 hover:bg-gray-200"><i class="ri-arrow-left-line"></i></a>
+        <div>
+          <h1 class="text-xl font-bold text-gray-900">Historique des modifications</h1>
+          <p class="text-xs text-gray-400">FAC-2026-0143 — Congo Freight SPRL</p>
+        </div>
+      </div>
+    </header>
+    <main class="p-8 max-w-2xl">
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div class="p-5 border-b border-gray-100 flex items-center gap-3">
+          <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0"><i class="ri-shield-check-line text-green-600"></i></div>
+          <div class="flex-1"><p class="text-sm font-bold text-gray-900">Version actuelle — Validée</p><p class="text-xs text-gray-400">Dernière modification par Jean K. — 22 avr. 2026 à 14:30</p></div>
+        </div>
+        <div class="divide-y divide-gray-100">
+          <div class="p-5 flex items-start gap-4">
+            <div class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5"><i class="ri-government-line text-gray-500"></i></div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1"><p class="text-sm font-bold text-gray-900">Transmise à la DGI</p><span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full">22 avr. 14:30</span></div>
+              <p class="text-xs text-gray-500">Statut changé : En attente → Transmise</p>
+              <p class="text-xs text-gray-400 mt-1">Par Jean K.</p>
+            </div>
+          </div>
+          <div class="p-5 flex items-start gap-4">
+            <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5"><i class="ri-check-line text-green-600"></i></div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1"><p class="text-sm font-bold text-gray-900">Validée par DGI</p><span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full">22 avr. 14:32</span></div>
+              <p class="text-xs text-gray-500">Code d'authenticité reçu : FAC-AUTH-2026-0143</p>
+              <p class="text-xs text-gray-400 mt-1">Par Système DGI</p>
+            </div>
+          </div>
+          <div class="p-5 flex items-start gap-4">
+            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5"><i class="ri-edit-line text-blue-500"></i></div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1"><p class="text-sm font-bold text-gray-900">Ligne ajoutée</p><span class="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-0.5 rounded-full">22 avr. 13:45</span></div>
+              <p class="text-xs text-gray-500">Assurance maritime tous risques — CDF 250 000</p>
+              <p class="text-xs text-gray-400 mt-1">Par Jean K.</p>
+            </div>
+          </div>
+          <div class="p-5 flex items-start gap-4">
+            <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5"><i class="ri-send-plane-line text-amber-500"></i></div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1"><p class="text-sm font-bold text-gray-900">Brouillon créé</p><span class="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-0.5 rounded-full">22 avr. 13:00</span></div>
+              <p class="text-xs text-gray-500">Facture créée avec 1 ligne de produit</p>
+              <p class="text-xs text-gray-400 mt-1">Par Jean K.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

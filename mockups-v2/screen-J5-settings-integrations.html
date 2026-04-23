@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paramètres — Intégrations — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui']}}}}}</script>
+  <style>body{font-family:'Inter',system-ui,sans-serif}</style>
+</head>
+<body class="bg-gray-50 min-h-screen flex">
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full">
+    <div class="px-6 py-5 border-b border-gray-100"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-green-600 rounded-xl flex items-center justify-center"><i class="ri-file-paper-2-line text-white text-base"></i></div><span class="text-gray-900 text-base font-bold">FactureX</span></div></div>
+    <div class="flex-1 px-4 py-4 space-y-1">
+      <a href="screen-08-settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-settings-3-line text-lg text-gray-500"></i> Général</a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-team-line text-lg text-gray-500"></i> Utilisateurs</a>
+      <a href="screen-J4-settings-notifications.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-notification-3-line text-lg text-gray-500"></i> Notifications</a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-green-50 rounded-xl text-sm font-semibold text-green-700 border-l-[3px] border-green-600"><i class="ri-plug-line text-lg"></i> Intégrations</a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-shield-key-line text-lg text-gray-500"></i> Sécurité</a>
+    </div>
+  </aside>
+  <div class="flex-1 ml-64">
+    <header class="bg-white border-b border-gray-200 px-8 py-4"><h1 class="text-xl font-bold text-gray-900">Intégrations</h1><p class="text-sm text-gray-500">Connectez vos outils préférés</p></header>
+    <main class="p-8 max-w-2xl">
+      <div class="space-y-4">
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-xl">📦</div>
+            <div>
+              <p class="text-sm font-bold text-gray-900">API DGI</p>
+              <p class="text-xs text-gray-400">Connexion officielle à la Direction Générale des Impôts</p>
+              <div class="flex items-center gap-1 mt-1"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span><span class="text-xs text-green-600 font-medium">Connecté</span></div>
+            </div>
+          </div>
+          <button class="px-4 py-2 border border-gray-200 rounded-xl text-xs font-medium text-gray-600 hover:bg-gray-50">Configurer</button>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-xl">💳</div>
+            <div>
+              <p class="text-sm font-bold text-gray-900">Orange Money</p>
+              <p class="text-xs text-gray-400">Paiements en ligne via Orange Money</p>
+              <div class="flex items-center gap-1 mt-1"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span><span class="text-xs text-green-600 font-medium">Connecté</span></div>
+            </div>
+          </div>
+          <button class="px-4 py-2 border border-gray-200 rounded-xl text-xs font-medium text-gray-600 hover:bg-gray-50">Configurer</button>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-xl">📊</div>
+            <div>
+              <p class="text-sm font-bold text-gray-900">API Comptable</p>
+              <p class="text-xs text-gray-400">Export automatique vers votre logiciel comptable</p>
+              <div class="flex items-center gap-1 mt-1"><span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span><span class="text-xs text-amber-600 font-medium">Non configuré</span></div>
+            </div>
+          </div>
+          <button class="px-4 py-2 bg-green-600 text-white rounded-xl text-xs font-semibold hover:bg-green-700">Connecter</button>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-xl">🔌</div>
+            <div>
+              <p class="text-sm font-bold text-gray-900">Webhook DGI</p>
+              <p class="text-xs text-gray-400">URL de callback pour les notifications DGI</p>
+              <div class="flex items-center gap-1 mt-1"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span><span class="text-xs text-green-600 font-medium">Actif</span></div>
+            </div>
+          </div>
+          <button class="px-4 py-2 border border-gray-200 rounded-xl text-xs font-medium text-gray-600 hover:bg-gray-50">Voir URL</button>
+        </div>
+      </div>
+      <div class="mt-6">
+        <h3 class="text-sm font-bold text-gray-900 mb-3">API REST</h3>
+        <div class="bg-gray-900 rounded-2xl p-5">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-mono text-green-400">GET /api/v1/factures</span>
+            <span class="text-xs font-semibold text-green-400 bg-green-900/50 px-2 py-0.5 rounded">200 OK</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="h-1.5 flex-1 bg-gray-700 rounded overflow-hidden"><div class="h-full bg-green-500 rounded" style="width:80%"></div></div>
+            <span class="text-[10px] text-gray-500">80 req/min</span>
+          </div>
+          <div class="flex gap-2 mt-3">
+            <span class="text-[10px] font-mono text-gray-400 bg-gray-800 px-2 py-1 rounded">Clé API</span>
+            <span class="text-[10px] font-mono text-gray-400 bg-gray-800 px-2 py-1 rounded">••••••••</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

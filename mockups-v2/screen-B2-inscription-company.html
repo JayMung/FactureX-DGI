@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscription — Mon entreprise — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui']}}}}}</script>
+  <style>body{font-family:'Inter',system-ui,sans-serif}.gradient-green{background:linear-gradient(135deg,#10B981 0%,#059669 100%)}</style>
+</head>
+<body class="min-h-screen flex bg-gray-50">
+  <div class="hidden lg:flex lg:w-1/2 gradient-green flex-col justify-between p-12">
+    <div class="flex items-center gap-3"><div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center"><i class="ri-file-paper-2-line text-white text-lg"></i></div><span class="text-white text-xl font-bold">FactureX</span></div>
+    <div><h2 class="text-3xl font-extrabold text-white mb-4">Parlez-nous de votre entreprise</h2><p class="text-green-100 text-base">Ces informations apparaîtront sur vos factures officielles.</p></div>
+    <p class="text-green-300 text-xs">© 2026 FactureX — Kinshasa, RDC</p>
+  </div>
+  <div class="flex-1 flex items-center justify-center p-8">
+    <div class="w-full max-w-md">
+      <div class="mb-6">
+        <div class="flex justify-between text-xs font-semibold text-gray-500 mb-2"><span>Étape 2 sur 4</span><span>Entreprise</span></div>
+        <div class="h-1.5 bg-gray-200 rounded-full"><div class="h-full bg-green-600 rounded-full" style="width:50%"></div></div>
+        <div class="flex justify-between mt-2 text-xs">
+          <span class="text-xs font-medium text-green-700 flex items-center gap-1"><span class="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center"><i class="ri-check-line text-white text-[8px]"></i></span>Compte</span>
+          <span class="text-xs font-medium text-green-700 flex items-center gap-1"><span class="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center"><span class="text-white text-[8px] font-bold">2</span></span>Entreprise</span>
+          <span class="text-xs font-medium text-gray-400">NIF</span>
+          <span class="text-xs font-medium text-gray-400">Vérif</span>
+        </div>
+      </div>
+      <h1 class="text-2xl font-extrabold text-gray-900 mb-1">Votre entreprise</h1>
+      <p class="text-sm text-gray-500 mb-6">Déjà inscrit ? <a href="#" class="text-green-600 font-semibold hover:underline">Connectez-vous</a></p>
+      <form class="space-y-4">
+        <div>
+          <label class="text-xs font-semibold text-gray-700 block mb-1.5">Raison sociale *</label>
+          <div class="relative"><i class="ri-building-2-line text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 text-lg"></i><input type="text" placeholder="SARL, SPRL, SA..." class="w-full pl-10 pr-4 py-3.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300"></div>
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-gray-700 block mb-1.5">Secteur d'activité *</label>
+          <div class="relative"><i class="ri-briefcase-line text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 text-lg"></i><select class="w-full pl-10 pr-10 py-3.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none appearance-none"><option>Commerce général</option><option>Transport & Logistique</option><option>Services IT</option><option>Construction & BTP</option><option>Agro-industrie</option></select><i class="ri-arrow-down-s-line absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i></div>
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-gray-700 block mb-1.5">Site web (optionnel)</label>
+          <div class="relative"><i class="ri-global-line text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 text-lg"></i><input type="url" placeholder="www.monentreprise.cd" class="w-full pl-10 pr-4 py-3.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100"></div>
+        </div>
+        <button type="submit" class="w-full py-3.5 bg-green-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-green-600/20 hover:bg-green-700 flex items-center justify-center gap-2 mt-2">Continuer <i class="ri-arrow-right-line"></i></button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

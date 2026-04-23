@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détail facture — FAC-2026-0143 — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui']}}}}}</script>
+  <style>body{font-family:'Inter',system-ui,sans-serif}</style>
+</head>
+<body class="bg-gray-50 min-h-screen flex">
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full">
+    <div class="px-6 py-5 border-b border-gray-100"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-green-600 rounded-xl flex items-center justify-center"><i class="ri-file-paper-2-line text-white text-base"></i></div><span class="text-gray-900 text-base font-bold">FactureX</span></div></div>
+    <div class="flex-1 px-4 py-4 space-y-1">
+      <a href="screen-01-dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-dashboard-line text-lg text-gray-500"></i> Dashboard</a>
+      <a href="screen-02-factures.html" class="flex items-center gap-3 px-3 py-2.5 bg-green-50 rounded-xl text-sm font-semibold text-green-700 border-l-[3px] border-green-600"><i class="ri-file-list-3-line text-lg"></i> Factures</a>
+      <a href="screen-06-clients.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-user-line text-lg text-gray-500"></i> Clients</a>
+      <a href="screen-07-rapports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-bar-chart-box-line text-lg text-gray-500"></i> Rapports</a>
+    </div>
+  </aside>
+  <div class="flex-1 ml-64">
+    <header class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="screen-02-factures.html" class="w-9 h-9 bg-gray-100 rounded-xl flex items-center justify-center text-gray-500 hover:bg-gray-200"><i class="ri-arrow-left-line"></i></a>
+        <div>
+          <h1 class="text-xl font-bold text-gray-900">FAC-2026-0143</h1>
+          <p class="text-xs text-gray-400">Créée le 22 avr. 2026 — Congo Freight SPRL</p>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button class="px-4 py-2 border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 flex items-center gap-2"><i class="ri-download-line"></i> PDF</button>
+        <button class="px-4 py-2 border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 flex items-center gap-2"><i class="ri-share-line"></i> Envoyer</button>
+        <a href="screen-03-creation-facture.html" class="px-4 py-2 border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 flex items-center gap-2"><i class="ri-edit-line"></i> Modifier</a>
+      </div>
+    </header>
+    <main class="p-8">
+      <!-- Status bar -->
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 mb-6">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center"><i class="ri-shield-check-line text-green-600 text-2xl"></i></div>
+            <div>
+              <p class="text-base font-bold text-green-700">Validée par la DGI</p>
+              <p class="text-xs text-gray-400">Code d'authenticité reçu le 22 avr. 2026 à 14:32</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="text-right">
+              <p class="text-[10px] text-gray-400 uppercase tracking-wider">QR Code</p>
+              <div class="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mt-1"><i class="ri-qr-code-line text-white text-xl"></i></div>
+            </div>
+            <div class="text-right">
+              <p class="text-[10px] text-gray-400 uppercase tracking-wider">Code Auth</p>
+              <p class="text-xs font-mono text-gray-700 mt-1">FAC-AUTH-2026</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Invoice content -->
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm">
+        <div class="p-8 border-b border-gray-100">
+          <div class="flex justify-between">
+            <div>
+              <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">De</p>
+              <p class="text-base font-bold text-gray-900">Mon Entreprise SARL</p>
+              <p class="text-sm text-gray-500">NIF: 1 234 567-8-9-00001</p>
+              <p class="text-sm text-gray-500">RCCM: 12345-KIN-2020</p>
+            </div>
+            <div class="text-right">
+              <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">À</p>
+              <p class="text-base font-bold text-gray-900">Congo Freight SPRL</p>
+              <p class="text-sm text-gray-500">NIF: 1 234 567-8-9-00012</p>
+              <p class="text-sm text-gray-500">Avenue du Port, Gombe, Kinshasa</p>
+            </div>
+          </div>
+        </div>
+        <table class="w-full">
+          <thead><tr class="text-[10px] text-gray-400 uppercase tracking-wider bg-gray-50"><th class="text-left px-8 py-3">Désignation</th><th class="text-center px-4 py-3">Qté</th><th class="text-right px-4 py-3">Prix unitaire</th><th class="text-right px-8 py-3">Montant HT</th></tr></thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr>
+              <td class="px-8 py-4 text-sm text-gray-900">Transport fret maritime — 20 conteneurs</td>
+              <td class="px-4 py-4 text-sm text-gray-700 text-center">1</td>
+              <td class="px-4 py-4 text-sm text-gray-700 text-right">CDF 1 500 000</td>
+              <td class="px-8 py-4 text-sm font-semibold text-gray-900 text-right">CDF 1 500 000</td>
+            </tr>
+            <tr>
+              <td class="px-8 py-4 text-sm text-gray-900">Assurance maritime tous risques</td>
+              <td class="px-4 py-4 text-sm text-gray-700 text-center">1</td>
+              <td class="px-4 py-4 text-sm text-gray-700 text-right">CDF 250 000</td>
+              <td class="px-8 py-4 text-sm font-semibold text-gray-900 text-right">CDF 250 000</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="p-8 border-t border-gray-100">
+          <div class="flex justify-end">
+            <div class="w-72 space-y-2">
+              <div class="flex justify-between text-sm"><span class="text-gray-500">Montant HT</span><span class="text-gray-900">CDF 1 750 000</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-500">TVA 18%</span><span class="text-gray-900">CDF 315 000</span></div>
+              <div class="flex justify-between text-base font-bold border-t border-gray-200 pt-2"><span class="text-gray-900">Total TTC</span><span class="text-green-700">CDF 2 065 000</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

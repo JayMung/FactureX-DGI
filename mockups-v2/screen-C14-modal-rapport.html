@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Générer rapport — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui']}}}}}</script>
+  <style>body{font-family:'Inter',system-ui,sans-serif}</style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <div class="bg-white rounded-2xl shadow-2xl border border-gray-100">
+      <div class="p-5 border-b border-gray-100 flex items-center justify-between">
+        <h3 class="text-base font-bold text-gray-900">Générer un rapport fiscal</h3>
+        <button class="text-gray-400 hover:text-gray-600 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100"><i class="ri-close-line text-lg"></i></button>
+      </div>
+      <div class="p-5 space-y-4">
+        <div>
+          <label class="text-xs font-semibold text-gray-700 block mb-2">Type de rapport</label>
+          <div class="space-y-2">
+            <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border-2 border-green-300 cursor-pointer">
+              <input type="radio" name="rtype" checked class="text-green-600">
+              <div><p class="text-sm font-semibold text-gray-900">Déclaration TVA</p><p class="text-xs text-gray-400">TVA collectée et récupérable</p></div>
+            </label>
+            <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-200 cursor-pointer">
+              <input type="radio" name="rtype" class="text-green-600">
+              <div><p class="text-sm font-semibold text-gray-900">Résumé des ventes</p><p class="text-xs text-gray-400">Chiffre d'affaires par période</p></div>
+            </label>
+            <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-200 cursor-pointer">
+              <input type="radio" name="rtype" class="text-green-600">
+              <div><p class="text-sm font-semibold text-gray-900">Export DGI XML</p><p class="text-xs text-gray-400">Format officiel DGI</p></div>
+            </label>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs font-semibold text-gray-700 block mb-1.5">Date début</label>
+            <input type="date" value="2026-04-01" class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-100">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-700 block mb-1.5">Date fin</label>
+            <input type="date" value="2026-04-30" class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-100">
+          </div>
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-gray-700 block mb-1.5">Format d'export</label>
+          <div class="flex gap-2">
+            <button class="flex-1 py-2.5 border-2 border-green-300 bg-green-50 text-green-700 rounded-xl text-xs font-semibold">XML DGI</button>
+            <button class="flex-1 py-2.5 border border-gray-200 text-gray-600 rounded-xl text-xs font-medium hover:bg-gray-50">PDF</button>
+            <button class="flex-1 py-2.5 border border-gray-200 text-gray-600 rounded-xl text-xs font-medium hover:bg-gray-50">CSV</button>
+          </div>
+        </div>
+      </div>
+      <div class="p-5 border-t border-gray-100 flex gap-3">
+        <button class="flex-1 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50">Annuler</button>
+        <button class="flex-1 py-2.5 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700 flex items-center justify-center gap-2"><i class="ri-file-download-line"></i> Générer</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

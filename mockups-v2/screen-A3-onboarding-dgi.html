@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onboarding — Transmission DGI — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter',system-ui]},colors:{green:{500:'#10B981',600:'#10B981',700:'#059669'}}}}}</script>
+  <style>body{font-family:'Inter',system-ui,sans-serif}.gradient-green{background:linear-gradient(135deg,#10B981 0%,#059669 100%)}</style>
+</head>
+<body class="min-h-screen flex">
+  <div class="hidden lg:flex lg:w-1/2 gradient-green flex-col justify-between p-12 relative">
+    <div class="absolute inset-0">
+      <div class="absolute top-20 right-20 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
+    </div>
+    <div class="relative z-10">
+      <div class="flex items-center gap-3 mb-16">
+        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center"><i class="ri-file-list-line text-white text-xl"></i></div>
+        <span class="text-white text-2xl font-bold">FactureX</span>
+      </div>
+      <h1 class="text-white text-4xl font-extrabold leading-tight mb-4">Transmission automatique à la DGI</h1>
+      <p class="text-green-100 text-lg leading-relaxed">Plus besoin de vous déplacer. Vos factures sont transmises en temps réel aux serveurs de la DGI dès l'envoi.</p>
+    </div>
+    <div class="relative z-10">
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-6 flex items-center gap-4">
+        <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center"><i class="ri-government-line text-white text-2xl"></i></div>
+        <div><p class="text-white font-semibold text-sm">Direction Générale des Impôts</p><p class="text-green-200 text-xs">Validation en temps réel — RDC</p></div>
+      </div>
+      <div class="mt-4 bg-white/10 backdrop-blur rounded-2xl p-4 flex items-center gap-3">
+        <div class="w-8 h-8 bg-green-400/30 rounded-lg flex items-center justify-center"><i class="ri-shield-check-line text-green-300 text-lg"></i></div>
+        <p class="text-green-100 text-xs">Conforme à l'arrêté n°005/DGI/DG/DJ/2024 relatif à la facturation électronique.</p>
+      </div>
+    </div>
+    <div class="relative z-10 flex items-center gap-3">
+      <div class="flex gap-1.5">
+        <div class="w-8 h-1.5 bg-white/30 rounded-full"></div>
+        <div class="w-8 h-1.5 bg-white/30 rounded-full"></div>
+        <div class="w-8 h-1.5 bg-white rounded-full"></div>
+        <div class="w-8 h-1.5 bg-white/30 rounded-full"></div>
+      </div>
+      <span class="text-white/60 text-sm">3 / 4</span>
+    </div>
+  </div>
+
+  <div class="flex-1 flex items-center justify-center p-8 bg-gray-50">
+    <div class="w-full max-w-lg">
+      <div class="mb-1">
+        <span class="text-xs font-bold text-green-600 uppercase tracking-widest">Étape 3 / 4</span>
+        <h2 class="text-2xl font-extrabold text-gray-900 mt-1">Ce qui se passe ensuite</h2>
+        <p class="text-gray-500 text-sm mt-1">Votre facture est envoyée automatiquement à la DGI.</p>
+      </div>
+      <div class="mt-8 space-y-4">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex items-center gap-4">
+          <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0"><i class="ri-upload-cloud-line text-blue-500 text-xl"></i></div>
+          <div class="flex-1"><p class="text-sm font-bold text-gray-900">Soumission automatique</p><p class="text-xs text-gray-400">Facture envoyée à la DGI dès l'envoi</p></div>
+          <i class="ri-arrow-right-s-line text-gray-300 text-xl"></i>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex items-center gap-4">
+          <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center flex-shrink-0"><i class="ri-file-search-line text-amber-500 text-xl"></i></div>
+          <div class="flex-1"><p class="text-sm font-bold text-gray-900">Vérification DGI</p><p class="text-xs text-gray-400">Validation en temps réel par l'autorité</p></div>
+          <i class="ri-arrow-right-s-line text-gray-300 text-xl"></i>
+        </div>
+        <div class="bg-white rounded-2xl border-2 border-green-400 shadow-md p-5">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center flex-shrink-0"><i class="ri-qr-code-line text-white text-xl"></i></div>
+            <div class="flex-1"><p class="text-sm font-bold text-gray-900">QR Code + Code Authentification</p><p class="text-xs text-gray-500">Votre facture est officielle et vérifiable</p></div>
+            <span class="bg-green-100 text-green-700 text-xs font-bold px-2.5 py-1 rounded-full border border-green-200">Validé</span>
+          </div>
+          <div class="mt-4 grid grid-cols-2 gap-3">
+            <div class="bg-gray-50 rounded-xl p-3 flex items-center gap-3">
+              <div class="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center flex-shrink-0"><i class="ri-qr-code-line text-white text-xl"></i></div>
+              <div><p class="text-[10px] text-gray-400 uppercase">QR Code</p><p class="text-xs font-mono text-gray-700">FAC-2026-0142</p></div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-3 flex items-center gap-3">
+              <div class="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0"><i class="ri-shield-star-line text-gray-500 text-xl"></i></div>
+              <div><p class="text-[10px] text-gray-400 uppercase">Code Auth</p><p class="text-xs font-mono text-gray-700">FAC-AUTH-2026</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-8 flex gap-3">
+        <button class="flex-1 py-3.5 bg-green-600 text-white font-semibold rounded-xl text-sm hover:bg-green-700 transition-colors shadow-lg shadow-green-600/20 flex items-center justify-center gap-2">Commenencer <i class="ri-arrow-right-line"></i></button>
+        <button class="px-4 py-3.5 text-gray-400 hover:text-gray-600 text-sm">Passer</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

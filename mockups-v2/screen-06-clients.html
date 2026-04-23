@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion des clients — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            primary: { 50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac', 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d', 800: '#166534', 900: '#14532d' },
+            fx: { blue: '#10B981', 'blue-dark': '#15803d', 'blue-light': '#E8F0FE', gray: '#F8FAFC', 'gray-100': '#F1F5F9', 'gray-200': '#E2E8F0', 'gray-300': '#CBD5E1', 'gray-500': '#64748B', 'gray-700': '#334155', 'gray-900': '#0F172A', success: '#10B981', warning: '#F59E0B', danger: '#EF4444' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .rdc-bg { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='133' viewBox='0 0 200 133'%3E%3Crect width='66' height='44' fill='%230056D6' fill-opacity='0.03'/%3E%3Crect y='44' width='66' height='45' fill='%23FFD100' fill-opacity='0.03'/%3E%3Crect y='89' width='66' height='44' fill='%230056D6' fill-opacity='0.03'/%3E%3Crect x='66' width='68' height='133' fill='%230056D6' fill-opacity='0.03'/%3E%3Ccircle cx='100' cy='66' r='16' fill='none' stroke='%230056D6' stroke-opacity='0.05' stroke-width='2'/%3E%3Ccircle cx='100' cy='66' r='8' fill='%23FFD100' fill-opacity='0.04'/%3E%3C/svg%3E"); background-size: 200px 133px; }
+    .sidebar-item:hover { background: #E8F0FE; }
+    .sidebar-item.active { background: #E8F0FE; color: #10B981; }
+    .sidebar-item.active .sidebar-icon { color: #10B981; }
+    .table-row:hover { background: #f8fafc; }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-20">
+    <div class="px-6 py-5 border-b border-gray-100">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-green-600 rounded-xl flex items-center justify-center flex-shrink-0">
+          <i class="ri-file-paper-2-line text-white text-base"></i>
+        </div>
+        <div>
+          <span class="text-gray-900 text-base font-bold">FactureX</span>
+          <span class="block text-[10px] text-gray-400 font-medium -mt-0.5">DGI — RDC</span>
+        </div>
+      </div>
+    </div>
+    <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      <div class="px-3 py-2 mb-2"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Navigation</span></div>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 transition-colors">
+        <i class="ri-dashboard-line sidebar-icon text-lg text-gray-500"></i> Dashboard
+      </a>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 transition-colors">
+        <i class="ri-file-list-3-line sidebar-icon text-lg text-gray-500"></i> Factures
+      </a>
+      <a href="#" class="sidebar-item active flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors">
+        <i class="ri-user-3-line sidebar-icon text-lg text-gray-500"></i> Clients
+      </a>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+        <i class="ri-bar-chart-2-line sidebar-icon text-lg text-gray-500"></i> Rapports
+      </a>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+        <i class="ri-settings-3-line sidebar-icon text-lg text-gray-500"></i> Paramètres
+      </a>
+    </nav>
+    <div class="border-t border-gray-100 p-4">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <span class="text-green-700 text-sm font-bold">JP</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-gray-900 truncate">Jean Pambu</p>
+          <p class="text-xs text-gray-400 truncate">Administrateur</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 ml-64 flex flex-col min-h-screen">
+    <header class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">Clients</h1>
+        <p class="text-sm text-gray-500">18 clients enregistrés — 142 factures au total</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="relative">
+          <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
+          <input type="text" placeholder="Rechercher un client..." class="pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300 w-64">
+        </div>
+        <button class="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700 transition-colors shadow-sm">
+          <i class="ri-add-line"></i> Ajouter un client
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-1 p-8 rdc-bg">
+      <!-- Stats row -->
+      <div class="grid grid-cols-3 gap-5 mb-5">
+        <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center">
+              <i class="ri-user-3-line text-green-600 text-lg"></i>
+            </div>
+            <div>
+              <p class="text-xs text-gray-400 uppercase tracking-wide font-semibold">Total clients</p>
+              <p class="text-xl font-bold text-gray-900">18</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center">
+              <i class="ri-file-list-3-line text-green-600 text-lg"></i>
+            </div>
+            <div>
+              <p class="text-xs text-gray-400 uppercase tracking-wide font-semibold">Nouveaux (30j)</p>
+              <p class="text-xl font-bold text-gray-900">3</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+              <i class="ri-money-dollar-circle-line text-amber-600 text-lg"></i>
+            </div>
+            <div>
+              <p class="text-xs text-gray-400 uppercase tracking-wide font-semibold">CA total clients</p>
+              <p class="text-xl font-bold text-gray-900">CDF 184.5M</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client table -->
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <table class="w-full">
+          <thead class="bg-gray-50 border-b border-gray-100">
+            <tr>
+              <th class="text-left px-6 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">NIF</th>
+              <th class="text-left px-6 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">Nom / Raison sociale</th>
+              <th class="text-left px-6 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">Adresse</th>
+              <th class="text-center px-6 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">Nbre factures</th>
+              <th class="text-right px-6 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">CA total</th>
+              <th class="text-center px-6 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-50">
+            <tr class="table-row transition-colors cursor-pointer">
+              <td class="px-6 py-3.5"><span class="text-xs font-mono text-gray-600 bg-gray-100 px-2 py-1 rounded-lg">0XXXXXXXXX1</span></td>
+              <td class="px-6 py-3.5">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-xs font-bold text-green-700">CF</span>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-gray-900">Congo Freight SPRL</p>
+                    <p class="text-xs text-gray-400">Transport & Logistique</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-3.5"><span class="text-sm text-gray-600">45 Av. du Fleuve, Gombe, Kinshasa</span></td>
+              <td class="px-6 py-3.5 text-center"><span class="text-sm font-semibold text-gray-900">42</span></td>
+              <td class="px-6 py-3.5 text-right"><span class="text-sm font-bold text-gray-900">CDF 68.4M</span></td>
+              <td class="px-6 py-3.5 text-center">
+                <div class="flex items-center justify-center gap-1.5">
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-green-50 text-gray-500 hover:text-green-600 flex items-center justify-center transition-colors" title="Voir détail"><i class="ri-eye-line"></i></button>
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-green-50 text-gray-500 hover:text-green-600 flex items-center justify-center transition-colors" title="Modifier"><i class="ri-edit-line"></i></button>
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-500 flex items-center justify-center transition-colors" title="Plus"><i class="ri-more-2-line"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr class="table-row transition-colors cursor-pointer">
+              <td class="px-6 py-3.5"><span class="text-xs font-mono text-gray-600 bg-gray-100 px-2 py-1 rounded-lg">0XXXXXXXXX2</span></td>
+              <td class="px-6 py-3.5">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-xs font-bold text-amber-700">MS</span>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-gray-900">Minexco SARL</p>
+                    <p class="text-xs text-gray-400">Extraction minière</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-3.5"><span class="text-sm text-gray-600">12 Rue Kolonga, Lubumbashi</span></td>
+              <td class="px-6 py-3.5 text-center"><span class="text-sm font-semibold text-gray-900">28</span></td>
+              <td class="px-6 py-3.5 text-right"><span class="text-sm font-bold text-gray-900">CDF 52.1M</span></td>
+              <td class="px-6 py-3.5 text-center">
+                <div class="flex items-center justify-center gap-1.5">
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-green-50 text-gray-500 hover:text-green-600 flex items-center justify-center transition-colors"><i class="ri-eye-line"></i></button>
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-green-50 text-gray-500 hover:text-green-600 flex items-center justify-center transition-colors"><i class="ri-edit-line"></i></button>
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-500 flex items-center justify-center transition-colors"><i class="ri-more-2-line"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr class="table-row transition-colors cursor-pointer">
+              <td class="px-6 py-3.5"><span class="text-xs font-mono text-gray-600 bg-gray-100 px-2 py-1 rounded-lg">0XXXXXXXXX3</span></td>
+              <td class="px-6 py-3.5">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-xs font-bold text-green-700">SC</span>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-gray-900">Solveris Consulting</p>
+                    <p class="text-xs text-gray-400">Conseil & Audit</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-3.5"><span class="text-sm text-gray-600">8 Av. des Aviateurs, Gombe</span></td>
+              <td class="px-6 py-3.5 text-center"><span class="text-sm font-semibold text-gray-900">19</span></td>
+              <td class="px-6 py-3.5 text-right"><span class="text-sm font-bold text-gray-900">CDF 21.8M</span></td>
+              <td class="px-6 py-3.5 text-center">
+                <div class="flex items-center justify-center gap-1.5">
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-green-50 text-gray-500 hover:text-green-600 flex items-center justify-center transition-colors"><i class="ri-eye-line"></i></button>
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-green-50 text-gray-500 hover:text-green-600 flex items-center justify-center transition-colors"><i class="ri-edit-line"></i></button>
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-500 flex items-center justify-center transition-colors"><i class="ri-more-2-line"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr class="table-row transition-colors cursor-pointer">
+              <td class="px-6 py-3.5"><span class="text-xs font-mono text-gray-600 bg-gray-100 px-2 py-1 rounded-lg">0XXXXXXXXX4</span></td>
+              <td class="px-6 py-3.5">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-xs font-bold text-purple-700">AI</span>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-gray-900">Africaplast Industries</p>
+                    <p class="text-xs text-gray-400">Industrie & Plasturgie</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-3.5"><span class="text-sm text-gray-600">Zone Industrielle, Kinshasa</span></td>
+              <td class="px-6 py-3.5 text-center"><span class="text-sm font-semibold text-gray-900">15</span></td>
+              <td class="px-6 py-3.5 text-right"><span class="text-sm font-bold text-gray-900">CDF 34.2M</span></td>
+              <td class="px-6 py-3.5 text-center">
+                <div class="flex items-center justify-center gap-1.5">
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-green-50 text-gray-500 hover:text-green-600 flex items-center justify-center transition-colors"><i class="ri-eye-line"></i></button>
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-green-50 text-gray-500 hover:text-green-600 flex items-center justify-center transition-colors"><i class="ri-edit-line"></i></button>
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-500 flex items-center justify-center transition-colors"><i class="ri-more-2-line"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr class="table-row transition-colors cursor-pointer">
+              <td class="px-6 py-3.5"><span class="text-xs font-mono text-gray-600 bg-gray-100 px-2 py-1 rounded-lg">0XXXXXXXXX5</span></td>
+              <td class="px-6 py-3.5">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-xs font-bold text-teal-700">TS</span>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-gray-900">TechSolutions Kinshasa</p>
+                    <p class="text-xs text-gray-400">Technologies & IT</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-3.5"><span class="text-sm text-gray-600">Quartier Texfad, Kinshasa</span></td>
+              <td class="px-6 py-3.5 text-center"><span class="text-sm font-semibold text-gray-900">11</span></td>
+              <td class="px-6 py-3.5 text-right"><span class="text-sm font-bold text-gray-900">CDF 8.0M</span></td>
+              <td class="px-6 py-3.5 text-center">
+                <div class="flex items-center justify-center gap-1.5">
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-green-50 text-gray-500 hover:text-green-600 flex items-center justify-center transition-colors"><i class="ri-eye-line"></i></button>
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-green-50 text-gray-500 hover:text-green-600 flex items-center justify-center transition-colors"><i class="ri-edit-line"></i></button>
+                  <button class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-500 flex items-center justify-center transition-colors"><i class="ri-more-2-line"></i></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Pagination -->
+        <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-between">
+          <span class="text-sm text-gray-500">Affichage 1-5 sur 18 clients</span>
+          <div class="flex items-center gap-1">
+            <button class="w-8 h-8 rounded-lg border border-gray-200 text-gray-400 flex items-center justify-center" disabled><i class="ri-arrow-left-s-line"></i></button>
+            <button class="w-8 h-8 rounded-lg bg-green-600 text-white text-sm font-semibold flex items-center justify-center">1</button>
+            <button class="w-8 h-8 rounded-lg border border-gray-200 text-gray-600 text-sm font-semibold flex items-center justify-center hover:bg-gray-50">2</button>
+            <button class="w-8 h-8 rounded-lg border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-gray-50"><i class="ri-arrow-right-s-line"></i></button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

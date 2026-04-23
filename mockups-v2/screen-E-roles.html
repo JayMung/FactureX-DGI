@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rôles & Permissions — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            primary: { 600: '#16a34a', 700: '#15803d' },
+            fx: { blue: '#10B981' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .tab-active { border-bottom: 2px solid #10B981; color: #10B981; }
+    .fade-up { animation: fadeUp 0.4s ease-out; }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-20">
+    <div class="px-6 py-5 border-b border-gray-100">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-green-600 rounded-xl flex items-center justify-center flex-shrink-0">
+          <i class="ri-file-paper-2-line text-white text-base"></i>
+        </div>
+        <span class="text-gray-900 text-base font-bold">FactureX</span>
+      </div>
+    </div>
+    <nav class="flex-1 px-3 py-4 space-y-1">
+      <div class="px-3 py-2 mb-2"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Navigation</span></div>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"><i class="ri-dashboard-line text-lg text-gray-500"></i> Dashboard</a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"><i class="ri-file-list-3-line text-lg text-gray-500"></i> Factures</a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"><i class="ri-user-line text-lg text-gray-500"></i> Clients</a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"><i class="ri-bar-chart-2-line text-lg text-gray-500"></i> Rapports</a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium bg-green-50 text-green-700 transition-colors border-l-3 border-green-600"><i class="ri-settings-3-line text-lg text-green-600"></i> Paramètres</a>
+    </nav>
+    <div class="border-t border-gray-100 p-4">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-green-700 text-sm font-bold">JP</span></div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-gray-900 truncate">Jean Pambu</p>
+          <p class="text-xs text-gray-400 truncate">Administrateur</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="flex-1 ml-64">
+    <header class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">Rôles & Permissions</h1>
+        <p class="text-sm text-gray-500">Gérez les accès de votre équipe</p>
+      </div>
+      <button class="flex items-center gap-2 px-4 py-2.5 bg-green-600 text-white text-sm font-semibold rounded-xl hover:bg-green-700 shadow-sm transition-colors">
+        <i class="ri-user-add-line"></i> Ajouter un utilisateur
+      </button>
+    </header>
+
+    <!-- Tabs -->
+    <div class="bg-white border-b border-gray-200 px-8 flex gap-6">
+      <button class="py-4 text-sm font-semibold text-green-600 border-b-2 border-green-600">Utilisateurs</button>
+      <button class="py-4 text-sm font-medium text-gray-500 hover:text-gray-700">Rôles</button>
+      <button class="py-4 text-sm font-medium text-gray-500 hover:text-gray-700">Journaux d'activité</button>
+    </div>
+
+    <main class="p-8">
+
+      <!-- Users table -->
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden fade-up">
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="relative">
+              <i class="ri-search-line text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+              <input type="text" placeholder="Rechercher un utilisateur..." class="pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100 w-64">
+            </div>
+          </div>
+          <span class="text-xs text-gray-400">3 utilisateurs</span>
+        </div>
+
+        <table class="w-full">
+          <thead class="bg-gray-50 border-b border-gray-100">
+            <tr>
+              <th class="px-6 py-3 text-left text-[10px] font-bold text-gray-500 uppercase tracking-wider">Utilisateur</th>
+              <th class="px-6 py-3 text-left text-[10px] font-bold text-gray-500 uppercase tracking-wider">Rôle</th>
+              <th class="px-6 py-3 text-left text-[10px] font-bold text-gray-500 uppercase tracking-wider">Statut</th>
+              <th class="px-6 py-3 text-left text-[10px] font-bold text-gray-500 uppercase tracking-wider">Dernière connexion</th>
+              <th class="px-6 py-3 text-right text-[10px] font-bold text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-50">
+            <!-- Admin -->
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-white text-sm font-bold">JP</span></div>
+                  <div>
+                    <p class="text-sm font-semibold text-gray-900">Jean Pambu</p>
+                    <p class="text-xs text-gray-400">jean@monentreprise.cd</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4"><span class="text-xs font-bold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200">Admin</span></td>
+              <td class="px-6 py-4"><span class="inline-flex items-center gap-1 text-xs font-medium text-green-700"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>Actif</span></td>
+              <td class="px-6 py-4"><span class="text-xs text-gray-500">Aujourd'hui, 14:32</span></td>
+              <td class="px-6 py-4 text-right">
+                <button class="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition-colors"><i class="ri-more-2-line text-lg"></i></button>
+              </td>
+            </tr>
+            <!-- Comptable -->
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-gray-700 text-sm font-bold">MK</span></div>
+                  <div>
+                    <p class="text-sm font-semibold text-gray-900">Marie Kabongo</p>
+                    <p class="text-xs text-gray-400">marie@monentreprise.cd</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4"><span class="text-xs font-bold text-gray-700 bg-gray-100 px-2.5 py-1 rounded-full border border-gray-200">Comptable</span></td>
+              <td class="px-6 py-4"><span class="inline-flex items-center gap-1 text-xs font-medium text-green-700"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>Actif</span></td>
+              <td class="px-6 py-4"><span class="text-xs text-gray-500">Hier, 17:45</span></td>
+              <td class="px-6 py-4 text-right">
+                <button class="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition-colors"><i class="ri-more-2-line text-lg"></i></button>
+              </td>
+            </tr>
+            <!-- Caissier -->
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-amber-700 text-sm font-bold">TD</span></div>
+                  <div>
+                    <p class="text-sm font-semibold text-gray-900">Thierry Disashi</p>
+                    <p class="text-xs text-gray-400">thierry@monentreprise.cd</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4"><span class="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">Caissier</span></td>
+              <td class="px-6 py-4"><span class="inline-flex items-center gap-1 text-xs font-medium text-amber-700"><span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>En attente</span></td>
+              <td class="px-6 py-4"><span class="text-xs text-gray-500">Jamais</span></td>
+              <td class="px-6 py-4 text-right">
+                <button class="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition-colors"><i class="ri-more-2-line text-lg"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Role cards -->
+      <div class="mt-8">
+        <h2 class="text-base font-bold text-gray-900 mb-4">Définition des rôles</h2>
+        <div class="grid grid-cols-4 gap-4">
+
+          <!-- Admin role -->
+          <div class="bg-white rounded-2xl border border-purple-200 p-5 shadow-sm">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center"><i class="ri-admin-line text-purple-600 text-lg"></i></div>
+              <div>
+                <p class="text-sm font-bold text-gray-900">Administrateur</p>
+                <p class="text-xs text-gray-400">Accès complet</p>
+              </div>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs text-gray-600"><i class="ri-check-line text-green-500 text-base"></i> Toutes les功能</div>
+              <div class="flex items-center gap-2 text-xs text-gray-600"><i class="ri-check-line text-green-500 text-base"></i> Gestion utilisateurs</div>
+              <div class="flex items-center gap-2 text-xs text-gray-600"><i class="ri-check-line text-green-500 text-base"></i> Paramètres système</div>
+              <div class="flex items-center gap-2 text-xs text-gray-600"><i class="ri-check-line text-green-500 text-base"></i> Factures & Clients</div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-100 flex justify-end">
+              <button class="text-xs text-green-600 font-medium hover:text-green-700">Modifier</button>
+            </div>
+          </div>
+
+          <!-- Comptable role -->
+          <div class="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center"><i class="ri-calculator-line text-gray-600 text-lg"></i></div>
+              <div>
+                <p class="text-sm font-bold text-gray-900">Comptable</p>
+                <p class="text-xs text-gray-400">Comptabilité & Rapports</p>
+              </div>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs text-gray-600"><i class="ri-check-line text-green-500 text-base"></i> Créer / Modifier factures</div>
+              <div class="flex items-center gap-2 text-xs text-gray-600"><i class="ri-check-line text-green-500 text-base"></i> Voir clients</div>
+              <div class="flex items-center gap-2 text-xs text-gray-600"><i class="ri-check-line text-green-500 text-base"></i> Rapports & Export</div>
+              <div class="flex items-center gap-2 text-xs text-gray-400"><i class="ri-close-line text-gray-300 text-base"></i> Paramètres avancés</div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-100 flex justify-end">
+              <button class="text-xs text-green-600 font-medium hover:text-green-700">Modifier</button>
+            </div>
+          </div>
+
+          <!-- Caissier role -->
+          <div class="bg-white rounded-2xl border border-amber-200 p-5 shadow-sm">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center"><i class="ri-cashier-line text-amber-600 text-lg"></i></div>
+              <div>
+                <p class="text-sm font-bold text-gray-900">Caissier</p>
+                <p class="text-xs text-gray-400">Point de vente</p>
+              </div>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs text-gray-600"><i class="ri-check-line text-green-500 text-base"></i> Créer factures rapides</div>
+              <div class="flex items-center gap-2 text-xs text-gray-600"><i class="ri-check-line text-green-500 text-base"></i> Impression tickets</div>
+              <div class="flex items-center gap-2 text-xs text-gray-400"><i class="ri-close-line text-gray-300 text-base"></i> Rapports détaillés</div>
+              <div class="flex items-center gap-2 text-xs text-gray-400"><i class="ri-close-line text-gray-300 text-base"></i> Gestion clients complète</div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-100 flex justify-end">
+              <button class="text-xs text-green-600 font-medium hover:text-green-700">Modifier</button>
+            </div>
+          </div>
+
+          <!-- Reader role -->
+          <div class="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center"><i class="ri-eye-line text-gray-500 text-lg"></i></div>
+              <div>
+                <p class="text-sm font-bold text-gray-900">Lecteur</p>
+                <p class="text-xs text-gray-400">Lecture seule</p>
+              </div>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs text-gray-600"><i class="ri-check-line text-green-500 text-base"></i> Voir factures</div>
+              <div class="flex items-center gap-2 text-xs text-gray-600"><i class="ri-check-line text-green-500 text-base"></i> Voir clients</div>
+              <div class="flex items-center gap-2 text-xs text-gray-400"><i class="ri-close-line text-gray-300 text-base"></i> Créer / Modifier</div>
+              <div class="flex items-center gap-2 text-xs text-gray-400"><i class="ri-close-line text-gray-300 text-base"></i> Envoi DGI</div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-100 flex justify-end">
+              <button class="text-xs text-green-600 font-medium hover:text-green-700">Modifier</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Permissions detail for Admin -->
+      <div class="mt-8 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100">
+          <h3 class="text-sm font-bold text-gray-900">Permissions détaillées — Administrateur</h3>
+        </div>
+        <div class="p-6 grid grid-cols-4 gap-6">
+          <div>
+            <p class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">Factures</p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Créer</div>
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Modifier</div>
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Supprimer</div>
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Transmettre DGI</div>
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Exporter</div>
+            </div>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">Clients</p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Créer</div>
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Modifier</div>
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Supprimer</div>
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Voir historique</div>
+            </div>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">Rapports</p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Voir tous</div>
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Exporter XML</div>
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Configurer alerts</div>
+            </div>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">Système</p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Utilisateurs</div>
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Paramètres</div>
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Abonnement</div>
+              <div class="flex items-center gap-2 text-xs text-gray-700"><i class="ri-check-line text-green-500"></i> Audit logs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</body>
+</html>

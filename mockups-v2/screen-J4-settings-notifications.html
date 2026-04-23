@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paramètres — Notifications — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui']}}}}}</script>
+  <style>body{font-family:'Inter',system-ui,sans-serif}</style>
+</head>
+<body class="bg-gray-50 min-h-screen flex">
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full">
+    <div class="px-6 py-5 border-b border-gray-100"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-green-600 rounded-xl flex items-center justify-center"><i class="ri-file-paper-2-line text-white text-base"></i></div><span class="text-gray-900 text-base font-bold">FactureX</span></div></div>
+    <div class="flex-1 px-4 py-4 space-y-1">
+      <a href="screen-08-settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-settings-3-line text-lg text-gray-500"></i> Général</a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-team-line text-lg text-gray-500"></i> Utilisateurs</a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-green-50 rounded-xl text-sm font-semibold text-green-700 border-l-[3px] border-green-600"><i class="ri-notification-3-line text-lg"></i> Notifications</a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-plug-line text-lg text-gray-500"></i> Intégrations</a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-shield-key-line text-lg text-gray-500"></i> Sécurité</a>
+    </div>
+  </aside>
+  <div class="flex-1 ml-64">
+    <header class="bg-white border-b border-gray-200 px-8 py-4"><h1 class="text-xl font-bold text-gray-900">Notifications</h1><p class="text-sm text-gray-500">Configurez vos préférences de notification</p></header>
+    <main class="p-8 max-w-2xl">
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6">
+        <h3 class="text-sm font-bold text-gray-900 mb-4">Notifications par email</h3>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div><p class="text-sm font-semibold text-gray-900">Facture validée par DGI</p><p class="text-xs text-gray-400">Recevez un email quand une facture est validée</p></div>
+            <button class="w-12 h-6 bg-green-500 rounded-full relative"><div class="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5 shadow"></div></button>
+          </div>
+          <div class="flex items-center justify-between">
+            <div><p class="text-sm font-semibold text-gray-900">Facture rejetée</p><p class="text-xs text-gray-400">Notification si la DGI rejette une facture</p></div>
+            <button class="w-12 h-6 bg-green-500 rounded-full relative"><div class="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5 shadow"></div></button>
+          </div>
+          <div class="flex items-center justify-between">
+            <div><p class="text-sm font-semibold text-gray-900">Rappel de paiement</p><p class="text-xs text-gray-400">Alertes pour les factures en retard</p></div>
+            <button class="w-12 h-6 bg-gray-300 rounded-full relative"><div class="w-5 h-5 bg-white rounded-full absolute left-0.5 top-0.5 shadow"></div></button>
+          </div>
+          <div class="flex items-center justify-between">
+            <div><p class="text-sm font-semibold text-gray-900">Rapport mensuel</p><p class="text-xs text-gray-400">Résumé de votre activité chaque mois</p></div>
+            <button class="w-12 h-6 bg-green-500 rounded-full relative"><div class="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5 shadow"></div></button>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6">
+        <h3 class="text-sm font-bold text-gray-900 mb-4">Notifications push (mobile)</h3>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div><p class="text-sm font-semibold text-gray-900">Statut facture</p><p class="text-xs text-gray-400">Toutes les mises à jour de statut</p></div>
+            <button class="w-12 h-6 bg-green-500 rounded-full relative"><div class="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5 shadow"></div></button>
+          </div>
+          <div class="flex items-center justify-between">
+            <div><p class="text-sm font-semibold text-gray-900">Nouveaux devis reçus</p><p class="text-xs text-gray-400">Alertes pour les devis clients</p></div>
+            <button class="w-12 h-6 bg-green-500 rounded-full relative"><div class="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5 shadow"></div></button>
+          </div>
+          <div class="flex items-center justify-between">
+            <div><p class="text-sm font-semibold text-gray-900">Rappels automatiques</p><p class="text-xs text-gray-400">Relances automatiques pour impayés</p></div>
+            <button class="w-12 h-6 bg-gray-300 rounded-full relative"><div class="w-5 h-5 bg-white rounded-full absolute left-0.5 top-0.5 shadow"></div></button>
+          </div>
+        </div>
+      </div>
+      <button class="py-2.5 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700 px-6">Enregistrer</button>
+    </main>
+  </div>
+</body>
+</html>

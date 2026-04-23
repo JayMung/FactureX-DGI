@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rapports fiscaux — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+          colors: {
+            primary: { 50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac', 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d', 800: '#166534', 900: '#14532d' },
+            fx: { blue: '#10B981', 'blue-dark': '#15803d', 'blue-light': '#E8F0FE', gray: '#F8FAFC', 'gray-100': '#F1F5F9', 'gray-200': '#E2E8F0', 'gray-300': '#CBD5E1', 'gray-500': '#64748B', 'gray-700': '#334155', 'gray-900': '#0F172A', success: '#10B981', warning: '#F59E0B', danger: '#EF4444' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .sidebar-item:hover { background: #E8F0FE; }
+    .sidebar-item.active { background: #E8F0FE; color: #10B981; }
+    .sidebar-item.active .sidebar-icon { color: #10B981; }
+    .pie-segment { transition: all 0.3s ease; transform-origin: center; }
+    .pie-segment:hover { opacity: 0.8; transform: scale(1.02); }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-20">
+    <div class="px-6 py-5 border-b border-gray-100">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-green-600 rounded-xl flex items-center justify-center flex-shrink-0">
+          <i class="ri-file-paper-2-line text-white text-base"></i>
+        </div>
+        <div>
+          <span class="text-gray-900 text-base font-bold">FactureX</span>
+          <span class="block text-[10px] text-gray-400 font-medium -mt-0.5">DGI — RDC</span>
+        </div>
+      </div>
+    </div>
+    <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      <div class="px-3 py-2 mb-2"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Navigation</span></div>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 transition-colors">
+        <i class="ri-dashboard-line sidebar-icon text-lg text-gray-500"></i> Dashboard
+      </a>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 transition-colors">
+        <i class="ri-file-list-3-line sidebar-icon text-lg text-gray-500"></i> Factures
+      </a>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 transition-colors">
+        <i class="ri-user-line sidebar-icon text-lg text-gray-500"></i> Clients
+      </a>
+      <a href="#" class="sidebar-item active flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors">
+        <i class="ri-bar-chart-2-line sidebar-icon text-lg text-gray-500"></i> Rapports
+      </a>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+        <i class="ri-settings-3-line sidebar-icon text-lg text-gray-500"></i> Paramètres
+      </a>
+    </nav>
+    <div class="border-t border-gray-100 p-4">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <span class="text-green-700 text-sm font-bold">JP</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-gray-900 truncate">Jean Pambu</p>
+          <p class="text-xs text-gray-400 truncate">Administrateur</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 ml-64 flex flex-col min-h-screen">
+    <header class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">Rapports fiscaux</h1>
+        <p class="text-sm text-gray-500">TVA collectée, récupérable et déclarations DGI</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-1.5">
+          <i class="ri-calendar-line text-gray-400 text-base"></i>
+          <input type="date" value="2026-01-01" class="text-sm text-gray-700 border-none outline-none bg-transparent">
+          <span class="text-gray-400 text-sm">—</span>
+          <input type="date" value="2026-04-23" class="text-sm text-gray-700 border-none outline-none bg-transparent">
+        </div>
+        <button class="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700 transition-colors shadow-sm">
+          <i class="ri-download-line"></i> Exporter XML/PDF
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-1 p-8">
+
+      <!-- Summary cards -->
+      <div class="grid grid-cols-4 gap-5 mb-6">
+        <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center">
+              <i class="ri-file-list-3-line text-green-600 text-lg"></i>
+            </div>
+          </div>
+          <p class="text-xs text-gray-400 uppercase tracking-wide font-semibold mb-1">Factures émises</p>
+          <p class="text-2xl font-bold text-gray-900">142</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center">
+              <i class="ri-money-dollar-circle-line text-green-600 text-lg"></i>
+            </div>
+          </div>
+          <p class="text-xs text-gray-400 uppercase tracking-wide font-semibold mb-1">CA total HT</p>
+          <p class="text-2xl font-bold text-gray-900">CDF 156.4M</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+              <i class="ri-percent-line text-amber-600 text-lg"></i>
+            </div>
+          </div>
+          <p class="text-xs text-gray-400 uppercase tracking-wide font-semibold mb-1">TVA collectée</p>
+          <p class="text-2xl font-bold text-gray-900">CDF 28.1M</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center">
+              <i class="ri-arrow-go-back-line text-red-600 text-lg"></i>
+            </div>
+          </div>
+          <p class="text-xs text-gray-400 uppercase tracking-wide font-semibold mb-1">TVA récupérable</p>
+          <p class="text-2xl font-bold text-gray-900">CDF 8.3M</p>
+        </div>
+      </div>
+
+      <!-- Charts row -->
+      <div class="grid grid-cols-3 gap-5 mb-6">
+
+        <!-- Pie chart: CA by client -->
+        <div class="col-span-1 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+          <h3 class="text-sm font-bold text-gray-900 mb-4">Répartition CA par client</h3>
+          <div class="flex items-center justify-center mb-4">
+            <!-- SVG pie chart -->
+            <svg viewBox="0 0 200 200" class="w-40 h-40">
+              <!-- Pie slices as arcs -->
+              <circle cx="100" cy="100" r="80" fill="none" stroke="#10B981" stroke-width="40" stroke-dasharray="200 503" stroke-dashoffset="0" transform="rotate(-90 100 100)" class="pie-segment" opacity="0.9"/>
+              <circle cx="100" cy="100" r="80" fill="none" stroke="#10B981" stroke-width="40" stroke-dasharray="150 503" stroke-dashoffset="-200" transform="rotate(-90 100 100)" class="pie-segment" opacity="0.9"/>
+              <circle cx="100" cy="100" r="80" fill="none" stroke="#F59E0B" stroke-width="40" stroke-dasharray="100 503" stroke-dashoffset="-350" transform="rotate(-90 100 100)" class="pie-segment" opacity="0.9"/>
+              <circle cx="100" cy="100" r="80" fill="none" stroke="#8B5CF6" stroke-width="40" stroke-dasharray="53 503" stroke-dashoffset="-450" transform="rotate(-90 100 100)" class="pie-segment" opacity="0.9"/>
+              <circle cx="100" cy="100" r="80" fill="none" stroke="#EF4444" stroke-width="40" stroke-dasharray="0 503" stroke-dashoffset="-503" transform="rotate(-90 100 100)" class="pie-segment" opacity="0.9"/>
+              <!-- Center circle for donut -->
+              <circle cx="100" cy="100" r="52" fill="white"/>
+              <!-- Center text -->
+              <text x="100" y="95" text-anchor="middle" class="text-xs font-bold fill-gray-700">CDF</text>
+              <text x="100" y="112" text-anchor="middle" class="text-xs font-bold fill-gray-900">184.5M</text>
+            </svg>
+          </div>
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-green-600"></span> Congo Freight</span>
+              <span class="font-semibold text-gray-700">37%</span>
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-green-500"></span> Minexco</span>
+              <span class="font-semibold text-gray-700">28%</span>
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-amber-500"></span> Africaplast</span>
+              <span class="font-semibold text-gray-700">19%</span>
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-purple-500"></span> Solveris</span>
+              <span class="font-semibold text-gray-700">10%</span>
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-red-500"></span> Autres</span>
+              <span class="font-semibold text-gray-700">6%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bar chart: Monthly TVA -->
+        <div class="col-span-2 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+          <div class="flex items-center justify-between mb-5">
+            <h3 class="text-sm font-bold text-gray-900">TVA mensuelle collectée (CDF)</h3>
+            <div class="flex items-center gap-3 text-xs">
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-green-600"></span> TVA collectée</span>
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-red-400"></span> TVA récupérable</span>
+            </div>
+          </div>
+          <div class="flex items-end gap-4 h-36">
+            <div class="flex-1 flex flex-col items-center gap-1">
+              <div class="w-full flex gap-1 items-end h-full">
+                <div class="flex-1 bg-green-600 rounded-t-md" style="height:35%"></div>
+                <div class="flex-1 bg-red-400 rounded-t-md" style="height:15%"></div>
+              </div>
+              <span class="text-[10px] text-gray-400 font-medium">Jan</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center gap-1">
+              <div class="w-full flex gap-1 items-end h-full">
+                <div class="flex-1 bg-green-600 rounded-t-md" style="height:42%"></div>
+                <div class="flex-1 bg-red-400 rounded-t-md" style="height:18%"></div>
+              </div>
+              <span class="text-[10px] text-gray-400 font-medium">Fév</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center gap-1">
+              <div class="w-full flex gap-1 items-end h-full">
+                <div class="flex-1 bg-green-600 rounded-t-md" style="height:48%"></div>
+                <div class="flex-1 bg-red-400 rounded-t-md" style="height:20%"></div>
+              </div>
+              <span class="text-[10px] text-gray-400 font-medium">Mar</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center gap-1">
+              <div class="w-full flex gap-1 items-end h-full">
+                <div class="flex-1 bg-green-600 rounded-t-md" style="height:100%"></div>
+                <div class="flex-1 bg-red-400 rounded-t-md" style="height:35%"></div>
+              </div>
+              <span class="text-[10px] text-green-700 font-bold">Avr</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TVA Table -->
+      <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="text-base font-bold text-gray-900">Détail TVA collectée par période</h3>
+          <button class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium">
+            <i class="ri-download-line text-gray-500"></i> Exporter pour DGI
+          </button>
+        </div>
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-gray-100">
+              <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Période</th>
+              <th class="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">CA HT (CDF)</th>
+              <th class="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">TVA collectée</th>
+              <th class="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">TVA récupérable</th>
+              <th class="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">TVA nette</th>
+              <th class="text-center py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Statut</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-50">
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="py-3 px-4"><span class="text-sm font-medium text-gray-900">Janvier 2026</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-medium text-gray-700 font-mono">38 200 000</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-semibold text-green-600 font-mono">6 876 000</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm text-gray-500 font-mono">2 100 000</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-bold text-gray-900 font-mono">4 776 000</span></td>
+              <td class="py-3 px-4 text-center">
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Déclaré</span>
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="py-3 px-4"><span class="text-sm font-medium text-gray-900">Février 2026</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-medium text-gray-700 font-mono">45 600 000</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-semibold text-green-600 font-mono">8 208 000</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm text-gray-500 font-mono">2 800 000</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-bold text-gray-900 font-mono">5 408 000</span></td>
+              <td class="py-3 px-4 text-center">
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Déclaré</span>
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="py-3 px-4"><span class="text-sm font-medium text-gray-900">Mars 2026</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-medium text-gray-700 font-mono">52 100 000</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-semibold text-green-600 font-mono">9 378 000</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm text-gray-500 font-mono">3 400 000</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-bold text-gray-900 font-mono">5 978 000</span></td>
+              <td class="py-3 px-4 text-center">
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Déclaré</span>
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="py-3 px-4"><span class="text-sm font-medium text-gray-900">Avril 2026</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-medium text-gray-700 font-mono">20 500 000</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-semibold text-green-600 font-mono">3 690 000</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm text-gray-500 font-mono">0</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-bold text-gray-900 font-mono">3 690 000</span></td>
+              <td class="py-3 px-4 text-center">
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-amber-50 text-amber-700 text-xs font-semibold rounded-full"><span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span> En attente</span>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot class="bg-gray-50 border-t-2 border-gray-200">
+            <tr>
+              <td class="py-3 px-4"><span class="text-sm font-bold text-gray-900">TOTAL</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-bold text-gray-900 font-mono">156 400 000</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-bold text-green-700 font-mono">28 152 000</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-sm font-medium text-gray-700 font-mono">8 300 000</span></td>
+              <td class="py-3 px-4 text-right"><span class="text-base font-bold text-green-700 font-mono">19 852 000</span></td>
+              <td class="py-3 px-4 text-center"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

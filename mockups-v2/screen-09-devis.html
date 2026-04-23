@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Devis — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+          colors: {
+            primary: { 50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac', 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d', 800: '#166534', 900: '#14532d' },
+            fx: { blue: '#10B981', 'blue-dark': '#15803d', 'blue-light': '#E8F0FE', gray: '#F8FAFC', 'gray-100': '#F1F5F9', 'gray-200': '#E2E8F0', 'gray-300': '#CBD5E1', 'gray-500': '#64748B', 'gray-700': '#334155', 'gray-900': '#0F172A', success: '#10B981', warning: '#F59E0B', danger: '#EF4444' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .sidebar-item:hover { background: #E8F0FE; }
+    .sidebar-item.active { background: #E8F0FE; color: #10B981; }
+    .sidebar-item.active .sidebar-icon { color: #10B981; }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .card-hover { transition: all 0.2s ease; }
+    .card-hover:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-20">
+    <div class="px-6 py-5 border-b border-gray-100">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-green-600 rounded-xl flex items-center justify-center flex-shrink-0">
+          <i class="ri-file-paper-2-line text-white text-base"></i>
+        </div>
+        <div>
+          <span class="text-gray-900 text-base font-bold">FactureX</span>
+          <span class="block text-[10px] text-gray-400 font-medium -mt-0.5">DGI — RDC</span>
+        </div>
+      </div>
+    </div>
+    <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      <div class="px-3 py-2 mb-2"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Navigation</span></div>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 transition-colors">
+        <i class="ri-dashboard-line sidebar-icon text-lg text-gray-500"></i> Dashboard
+      </a>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 transition-colors">
+        <i class="ri-file-list-3-line sidebar-icon text-lg text-gray-500"></i> Factures
+      </a>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 transition-colors">
+        <i class="ri-file-text-line sidebar-icon text-lg text-gray-500"></i> Devis
+      </a>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 transition-colors">
+        <i class="ri-user-line sidebar-icon text-lg text-gray-500"></i> Clients
+      </a>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 transition-colors">
+        <i class="ri-bar-chart-2-line sidebar-icon text-lg text-gray-500"></i> Rapports
+      </a>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 transition-colors">
+        <i class="ri-settings-3-line sidebar-icon text-lg text-gray-500"></i> Paramètres
+      </a>
+    </nav>
+    <div class="border-t border-gray-100 p-4">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <span class="text-green-700 text-sm font-bold">JP</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-gray-900 truncate">Jean Pambu</p>
+          <p class="text-xs text-gray-400 truncate">Administrateur</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 ml-64 flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">Devis</h1>
+        <p class="text-sm text-gray-500">12 devis · 4 en attente de réponse</p>
+      </div>
+      <button class="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700 transition-colors shadow-sm">
+        <i class="ri-add-line text-lg"></i> Nouveau devis
+      </button>
+    </header>
+
+    <!-- Main content -->
+    <main class="flex-1 p-8">
+      <div class="max-w-6xl mx-auto fade-in">
+
+        <!-- Filters -->
+        <div class="bg-white rounded-xl border border-gray-200 p-4 mb-6 flex flex-wrap gap-3">
+          <div class="flex-1 min-w-[200px]">
+            <div class="relative">
+              <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+              <input type="text" placeholder="Rechercher un devis..." class="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+            </div>
+          </div>
+          <select class="px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+            <option>Tous les statuts</option>
+            <option>En attente</option>
+            <option>Accepté</option>
+            <option>Refusé</option>
+            <option>Expiré</option>
+            <option>Converti en facture</option>
+          </select>
+          <select class="px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+            <option>Tous les clients</option>
+            <option>Mining Corp</option>
+            <option>Logistix SARL</option>
+            <option>Energy Plus</option>
+            <option>Construct RDC</option>
+          </select>
+        </div>
+
+        <!-- Table -->
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          <table class="w-full">
+            <thead>
+              <tr class="border-b border-gray-100 bg-gray-50">
+                <th class="px-5 py-3.5 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">N° Devis</th>
+                <th class="px-5 py-3.5 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">Client</th>
+                <th class="px-5 py-3.5 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">Date</th>
+                <th class="px-5 py-3.5 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">Validité</th>
+                <th class="px-5 py-3.5 text-right text-[10px] font-bold text-gray-400 uppercase tracking-wider">Montant HT</th>
+                <th class="px-5 py-3.5 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">Statut</th>
+                <th class="px-5 py-3.5 text-right text-[10px] font-bold text-gray-400 uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <!-- En attente -->
+              <tr class="hover:bg-gray-50 transition-colors cursor-pointer">
+                <td class="px-5 py-4"><span class="text-sm font-bold text-gray-900 font-mono">DEVIS-2026-0012</span></td>
+                <td class="px-5 py-4"><span class="text-sm font-semibold text-gray-800">Mining Corp</span></td>
+                <td class="px-5 py-4"><span class="text-sm text-gray-600">21 avr. 2026</span></td>
+                <td class="px-5 py-4"><span class="text-sm text-gray-600">21 mai 2026</span></td>
+                <td class="px-5 py-4 text-right"><span class="text-sm font-bold text-gray-900">$12.400 USD</span></td>
+                <td class="px-5 py-4"><span class="inline-flex items-center gap-1 text-xs font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full"><span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>En attente</span></td>
+                <td class="px-5 py-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Voir"><i class="ri-eye-line text-base"></i></button>
+                    <button class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Modifier"><i class="ri-edit-line text-base"></i></button>
+                    <button class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Dupliquer"><i class="ri-file-copy-line text-base"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Accepté -->
+              <tr class="hover:bg-gray-50 transition-colors cursor-pointer">
+                <td class="px-5 py-4"><span class="text-sm font-bold text-gray-900 font-mono">DEVIS-2026-0011</span></td>
+                <td class="px-5 py-4"><span class="text-sm font-semibold text-gray-800">Logistix SARL</span></td>
+                <td class="px-5 py-4"><span class="text-sm text-gray-600">18 avr. 2026</span></td>
+                <td class="px-5 py-4"><span class="text-sm text-gray-600">18 mai 2026</span></td>
+                <td class="px-5 py-4 text-right"><span class="text-sm font-bold text-gray-900">$4.800 USD</span></td>
+                <td class="px-5 py-4"><span class="inline-flex items-center gap-1 text-xs font-semibold text-green-700 bg-green-50 px-2.5 py-1 rounded-full"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>Accepté</span></td>
+                <td class="px-5 py-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Voir"><i class="ri-eye-line text-base"></i></button>
+                    <button class="w-8 h-8 flex items-center justify-center text-green-600 bg-green-50 rounded-lg transition-colors" title="Convertir en facture"><i class="ri-file-paper-2-line text-base"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Refusé -->
+              <tr class="hover:bg-gray-50 transition-colors cursor-pointer">
+                <td class="px-5 py-4"><span class="text-sm font-bold text-gray-900 font-mono">DEVIS-2026-0010</span></td>
+                <td class="px-5 py-4"><span class="text-sm font-semibold text-gray-800">Energy Plus</span></td>
+                <td class="px-5 py-4"><span class="text-sm text-gray-600">15 avr. 2026</span></td>
+                <td class="px-5 py-4"><span class="text-sm text-gray-600">15 mai 2026</span></td>
+                <td class="px-5 py-4 text-right"><span class="text-sm font-bold text-gray-900">$7.200 USD</span></td>
+                <td class="px-5 py-4"><span class="inline-flex items-center gap-1 text-xs font-semibold text-red-700 bg-red-50 px-2.5 py-1 rounded-full"><span class="w-1.5 h-1.5 bg-red-500 rounded-full"></span>Refusé</span></td>
+                <td class="px-5 py-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Voir"><i class="ri-eye-line text-base"></i></button>
+                    <button class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Dupliquer"><i class="ri-file-copy-line text-base"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Expiré -->
+              <tr class="hover:bg-gray-50 transition-colors cursor-pointer">
+                <td class="px-5 py-4"><span class="text-sm font-bold text-gray-900 font-mono">DEVIS-2026-0008</span></td>
+                <td class="px-5 py-4"><span class="text-sm font-semibold text-gray-800">Construct RDC</span></td>
+                <td class="px-5 py-4"><span class="text-sm text-gray-600">1 avr. 2026</span></td>
+                <td class="px-5 py-4"><span class="text-sm text-red-600">1 mai 2026</span></td>
+                <td class="px-5 py-4 text-right"><span class="text-sm font-bold text-gray-900">$980 USD</span></td>
+                <td class="px-5 py-4"><span class="inline-flex items-center gap-1 text-xs font-semibold text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full"><span class="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>Expiré</span></td>
+                <td class="px-5 py-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Voir"><i class="ri-eye-line text-base"></i></button>
+                    <button class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Renouveler"><i class="ri-refresh-line text-base"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Converti -->
+              <tr class="hover:bg-gray-50 transition-colors cursor-pointer">
+                <td class="px-5 py-4"><span class="text-sm font-bold text-gray-900 font-mono">DEVIS-2026-0005</span></td>
+                <td class="px-5 py-4"><span class="text-sm font-semibold text-gray-800">Mining Corp</span></td>
+                <td class="px-5 py-4"><span class="text-sm text-gray-600">28 mars 2026</span></td>
+                <td class="px-5 py-4"><span class="text-sm text-gray-600">28 avr. 2026</span></td>
+                <td class="px-5 py-4 text-right"><span class="text-sm font-bold text-gray-900">$5.600 USD</span></td>
+                <td class="px-5 py-4"><span class="inline-flex items-center gap-1 text-xs font-semibold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full"><i class="ri-file-paper-2-line text-xs"></i>→ FAC-2026-0138</span></td>
+                <td class="px-5 py-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <button class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Voir"><i class="ri-eye-line text-base"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Pagination -->
+          <div class="flex items-center justify-between px-5 py-4 border-t border-gray-100">
+            <span class="text-xs text-gray-400">Affichage 1–5 sur 12 devis</span>
+            <div class="flex items-center gap-1">
+              <button class="w-8 h-8 flex items-center justify-center text-gray-400 bg-gray-50 border border-gray-200 rounded-lg text-xs font-medium hover:bg-gray-100 transition-colors disabled:opacity-50" disabled><i class="ri-arrow-left-s-line text-base"></i></button>
+              <button class="w-8 h-8 flex items-center justify-center bg-green-600 text-white rounded-lg text-xs font-bold">1</button>
+              <button class="w-8 h-8 flex items-center justify-center text-gray-600 bg-white border border-gray-200 rounded-lg text-xs font-medium hover:bg-gray-50 transition-colors">2</button>
+              <button class="w-8 h-8 flex items-center justify-center text-gray-600 bg-white border border-gray-200 rounded-lg text-xs font-medium hover:bg-gray-50 transition-colors">3</button>
+              <button class="w-8 h-8 flex items-center justify-center text-gray-400 bg-gray-50 border border-gray-200 rounded-lg text-xs font-medium hover:bg-gray-100 transition-colors"><i class="ri-arrow-right-s-line text-base"></i></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</body>
+</html>

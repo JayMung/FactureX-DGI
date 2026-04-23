@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paramètres POS — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui']}}}}}</script>
+  <style>body{font-family:'Inter',system-ui,sans-serif}</style>
+</head>
+<body class="bg-gray-50 min-h-screen flex">
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full">
+    <div class="px-6 py-5 border-b border-gray-100"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-green-600 rounded-xl flex items-center justify-center"><i class="ri-file-paper-2-line text-white text-base"></i></div><span class="text-gray-900 text-base font-bold">FactureX</span></div></div>
+    <div class="flex-1 px-4 py-4 space-y-1">
+      <div class="px-3 py-2 mb-2"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Paramètres</span></div>
+      <a href="screen-08-settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-settings-3-line text-lg text-gray-500"></i> Général</a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-green-50 rounded-xl text-sm font-semibold text-green-700 border-l-[3px] border-green-600"><i class="ri-printer-line text-lg"></i> POS</a>
+    </div>
+  </aside>
+  <div class="flex-1 ml-64">
+    <header class="bg-white border-b border-gray-200 px-8 py-4"><h1 class="text-xl font-bold text-gray-900">Paramètres Point de Vente</h1><p class="text-sm text-gray-500">Configurez votre terminal de vente</p></header>
+    <main class="p-8 max-w-2xl">
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6">
+        <h3 class="text-sm font-bold text-gray-900 mb-4">Imprimante ticket</h3>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center"><i class="ri-printer-line text-blue-600 text-lg"></i></div>
+              <div><p class="text-sm font-semibold text-gray-900">Thermal Printer XP-58</p><p class="text-xs text-gray-400">USB — Connectée</p></div>
+            </div>
+            <span class="flex items-center gap-1 text-xs font-semibold text-green-700"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Prête</span>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-700 block mb-1.5">Largeur ticket</label>
+            <div class="flex gap-2">
+              <button class="flex-1 py-2.5 border-2 border-green-300 bg-green-50 text-green-700 rounded-xl text-xs font-semibold">58mm</button>
+              <button class="flex-1 py-2.5 border border-gray-200 text-gray-600 rounded-xl text-xs font-medium hover:bg-gray-50">80mm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6">
+        <h3 class="text-sm font-bold text-gray-900 mb-4">Paramètres par défaut</h3>
+        <div class="space-y-4">
+          <div>
+            <label class="text-xs font-semibold text-gray-700 block mb-1.5">TVA par défaut</label>
+            <select class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none">
+              <option>18% — Standard</option>
+              <option>0% — Exonéré</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-700 block mb-1.5">Devise</label>
+            <select class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none">
+              <option>CDF — Francs Congolais</option>
+              <option>USD — Dollars US</option>
+            </select>
+          </div>
+          <div class="flex items-center justify-between">
+            <div><p class="text-sm font-semibold text-gray-900">Mode hors ligne</p><p class="text-xs text-gray-400">Continuer à vendre sans connexion</p></div>
+            <button class="w-12 h-6 bg-green-500 rounded-full relative"><div class="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5 shadow"></div></button>
+          </div>
+        </div>
+      </div>
+      <button class="py-2.5 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700 px-6">Enregistrer</button>
+    </main>
+  </div>
+</body>
+</html>

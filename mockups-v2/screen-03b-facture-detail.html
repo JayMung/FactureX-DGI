@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détail facture FAC-2026-0142 — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+          colors: {
+            primary: { 50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac', 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d', 800: '#166534', 900: '#14532d' },
+            fx: { blue: '#10B981', 'blue-dark': '#15803d', 'blue-light': '#E8F0FE', gray: '#F8FAFC', 'gray-100': '#F1F5F9', 'gray-200': '#E2E8F0', 'gray-300': '#CBD5E1', 'gray-500': '#64748B', 'gray-700': '#334155', 'gray-900': '#0F172A', success: '#10B981', warning: '#F59E0B', danger: '#EF4444' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .sidebar-item:hover { background: #E8F0FE; }
+    .sidebar-item.active { background: #E8F0FE; color: #10B981; }
+    .sidebar-item.active .sidebar-icon { color: #10B981; }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .card-hover { transition: all 0.2s ease; }
+    .card-hover:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-20">
+    <div class="px-6 py-5 border-b border-gray-100">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-green-600 rounded-xl flex items-center justify-center flex-shrink-0">
+          <i class="ri-file-paper-2-line text-white text-base"></i>
+        </div>
+        <div>
+          <span class="text-gray-900 text-base font-bold">FactureX</span>
+          <span class="block text-[10px] text-gray-400 font-medium -mt-0.5">DGI — RDC</span>
+        </div>
+      </div>
+    </div>
+    <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      <div class="px-3 py-2 mb-2"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Navigation</span></div>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 transition-colors">
+        <i class="ri-dashboard-line sidebar-icon text-lg text-gray-500"></i> Dashboard
+      </a>
+      <a href="#" class="sidebar-item active flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors">
+        <i class="ri-file-list-3-line sidebar-icon text-lg text-gray-500"></i> Factures
+      </a>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+        <i class="ri-user-line sidebar-icon text-lg text-gray-500"></i> Clients
+      </a>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+        <i class="ri-bar-chart-2-line sidebar-icon text-lg text-gray-500"></i> Rapports
+      </a>
+      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+        <i class="ri-settings-3-line sidebar-icon text-lg text-gray-500"></i> Paramètres
+      </a>
+    </nav>
+    <div class="border-t border-gray-100 p-4">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <span class="text-green-700 text-sm font-bold">JP</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-gray-900 truncate">Jean Pambu</p>
+          <p class="text-xs text-gray-400 truncate">Administrateur</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 ml-64 flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
+      <div class="flex items-center gap-3">
+        <button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+          <i class="ri-arrow-left-line text-lg"></i>
+        </button>
+        <div>
+          <h1 class="text-xl font-bold text-gray-900 font-mono">FAC-2026-0142</h1>
+          <p class="text-sm text-gray-500">Mining Corp · Émise le 18 avr. 2026</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-200 rounded-full">
+          <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+          <span class="text-xs font-semibold text-green-700">Validée DGI</span>
+        </div>
+        <button class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium">
+          <i class="ri-download-line text-gray-500"></i> PDF
+        </button>
+        <button class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium">
+          <i class="ri-mail-send-line text-gray-500"></i> Envoyer
+        </button>
+        <button class="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700 transition-colors shadow-sm">
+          <i class="ri-printer-line"></i> Imprimer
+        </button>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="flex-1 p-8">
+      <div class="max-w-5xl mx-auto fade-in">
+
+        <!-- Invoice info cards row -->
+        <div class="grid grid-cols-3 gap-6 mb-6">
+          <!-- Emetteur -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5 card-hover">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                <i class="ri-building-2-line text-green-600 text-sm"></i>
+              </div>
+              <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Émetteur</span>
+            </div>
+            <p class="text-sm font-bold text-gray-900 mb-0.5">Coccinelle SARL</p>
+            <p class="text-xs text-gray-500">NIF: 1-23-A00001</p>
+            <p class="text-xs text-gray-500">RCCM: CD/KIN/2024/00123</p>
+          </div>
+          <!-- Client -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5 card-hover">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
+                <i class="ri-user-3-line text-blue-600 text-sm"></i>
+              </div>
+              <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Client</span>
+            </div>
+            <p class="text-sm font-bold text-gray-900 mb-0.5">Mining Corp</p>
+            <p class="text-xs text-gray-500">NIF: 1-89-A12345</p>
+            <p class="text-xs text-gray-500">Avenue du Commerce, Kinshasa</p>
+          </div>
+          <!-- Dates & totaux -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5 card-hover">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-8 h-8 bg-amber-50 rounded-lg flex items-center justify-center">
+                <i class="ri-calendar-line text-amber-600 text-sm"></i>
+              </div>
+              <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Dates</span>
+            </div>
+            <div class="space-y-1">
+              <div class="flex justify-between"><span class="text-xs text-gray-500">Émission</span><span class="text-xs font-semibold text-gray-800">18 avr. 2026</span></div>
+              <div class="flex justify-between"><span class="text-xs text-gray-500">Échéance</span><span class="text-xs font-semibold text-gray-800">18 mai 2026</span></div>
+              <div class="flex justify-between border-t border-gray-100 pt-1 mt-1"><span class="text-xs text-gray-500">Total TTC</span><span class="text-sm font-bold text-green-600">$8.024 USD</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lines + DGI Status -->
+        <div class="grid grid-cols-3 gap-6">
+          <!-- Lines (col-span-2) -->
+          <div class="col-span-2 bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+              <h2 class="text-sm font-bold text-gray-900">Lignes de facturation</h2>
+              <span class="text-xs text-gray-400">2 articles</span>
+            </div>
+            <table class="w-full">
+              <thead>
+                <tr class="border-b border-gray-100 bg-gray-50">
+                  <th class="px-5 py-3 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">Désignation</th>
+                  <th class="px-3 py-3 text-center text-[10px] font-bold text-gray-400 uppercase tracking-wider">Qté</th>
+                  <th class="px-3 py-3 text-right text-[10px] font-bold text-gray-400 uppercase tracking-wider">P.U. HT</th>
+                  <th class="px-5 py-3 text-right text-[10px] font-bold text-gray-400 uppercase tracking-wider">Total HT</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr>
+                  <td class="px-5 py-3.5 text-sm text-gray-800">Installation système GPS FL960 — forfait complet</td>
+                  <td class="px-3 py-3.5 text-sm text-gray-600 text-center">5</td>
+                  <td class="px-3 py-3.5 text-sm text-gray-600 text-right">$1.200,00</td>
+                  <td class="px-5 py-3.5 text-sm font-bold text-gray-900 text-right">$6.000,00</td>
+                </tr>
+                <tr>
+                  <td class="px-5 py-3.5 text-sm text-gray-800">Formation utilisateurs (2 jours)</td>
+                  <td class="px-3 py-3.5 text-sm text-gray-600 text-center">1</td>
+                  <td class="px-3 py-3.5 text-sm text-gray-600 text-right">$800,00</td>
+                  <td class="px-5 py-3.5 text-sm font-bold text-gray-900 text-right">$800,00</td>
+                </tr>
+              </tbody>
+              <tfoot class="bg-gray-50">
+                <tr><td colspan="3" class="px-5 py-2.5 text-sm text-gray-600 text-right">Total HT</td><td class="px-5 py-2.5 text-sm font-bold text-gray-900 text-right">$6.800,00</td></tr>
+                <tr><td colspan="3" class="px-5 py-2.5 text-sm text-gray-600 text-right">TVA (18%)</td><td class="px-5 py-2.5 text-sm font-bold text-gray-900 text-right">$1.224,00</td></tr>
+                <tr class="border-t-2 border-gray-200"><td colspan="3" class="px-5 py-3 text-base font-bold text-gray-900 text-right">Total TTC</td><td class="px-5 py-3 text-base font-extrabold text-green-600 text-right">$8.024,00 USD</td></tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <!-- DGI Status sidebar -->
+          <div class="space-y-4">
+            <!-- DGI Status card -->
+            <div class="bg-white rounded-xl border border-gray-200 p-5">
+              <div class="flex items-center gap-2 mb-4">
+                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                  <i class="ri-shield-check-line text-green-600 text-base"></i>
+                </div>
+                <span class="text-sm font-bold text-gray-900">Statut DGI</span>
+              </div>
+              <div class="space-y-2">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></span>
+                  <span class="text-xs font-semibold text-green-700">Validée — Code reçu</span>
+                </div>
+                <p class="text-[10px] text-gray-400 ml-4">Reçu le 18/04/2026 à 14:35</p>
+              </div>
+              <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+                <p class="text-[10px] font-bold text-gray-400 uppercase mb-1">Code d'authentification</p>
+                <p class="text-xs font-mono font-bold text-gray-800 break-all">DGI-AUTH-2026-142-9A2F</p>
+              </div>
+            </div>
+
+            <!-- QR Code -->
+            <div class="bg-white rounded-xl border border-gray-200 p-5 text-center">
+              <div class="w-24 h-24 bg-gray-100 rounded-xl mx-auto mb-3 flex items-center justify-center">
+                <svg class="w-16 h-16 text-gray-700" viewBox="0 0 100 100" fill="currentColor">
+                  <rect x="5" y="5" width="25" height="25" rx="2"/><rect x="35" y="5" width="10" height="10" rx="1"/><rect x="50" y="5" width="10" height="10" rx="1"/><rect x="70" y="5" width="25" height="25" rx="2"/>
+                  <rect x="5" y="35" width="10" height="10" rx="1"/><rect x="20" y="35" width="10" height="10" rx="1"/>
+                  <rect x="5" y="50" width="25" height="25" rx="2"/><rect x="35" y="35" width="25" height="25" rx="1"/>
+                  <rect x="70" y="35" width="10" height="15" rx="1"/><rect x="85" y="35" width="10" height="10" rx="1"/>
+                  <rect x="70" y="55" width="10" height="10" rx="1"/>
+                  <rect x="35" y="65" width="10" height="10" rx="1"/><rect x="50" y="65" width="10" height="10" rx="1"/>
+                  <rect x="35" y="80" width="25" height="15" rx="2"/><rect x="65" y="80" width="15" height="15" rx="1"/>
+                  <rect x="85" y="85" width="10" height="10" rx="1"/>
+                </svg>
+              </div>
+              <p class="text-[10px] font-semibold text-gray-500">QR Code DGI</p>
+            </div>
+
+            <!-- Actions -->
+            <div class="bg-white rounded-xl border border-gray-200 p-4 space-y-2">
+              <p class="text-xs font-bold text-gray-400 uppercase mb-2">Actions</p>
+              <button class="w-full flex items-center gap-2 px-3 py-2.5 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700 transition-colors">
+                <i class="ri-download-cloud-line text-base"></i> Télécharger PDF
+              </button>
+              <button class="w-full flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors">
+                <i class="ri-mail-send-line text-base"></i> Envoyer au client
+              </button>
+              <button class="w-full flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors">
+                <i class="ri-archive-line text-base"></i> Archiver
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</body>
+</html>

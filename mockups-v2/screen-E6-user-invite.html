@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inviter utilisateur — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui']}}}}}</script>
+  <style>body{font-family:'Inter',system-ui,sans-serif}</style>
+</head>
+<body class="bg-gray-50 min-h-screen flex">
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full">
+    <div class="px-6 py-5 border-b border-gray-100"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-green-600 rounded-xl flex items-center justify-center"><i class="ri-file-paper-2-line text-white text-base"></i></div><span class="text-gray-900 text-base font-bold">FactureX</span></div></div>
+    <div class="flex-1 px-4 py-4 space-y-1">
+      <div class="px-3 py-2 mb-2"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Paramètres</span></div>
+      <a href="screen-08-settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="ri-settings-3-line text-lg text-gray-500"></i> Général</a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-green-50 rounded-xl text-sm font-semibold text-green-700 border-l-[3px] border-green-600"><i class="ri-team-line text-lg"></i> Utilisateurs</a>
+    </div>
+  </aside>
+  <div class="flex-1 ml-64">
+    <header class="bg-white border-b border-gray-200 px-8 py-4"><h1 class="text-xl font-bold text-gray-900">Inviter un utilisateur</h1><p class="text-sm text-gray-500">Donnez accès à un membre de votre équipe</p></header>
+    <main class="p-8 max-w-xl">
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <div class="space-y-4">
+          <div>
+            <label class="text-xs font-semibold text-gray-700 block mb-1.5">Adresse email *</label>
+            <div class="relative"><i class="ri-mail-line text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 text-lg"></i><input type="email" placeholder="collegue@monentreprise.cd" class="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300"></div>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-700 block mb-1.5">Rôle *</label>
+            <div class="relative">
+              <select class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none appearance-none">
+                <option selected>Comptable — Peut créer et valider des factures</option>
+                <option>Utilisateur — Peut créer des factures</option>
+                <option>Lecture seule — Peut consulter les rapports</option>
+              </select>
+              <i class="ri-arrow-down-s-line absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            </div>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-start gap-2">
+            <i class="ri-information-line text-amber-600 mt-0.5"></i>
+            <p class="text-xs text-amber-800">Un email d'invitation sera envoyé. L'utilisateur devra créer un mot de passe pour accéder à son compte.</p>
+          </div>
+          <div class="pt-2">
+            <label class="text-xs font-semibold text-gray-700 block mb-2">Permissions</label>
+            <div class="space-y-2">
+              <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                <input type="checkbox" checked class="w-4 h-4 text-green-600 rounded">
+                <span class="text-sm text-gray-700">Créer des factures</span>
+              </label>
+              <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                <input type="checkbox" checked class="w-4 h-4 text-green-600 rounded">
+                <span class="text-sm text-gray-700">Voir les rapports</span>
+              </label>
+              <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                <input type="checkbox" class="w-4 h-4 text-green-600 rounded">
+                <span class="text-sm text-gray-700">Gérer les clients</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button class="flex-1 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50">Annuler</button>
+          <button class="flex-1 py-2.5 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700 flex items-center justify-center gap-2"><i class="ri-send-plane-line"></i> Envoyer l'invitation</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
