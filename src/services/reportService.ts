@@ -193,7 +193,7 @@ export const ReportService = {
                 doc.setPage(i);
                 doc.setFontSize(8);
                 doc.setTextColor(156, 163, 175);
-                doc.text(`Page ${i} sur ${pageCount} - Généré par FactureX`, doc.internal.pageSize.width / 2, doc.internal.pageSize.height - 10, { align: 'center' });
+                doc.text(`Page ${i} sur ${pageCount} - Généré par FactureSmart`, doc.internal.pageSize.width / 2, doc.internal.pageSize.height - 10, { align: 'center' });
             }
 
             doc.save(`${fileName}.pdf`);

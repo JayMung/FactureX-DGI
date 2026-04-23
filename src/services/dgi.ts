@@ -1,4 +1,4 @@
-// DGI NIF Verification Service — FactureX Sprint 1
+// DGI NIF Verification Service — FactureSmart Sprint 1
 //
 // MOCK IMPLEMENTATION — À remplacer par l'appel réel à l'API DGI
 // une fois les credentials récupérés (COD-26).

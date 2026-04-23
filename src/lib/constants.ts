@@ -1,21 +1,21 @@
 // ============================================================
-// FactureX - Constantes de l'application
+// FactureSmart - Constantes de l'application
 // ============================================================
 // Toutes les références au nom de l'application passent par ici
 // pour faciliter un rename futur.
 
-export const APP_NAME = 'FactureX';
-export const APP_NAME_DISPLAY = 'FactureX';
+export const APP_NAME = 'FactureSmart';
+export const APP_NAME_DISPLAY = 'FactureSmart';
 export const APP_TAGLINE = 'Facturation intelligente, conformité DGI';
-export const APP_URL = import.meta.env.VITE_APP_URL || 'https://facturex.io';
-export const APP_SUPPORT_EMAIL = 'support@facturex.io';
+export const APP_URL = import.meta.env.VITE_APP_URL || 'https://facturesmart.com';
+export const APP_SUPPORT_EMAIL = 'support@facturesmart.com';
 
 // Versions
 export const APP_VERSION = import.meta.env.VITE_APP_VERSION || '2.0.0';
 export const BUILD_DATE = import.meta.env.VITE_BUILD_DATE || new Date().toISOString();
 
 // Société (pour mentions légales)
-export const COMPANY_NAME = 'FactureX';
+export const COMPANY_NAME = 'FactureSmart';
 export const COMPANY_RCCM = ''; // À configurer dans settings
 export const COMPANY_IDNAT = ''; // À configurer dans settings
 export const COMPANY_NIF = ''; // À configurer dans settings

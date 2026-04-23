@@ -1,6 +1,6 @@
-# Templates d'emails FactureX
+# Templates d'emails FactureSmart
 
-Ce dossier contient les templates HTML pour les emails transactionnels de FactureX.
+Ce dossier contient les templates HTML pour les emails transactionnels de FactureSmart.
 
 ## Templates disponibles
 
@@ -61,4 +61,4 @@ Pour modifier les couleurs du gradient, changez les valeurs dans :
 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 ```
 
-Pour modifier le nom de l'application, remplacez "FactureX" dans les templates.
+Pour modifier le nom de l'application, remplacez "FactureSmart" dans les templates.

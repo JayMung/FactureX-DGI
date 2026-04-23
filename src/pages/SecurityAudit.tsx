@@ -123,8 +123,8 @@ const SecurityAuditPage = () => {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: 'Audit de Sécurité - FactureX',
-        text: `FactureX a obtenu un score de sécurité de 9.5/10 dans son audit de sécurité complet.`,
+        title: 'Audit de Sécurité - FactureSmart',
+        text: `FactureSmart a obtenu un score de sécurité de 9.5/10 dans son audit de sécurité complet.`,
         url: window.location.href
       });
     } else {
@@ -151,7 +151,7 @@ const SecurityAuditPage = () => {
               <Shield className="h-8 w-8 text-green-600" />
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">Audit de Sécurité</h1>
-                <p className="text-sm text-gray-500">FactureX - Rapport Public</p>
+                <p className="text-sm text-gray-500">FactureSmart - Rapport Public</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
@@ -178,7 +178,7 @@ const SecurityAuditPage = () => {
             Sécurité de Niveau Entreprise
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            FactureX a passé avec succès un audit de sécurité complet, obtenant un score exceptionnel de 
+            FactureSmart a passé avec succès un audit de sécurité complet, obtenant un score exceptionnel de 
             <span className="font-bold text-green-600"> 9.5/10</span> et démontrant sa conformité avec les meilleures pratiques de sécurité.
           </p>
           
@@ -417,7 +417,7 @@ const SecurityAuditPage = () => {
           <div className="flex items-center justify-center space-x-2 mb-4">
             <Shield className="h-5 w-5 text-green-600" />
             <span className="text-lg font-semibold text-gray-900">
-              FactureX - Sécurité de Niveau Entreprise
+              FactureSmart - Sécurité de Niveau Entreprise
             </span>
           </div>
           <p className="text-gray-600 max-w-2xl mx-auto">

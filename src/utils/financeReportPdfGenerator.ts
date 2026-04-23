@@ -317,7 +317,7 @@ export const generateFinanceReportPDF = async (data: FinanceReportData, previewM
     doc.setTextColor(...COLORS.textLight);
 
     const now = format(new Date(), 'dd/MM/yyyy à HH:mm', { locale: fr });
-    doc.text(`Généré par FactureX le ${now}`, MARGIN, footerY);
+    doc.text(`Généré par FactureSmart le ${now}`, MARGIN, footerY);
 
     const pageCount = doc.getNumberOfPages();
     // Impossible d'ajouter "Page X/Y" facilement sans plugin alias, mais on peut mettre le total à la fin ou page courant

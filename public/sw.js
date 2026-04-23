@@ -1,4 +1,4 @@
-// FactureX Service Worker v1.0.0
+// FactureSmart Service Worker v1.0.0
 const CACHE_NAME = 'facturex-v1';
 const STATIC_CACHE = 'facturex-static-v1';
 const DYNAMIC_CACHE = 'facturex-dynamic-v1';

@@ -1,4 +1,4 @@
-# 🔧 Plan de Build Technique — FactureX Phase 5
+# 🔧 Plan de Build Technique — FactureSmart Phase 5
 ## Build Frontend/Backend Module par Module
 
 **Issue** : COD-25  
@@ -555,4 +555,4 @@ Week 4 (Phase 5.4):
 ---
 
 *Document généré automatiquement — 23 Avril 2026*  
-*Plan de build Phase 5 — FactureX*
+*Plan de build Phase 5 — FactureSmart*

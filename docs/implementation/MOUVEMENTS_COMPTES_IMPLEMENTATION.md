@@ -281,4 +281,4 @@ Mouvement 2 (Orange):
 
 **Date d'implémentation** : 1er novembre 2025, 21:48
 **Développeur** : Cascade AI
-**Projet** : FactureX
+**Projet** : FactureSmart

@@ -1,4 +1,4 @@
-# FactureX
+# FactureSmart
 
 **Version** : 1.0.3  
 **Status** : ✅ Production Ready
@@ -111,4 +111,4 @@ Pour toute question ou problème, consultez la documentation dans `/docs` ou con
 
 ---
 
-**FactureX v1.0.3** - Gestion d'entreprise simplifiée ✨
+**FactureSmart v1.0.3** - Gestion d'entreprise simplifiée ✨

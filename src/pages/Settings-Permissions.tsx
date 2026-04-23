@@ -1574,7 +1574,7 @@ const SettingsWithPermissions = () => {
                   </CardHeader>
                   <CardContent className="text-blue-800 dark:text-blue-200">
                     <p className="mb-4">
-                      Les clés API vous permettent d'intégrer FactureX avec des outils externes comme n8n, Discord, ou vos propres applications.
+                      Les clés API vous permettent d'intégrer FactureSmart avec des outils externes comme n8n, Discord, ou vos propres applications.
                     </p>
                     <Button
                       onClick={() => navigate('/api-keys')}
@@ -1637,7 +1637,7 @@ const SettingsWithPermissions = () => {
                   </CardHeader>
                   <CardContent className="text-purple-800 dark:text-purple-200">
                     <p className="mb-4">
-                      Les webhooks vous permettent de recevoir des notifications en temps réel lorsque des événements se produisent dans FactureX.
+                      Les webhooks vous permettent de recevoir des notifications en temps réel lorsque des événements se produisent dans FactureSmart.
                     </p>
                     <Button
                       onClick={() => navigate('/webhooks')}

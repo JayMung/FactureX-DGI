@@ -1,7 +1,7 @@
 /**
  * CSRF Protection Utility
  * 
- * Implements Cross-Site Request Forgery protection for FactureX
+ * Implements Cross-Site Request Forgery protection for FactureSmart
  * 
  * Protection Mechanisms:
  * 1. Custom headers (X-Requested-With, X-CSRF-Token)

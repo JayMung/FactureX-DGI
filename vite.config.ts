@@ -50,9 +50,9 @@ export default defineConfig(() => ({
         ]
       },
       manifest: {
-        name: 'FactureX',
-        short_name: 'FactureX',
-        description: 'Système de gestion de facturation et transferts FactureX',
+        name: 'FactureSmart',
+        short_name: 'FactureSmart',
+        description: 'Système de gestion de facturation et transferts FactureSmart',
         theme_color: '#10b981',
         background_color: '#ffffff',
         display: 'standalone',

@@ -1,6 +1,6 @@
 {
-  "name": "FactureX - Gestion Financière",
-  "short_name": "FactureX",
+  "name": "FactureSmart - Gestion Financière",
+  "short_name": "FactureSmart",
   "description": "Application de gestion de facturation, transactions et finances moderne et intuitive",
   "start_url": "/",
   "scope": "/",
@@ -37,7 +37,7 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Dashboard FactureX"
+      "label": "Dashboard FactureSmart"
     }
   ]
 }

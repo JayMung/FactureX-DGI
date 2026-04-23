@@ -1216,7 +1216,7 @@ const Settings = () => {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <p className="text-gray-600 dark:text-gray-400">
-                      Gérez vos clés d'accès API pour intégrer FactureX avec vos applications.
+                      Gérez vos clés d'accès API pour intégrer FactureSmart avec vos applications.
                     </p>
                     <Button onClick={() => navigate('/api-keys')} className="bg-emerald-500 hover:bg-emerald-600">
                       Gérer les clés API

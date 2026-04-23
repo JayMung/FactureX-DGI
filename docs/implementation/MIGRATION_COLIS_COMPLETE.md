@@ -256,7 +256,7 @@ SELECT id, email, organization_id, role FROM profiles;
 ---
 
 **Auteur** : Cascade AI  
-**Projet** : FactureX  
+**Projet** : FactureSmart  
 **Version** : 1.0.0
 
 ---

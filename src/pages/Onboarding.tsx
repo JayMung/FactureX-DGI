@@ -8,7 +8,7 @@ const slides = [
   {
     id: 1,
     badge: 'Étape 1',
-    title: 'Bienvenue sur FactureX',
+    title: 'Bienvenue sur FactureSmart',
     subtitle: 'La facturation électronique en conformité DGI',
     description:
       'La solution de facturation électronique qui simplifie votre quotidien et vous met en conformité avec la réglementation DGI.',
@@ -232,7 +232,7 @@ const Slide = ({
         </div>
 
         <p className="text-center text-xs text-slate-400">
-          {isLast ? 'Prêt à démarrer votre activité sur FactureX' : `Étape ${currentSlide + 1} sur ${totalSlides}`}
+          {isLast ? 'Prêt à démarrer votre activité sur FactureSmart' : `Étape ${currentSlide + 1} sur ${totalSlides}`}
         </p>
       </div>
     </div>

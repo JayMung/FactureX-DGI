@@ -1,4 +1,4 @@
-# Amélioration du Flux d'Encaissements - FactureX
+# Amélioration du Flux d'Encaissements - FactureSmart
 
 ## 🎯 Objectif
 
@@ -584,5 +584,5 @@ onSuccess={() => {
 **Date de création** : 5 novembre 2025  
 **Statut** : ⏳ En cours (Phase 1 complétée)  
 **Auteur** : Cascade AI  
-**Projet** : FactureX  
+**Projet** : FactureSmart  
 **Version** : 1.0.0

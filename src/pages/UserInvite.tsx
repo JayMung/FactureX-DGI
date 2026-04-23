@@ -67,7 +67,7 @@ const UserInvite = () => {
             </div>
             <h2 className="text-2xl font-bold mb-2">Invitez un membre dans votre équipe</h2>
             <p className="text-emerald-100 text-sm leading-relaxed">
-              L'utilisateur recevra un email avec un lien pour créer son mot de passe et accéder à FactureX selon le rôle que vous lui attribuez.
+              L'utilisateur recevra un email avec un lien pour créer son mot de passe et accéder à FactureSmart selon le rôle que vous lui attribuez.
             </p>
           </div>
 
@@ -153,7 +153,7 @@ const UserInvite = () => {
               <textarea
                 value={form.message}
                 onChange={update('message')}
-                placeholder="Bienvenue dans l'équipe ! Je vous invite à rejoindre FactureX pour gérer la facturation de notre entreprise..."
+                placeholder="Bienvenue dans l'équipe ! Je vous invite à rejoindre FactureSmart pour gérer la facturation de notre entreprise..."
                 rows={3}
                 className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none resize-none"
               />

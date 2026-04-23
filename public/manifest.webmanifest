@@ -1,7 +1,7 @@
 {
-    "name": "FactureX",
-    "short_name": "FactureX",
-    "description": "Système de gestion de facturation et transferts FactureX",
+    "name": "FactureSmart",
+    "short_name": "FactureSmart",
+    "description": "Système de gestion de facturation et transferts FactureSmart",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",

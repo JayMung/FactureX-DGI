@@ -334,5 +334,5 @@ Si vous avez des transactions créées avant cette implémentation :
 **Développeur** : Cascade AI  
 **Date** : 1er novembre 2025  
 **Durée** : ~1 heure  
-**Projet** : FactureX  
+**Projet** : FactureSmart  
 **Version** : 1.0.2

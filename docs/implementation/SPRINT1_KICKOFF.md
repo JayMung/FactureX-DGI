@@ -166,7 +166,7 @@ PUT    /api/roles/:id                 Modifier rôle
 
 ## 📦 Checklist démarrage Dev 2
 
-- [ ] Accès repo GitHub (`JayMung/FactureX-DGI`)
+- [ ] Accès repo GitHub (`JayMung/FactureSmart-DGI`)
 - [ ] Accès Supabase (projet production)
 - [ ] Accès Vercel (déploiement)
 - [ ] Briefing architecture (ce document)

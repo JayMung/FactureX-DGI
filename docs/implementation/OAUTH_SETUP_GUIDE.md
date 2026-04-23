@@ -1,4 +1,4 @@
-# OAuth Setup Guide — FactureX Sprint 1
+# OAuth Setup Guide — FactureSmart Sprint 1
 
 **Date** : 23 Avril 2026
 **Status** : À faire — Deadline : fin de semaine
@@ -10,7 +10,7 @@
 ### Étape 1 : Créer un projet GCP
 
 1. Aller sur [console.cloud.google.com](https://console.cloud.google.com)
-2. Créer un nouveau projet : `FactureX-Production`
+2. Créer un nouveau projet : `FactureSmart-Production`
 3. Activer les APIs nécessaires :
    - **Google+ API**
    - **OAuth2 API**
@@ -20,7 +20,7 @@
 1. **APIs & Services** → **OAuth consent screen**
 2. Choisir **External**
 3. Remplir :
-   - App name : `FactureX`
+   - App name : `FactureSmart`
    - Email support : `support@facturex.io`
    - Logo (upload : 128x128px)
 4. Scopes : `email`, `profile`, `openid`
@@ -55,7 +55,7 @@ Client Secret: [YOUR_GCP_CLIENT_SECRET]
 1. Aller sur [portal.azure.com](https://portal.azure.com)
 2. **Azure Active Directory** → **App registrations** → **New registration**
 3. Remplir :
-   - Name : `FactureX`
+   - Name : `FactureSmart`
    - Supported account types : `Accounts in this organizational directory only` (pourdev) / `Accounts in any organizational directory` (prod)
    - Redirect URI : `Web` → `https://[YOUR-PROJECT].supabase.co/auth/v1/callback`
 
@@ -135,4 +135,4 @@ http://localhost:5173/login  → Test login Microsoft
 
 ---
 
-*Guide OAuth FactureX Sprint 1 — 23 Avril 2026*
+*Guide OAuth FactureSmart Sprint 1 — 23 Avril 2026*

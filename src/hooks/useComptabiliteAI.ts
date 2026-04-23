@@ -94,9 +94,9 @@ export function useComptabiliteAI(config: AlertConfig) {
     // Alert: pending expenses
     if (pendingExpenses && pendingExpenses.length >= config.maxUnrecordedExpenses) {
       sendTelegramAlert(
-        `⚠️ <b>FactureX - Dépenses en attente</b>\n\n` +
+        `⚠️ <b>FactureSmart - Dépenses en attente</b>\n\n` +
         `Tu as <b>${pendingExpenses.length}</b> dépenses à valider aujourd'hui.\n\n` +
-        `Connecte-toi sur FactureX pour les enregistrer.\n\n` +
+        `Connecte-toi sur FactureSmart pour les enregistrer.\n\n` +
         `<i>Ne laisse pas traîner, c'est important pour ta trésorerie !</i>`
       );
     }
@@ -107,7 +107,7 @@ export function useComptabiliteAI(config: AlertConfig) {
 
       if (daysSinceReconciliation >= config.maxDaysWithoutReconciliation) {
         sendTelegramAlert(
-          `🚨 <b>FactureX - Réconciliation urgente</b>\n\n` +
+          `🚨 <b>FactureSmart - Réconciliation urgente</b>\n\n` +
           `Ta dernière réconciliation date de <b>${daysSinceReconciliation} jours</b>.\n\n` +
           `Va dans Comptes → Mouvements pour faire ta réconciliation.\n\n` +
           `<i>Sans réconciliation régulière, tu perds le contrôle de ta trésorerie !</i>`

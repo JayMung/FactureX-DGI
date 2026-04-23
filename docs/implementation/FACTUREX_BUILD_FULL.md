@@ -1,4 +1,4 @@
-# 🔧 Plan de Build Complet — FactureX
+# 🔧 Plan de Build Complet — FactureSmart
 ## 8 Sprints, 52 écrans, ~18 semaines
 
 **Issue** : COD-25  
@@ -10,7 +10,7 @@
 
 ## 📊 Vue d'ensemble
 
-- **Maquettes** : 65 fichiers HTML dans `/home/jay/FactureX/mockups-v2/`
+- **Maquettes** : 65 fichiers HTML dans `/home/jay/FactureSmart/mockups-v2/`
 - **Écrans fonctionnels** : ~52
 - **Stack** : React 18 + TypeScript + Vite + Tailwind CSS + shadcn/ui + Supabase
 - **Durée estimée** : ~18 semaines (1 dev) / ~10 semaines (2 devs)
@@ -20,7 +20,7 @@
 ## ⚠️ Constat architecture
 
 Le codebase actuel (CoxiPay v1.0.3) a ~50K lignes pour transferts USD/CDF.
-Le nouveau spec FactureX demande : **facturation DGI, OHADA, POS, SaaS, Mobile Money**.
+Le nouveau spec FactureSmart demande : **facturation DGI, OHADA, POS, SaaS, Mobile Money**.
 **→ Refonte majeure du data model, pas simple ajout de modules.**
 
 ---
@@ -222,7 +222,7 @@ Le nouveau spec FactureX demande : **facturation DGI, OHADA, POS, SaaS, Mobile M
 1. **API DGI** — Credentials sandbox + production pour Sprint 2
 2. **Mobile Money** — Accès merchant M-Pesa / Orange / Airtel
 3. **Branding** — Décision nom + création constantes `APP_NAME`
-4. **Schema DB** — Migration CoxiPay → FactureX (reset ou migration ?)
+4. **Schema DB** — Migration CoxiPay → FactureSmart (reset ou migration ?)
 5. **SYSCOHADA** — Source officielle du plan comptable (1000+ comptes)
 
 ---

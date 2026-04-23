@@ -57,7 +57,7 @@ const LeftHeroPanel = () => (
           <i className="ri-file-paper-2-line text-white text-xl" />
         </div>
         <div>
-          <span className="text-white text-xl font-bold tracking-tight">FactureX</span>
+          <span className="text-white text-xl font-bold tracking-tight">FactureSmart</span>
           <span className="ml-2 text-xs font-bold px-2 py-0.5 bg-white/20 text-white rounded-full border border-white/30">RDC</span>
         </div>
       </div>
@@ -85,7 +85,7 @@ const LeftHeroPanel = () => (
 
       {/* Footer */}
       <div className="flex items-center justify-between text-emerald-200 text-xs">
-        <span>© 2026 FactureX — Solution officielle DGI</span>
+        <span>© 2026 FactureSmart — Solution officielle DGI</span>
         <span className="flex items-center gap-1">
           <i className="ri-shield-fill text-xs" />
           Certifié DGI
@@ -522,7 +522,7 @@ const Login = () => {
             <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center">
               <i className="ri-file-paper-2-line text-white text-lg" />
             </div>
-            <span className="text-slate-900 text-xl font-bold">FactureX</span>
+            <span className="text-slate-900 text-xl font-bold">FactureSmart</span>
           </div>
 
           {/* Card */}

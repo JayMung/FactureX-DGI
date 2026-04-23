@@ -1,4 +1,4 @@
-// Email Service — FactureX Sprint 1
+// Email Service — FactureSmart Sprint 1
 // Provider: Resend (https://resend.com) — Free tier: 100 emails/jour
 
 import { RESEND_API_KEY } from './constants';
@@ -25,7 +25,7 @@ class EmailService {
 
   constructor() {
     this.apiKey = RESEND_API_KEY || process.env.RESEND_API_KEY || '';
-    this.fromEmail = 'FactureX <noreply@facturex.io>';
+    this.fromEmail = 'FactureSmart <noreply@facturesmart.com>';
   }
 
   /**
@@ -74,10 +74,10 @@ class EmailService {
     const verifyUrl = `${import.meta.env.VITE_APP_URL}/verify-email?token=${verificationToken}`;
     return this.send({
       to,
-      subject: 'Vérifiez votre adresse email — FactureX',
+      subject: 'Vérifiez votre adresse email — FactureSmart',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h1 style="color: #22c55e;">Bienvenue sur FactureX</h1>
+          <h1 style="color: #22c55e;">Bienvenue sur FactureSmart</h1>
           <p>Merci pour votre inscription. Cliquez sur le bouton ci-dessous pour vérifier votre adresse email :</p>
           <a href="${verifyUrl}" style="display: inline-block; background: #22c55e; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 16px 0;">Vérifier mon email</a>
           <p style="color: #666; font-size: 14px;">Ce lien expire dans 24 heures.</p>
@@ -93,7 +93,7 @@ class EmailService {
     const resetUrl = `${import.meta.env.VITE_APP_URL}/reset-password?token=${resetToken}`;
     return this.send({
       to,
-      subject: 'Réinitialisation de votre mot de passe — FactureX',
+      subject: 'Réinitialisation de votre mot de passe — FactureSmart',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h1 style="color: #22c55e;">Réinitialisation de mot de passe</h1>
@@ -112,11 +112,11 @@ class EmailService {
     const inviteUrl = `${import.meta.env.VITE_APP_URL}/invitation/accept?token=${invitationToken}`;
     return this.send({
       to,
-      subject: `Invitation à rejoindre FactureX en tant que ${role}`,
+      subject: `Invitation à rejoindre FactureSmart en tant que ${role}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h1 style="color: #22c55e;">Vous êtes invité sur FactureX</h1>
-          <p><strong>${invitedBy}</strong> vous invite à rejoindre FactureX avec le rôle : <strong>${role}</strong></p>
+          <h1 style="color: #22c55e;">Vous êtes invité sur FactureSmart</h1>
+          <p><strong>${invitedBy}</strong> vous invite à rejoindre FactureSmart avec le rôle : <strong>${role}</strong></p>
           <a href="${inviteUrl}" style="display: inline-block; background: #22c55e; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 16px 0;">Accepter l'invitation</a>
           <p style="color: #666; font-size: 14px;">Cette invitation expire dans 7 jours.</p>
         </div>
