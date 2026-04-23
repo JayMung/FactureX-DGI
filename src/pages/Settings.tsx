@@ -709,7 +709,7 @@ const Settings = () => {
   const [showMobileContent, setShowMobileContent] = useState(false);
 
   const filteredOptions = settingsOptions.filter(option =>
-    !option.adminOnly || profile?.role === 'admin'
+    !option.adminOnly || profile?.role === 'admin' || profile?.role === 'super_admin'
   );
 
   // Handle tab selection on mobile - show content view
@@ -928,7 +928,7 @@ const Settings = () => {
                         <div>
                           <h3 className="font-medium">{user?.email}</h3>
                           <p className="text-sm text-gray-500">
-                            {profile?.role === 'admin' ? 'Administrateur' : 'Opérateur'}
+                            {profile?.role === 'super_admin' ? 'Super Administrateur' : profile?.role === 'admin' ? 'Administrateur' : 'Opérateur'}
                           </p>
                         </div>
                       </div>

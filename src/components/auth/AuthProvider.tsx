@@ -19,6 +19,7 @@ interface AuthContextType {
   sessionValid: boolean;
   remainingTime: number;
   updateActivity: () => void;
+  profileRole: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -37,6 +38,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const [sessionValid, setSessionValid] = useState(false);
   const [remainingTime, setRemainingTime] = useState(0);
+  const [profileRole, setProfileRole] = useState<string | null>(null);
 
   // Handle session expiration
   const handleSessionExpired = async () => {
@@ -81,6 +83,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setSession(session);
         setUser(session?.user ?? null);
         
+        // Load profile role from database
+        if (session?.user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', session.user.id)
+            .single();
+          setProfileRole(profile?.role || null);
+        }
+        
         // Initialize session management
         if (session && session.user) {
           sessionManager.createSession(session, session.user);
@@ -102,6 +114,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
+        
+        // Load profile role on auth change
+        if (session?.user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', session.user.id)
+            .single();
+          setProfileRole(profile?.role || null);
+        } else {
+          setProfileRole(null);
+        }
         
         if (event === 'SIGNED_IN' && session && session.user) {
           // Create new session info
@@ -137,12 +161,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // SECURITY: Check for both admin and super_admin roles in app_metadata
-  // Note: Supabase exposes app_metadata differently in the client
-  const isAdmin = user?.user_metadata?.role === 'admin' || 
-                  user?.user_metadata?.role === 'super_admin' ||
-                  user?.app_metadata?.role === 'admin' || 
-                  user?.app_metadata?.role === 'super_admin';
+  // SECURITY: Check for both admin and super_admin roles from profiles table
+  const isAdmin = profileRole === 'admin' || profileRole === 'super_admin';
 
   const value = {
     user,
@@ -152,7 +172,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     isAdmin,
     sessionValid,
     remainingTime,
-    updateActivity
+    updateActivity,
+    profileRole
   };
 
   return (

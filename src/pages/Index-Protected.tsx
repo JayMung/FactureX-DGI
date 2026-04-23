@@ -215,7 +215,7 @@ const IndexProtected: React.FC = () => {
           <div className="banner-compact flex items-center justify-between">
             <div>
               <h1 className="text-xl md:text-2xl font-semibold">Bienvenue sur FactureX</h1>
-              <p className="text-green-100/90 text-sm mt-0.5">Gérez vos transferts USD/CDF en toute simplicité</p>
+              <p className="text-green-100/90 text-sm mt-0.5">Gérez vos factures USD/CDF en toute simplicité</p>
             </div>
           </div>
 

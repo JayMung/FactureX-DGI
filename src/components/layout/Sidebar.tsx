@@ -40,7 +40,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({
   currentPath
 }) => {
-  const { user } = useAuth();
+  const { user, profileRole } = useAuth();
   const { getAccessibleModules, checkPermission, isAdmin } = usePermissions();
 
 
@@ -186,7 +186,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
           <div className="min-w-0 flex-1">
             <h1 className="text-xl font-bold tracking-tight">FactureX</h1>
-            <p className="text-xs text-emerald-200/80">Transferts simplifiés</p>
+            <p className="text-xs text-emerald-200/80">Facturation simplifiée</p>
           </div>
         </div>
       </div>
@@ -300,8 +300,8 @@ const Sidebar: React.FC<SidebarProps> = ({
               }
             </p>
             <p className="text-xs text-emerald-200/70 truncate">
-              {user?.app_metadata?.role === 'super_admin' ? '👑 Super Admin' :
-                user?.app_metadata?.role === 'admin' ? '👑 Admin' : 'Opérateur'}
+              {profileRole === 'super_admin' ? '👑 Super Admin' :
+                profileRole === 'admin' ? '👑 Admin' : 'Opérateur'}
             </p>
           </div>
         </div>

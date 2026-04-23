@@ -129,7 +129,7 @@ const Index = () => {
         {/* Welcome Section */}
         <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-6 text-white">
           <h1 className="text-2xl font-bold mb-2">Bienvenue sur FactureX</h1>
-          <p className="text-green-100">Gérez vos transferts USD/CDF en toute simplicité</p>
+          <p className="text-green-100">Gérez vos factures USD/CDF en toute simplicité</p>
         </div>
 
         {/* Stats Grid */}
