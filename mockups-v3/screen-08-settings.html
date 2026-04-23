@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paramètres — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Manrope','sans-serif'] } } } }</script>
+  <style>
+    body { font-family: 'Manrope', sans-serif; }
+    .glass { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.3); }
+    .blob { position: absolute; filter: blur(80px); z-index: -1; opacity: 0.4; animation: move 10s infinite alternate; }
+    @keyframes move { from { transform: translate(0,0) scale(1); } to { transform: translate(20px,-20px) scale(1.1); } }
+    .hover-lift { transition: transform 0.3s ease; }
+    .hover-lift:hover { transform: translateY(-3px); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased overflow-x-hidden min-h-screen">
+  <div class="blob bg-emerald-300 w-96 h-96 rounded-full top-0 left-0 mix-blend-multiply"></div>
+  <div class="blob bg-lime-300 w-96 h-96 rounded-full top-0 right-0 mix-blend-multiply" style="animation-delay:2s"></div>
+  <div class="blob bg-teal-100 w-96 h-96 rounded-full bottom-0 left-20 mix-blend-multiply" style="animation-delay:4s"></div>
+
+  <header class="fixed w-full top-0 z-50 glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18">
+        <a href="#" class="text-2xl font-extrabold text-emerald-600">FactureX</a>
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#" class="text-slate-600 hover:text-emerald-600 font-medium transition">Tableau de bord</a>
+          <a href="#" class="text-slate-600 hover:text-emerald-600 font-medium transition">Factures</a>
+          <a href="#" class="text-slate-600 hover:text-emerald-600 font-medium transition">Clients</a>
+          <a href="#" class="text-slate-600 hover:text-emerald-600 font-medium transition">Rapports</a>
+          <a href="#" class="text-emerald-600 font-semibold transition">Paramètres</a>
+        </nav>
+        <div class="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center">
+          <span class="text-emerald-700 font-bold text-sm">JM</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="mb-8">
+      <h1 class="text-3xl font-extrabold text-slate-900">Paramètres</h1>
+      <p class="text-slate-500">Configurez votre espace FactureX</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex flex-wrap gap-2 mb-8 border-b border-slate-200 pb-4">
+      <button class="px-5 py-2.5 rounded-full bg-emerald-600 text-white text-sm font-bold transition">Entreprise</button>
+      <button class="px-5 py-2.5 rounded-full bg-slate-100 text-slate-600 text-sm font-semibold hover:bg-slate-200 transition">Utilisateurs</button>
+      <button class="px-5 py-2.5 rounded-full bg-slate-100 text-slate-600 text-sm font-semibold hover:bg-slate-200 transition">TVA & Taxes</button>
+      <button class="px-5 py-2.5 rounded-full bg-slate-100 text-slate-600 text-sm font-semibold hover:bg-slate-200 transition">API</button>
+      <button class="px-5 py-2.5 rounded-full bg-slate-100 text-slate-600 text-sm font-semibold hover:bg-slate-200 transition">Sécurité</button>
+      <button class="px-5 py-2.5 rounded-full bg-slate-100 text-slate-600 text-sm font-semibold hover:bg-slate-200 transition">Notifications</button>
+    </div>
+
+    <!-- Profile -->
+    <div class="bg-white rounded-2xl shadow-xl ring-1 ring-slate-900/5 p-8 mb-6">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">Profil entreprise</h2>
+      <p class="text-sm text-slate-400 mb-6">Ces informations apparaissent sur vos factures.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-2">Raison sociale</label>
+          <input type="text" value="Coccinelle SARL" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-2">NIF</label>
+          <input type="text" value="1-23-A00001" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-2">RCCM</label>
+          <input type="text" value="CD/KIN/2024/00123" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-2">Numéro téléphone</label>
+          <input type="text" value="+243 81 234 5678" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-sm font-semibold text-slate-700 mb-2">Adresse</label>
+          <input type="text" value="Avenue du Commerce, Commune de la Gombe, Kinshasa, République Démocratique du Congo" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-2">Email</label>
+          <input type="email" value="contact@coccinelle.cd" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-2">Site web</label>
+          <input type="text" value="https://coccinelle.cd" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+      </div>
+      <div class="mt-6 flex justify-end">
+        <button class="px-6 py-3 rounded-full bg-emerald-600 text-white font-bold hover:bg-emerald-700 transition shadow-sm">Enregistrer les modifications</button>
+      </div>
+    </div>
+
+    <!-- TVA Config -->
+    <div class="bg-white rounded-2xl shadow-xl ring-1 ring-slate-900/5 p-8 mb-6">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">Taux de TVA</h2>
+      <p class="text-sm text-slate-400 mb-6">Configurez les taux applicables à vos factures.</p>
+      <div class="space-y-4">
+        <div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+          <div>
+            <p class="text-sm font-bold text-slate-800">TVA standard</p>
+            <p class="text-xs text-slate-400">Taux général appliqué par défaut</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="text" value="18%" class="w-20 px-3 py-2 rounded-lg border border-slate-200 text-sm font-bold text-slate-800 text-center focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+            <span class="text-sm text-slate-500">%</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+          <div>
+            <p class="text-sm font-bold text-slate-800">TVA réduite</p>
+            <p class="text-xs text-slate-400">Pour certains produits/services</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="text" value="0%" class="w-20 px-3 py-2 rounded-lg border border-slate-200 text-sm font-bold text-slate-800 text-center focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+            <span class="text-sm text-slate-500">%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- API -->
+    <div class="bg-white rounded-2xl shadow-xl ring-1 ring-slate-900/5 p-8">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">Intégration API DGI</h2>
+      <p class="text-sm text-slate-400 mb-6">Clés et endpoints pour la connexion à l'API DGI.</p>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-2">API Key DGI</label>
+          <div class="flex gap-2">
+            <input type="password" value="dgi_live_sk_xxxxxxxxxxxxxx" class="flex-1 px-4 py-3 rounded-xl border border-slate-200 text-slate-800 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+            <button class="px-4 py-3 rounded-xl bg-slate-100 text-slate-600 text-sm font-semibold hover:bg-slate-200 transition">Afficher</button>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-2">Endpoint</label>
+          <input type="text" value="https://api.dgi.rdc.gov.cd/v1" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-800 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+          <span class="text-sm text-emerald-700 font-semibold">API connectée — dernière sync il y a 2 minutes</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

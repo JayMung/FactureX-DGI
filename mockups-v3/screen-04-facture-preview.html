@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prévisualisation — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Manrope','sans-serif'] } } } }</script>
+  <style>
+    body { font-family: 'Manrope', sans-serif; }
+    .glass { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.3); }
+    .blob { position: absolute; filter: blur(80px); z-index: -1; opacity: 0.4; animation: move 10s infinite alternate; }
+    @keyframes move { from { transform: translate(0,0) scale(1); } to { transform: translate(20px,-20px) scale(1.1); } }
+    .hover-lift { transition: transform 0.3s ease; }
+    .hover-lift:hover { transform: translateY(-3px); }
+    .invoice-paper { background: white; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased overflow-x-hidden min-h-screen">
+  <div class="blob bg-emerald-300 w-96 h-96 rounded-full top-0 left-0 mix-blend-multiply"></div>
+  <div class="blob bg-lime-300 w-96 h-96 rounded-full top-0 right-0 mix-blend-multiply" style="animation-delay:2s"></div>
+
+  <header class="fixed w-full top-0 z-50 glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18">
+        <a href="#" class="text-2xl font-extrabold text-emerald-600">FactureX</a>
+        <div class="flex items-center gap-3">
+          <a href="#" class="text-sm text-slate-600 hover:text-emerald-600 font-medium transition">← Retour</a>
+          <div class="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center">
+            <span class="text-emerald-700 font-bold text-sm">JM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <!-- Actions bar -->
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-8">
+      <div>
+        <h1 class="text-xl font-extrabold text-slate-900">Prévisualisation</h1>
+        <p class="text-sm text-slate-500">FAC-2026-0047 · Mining Corp · 23 avr. 2026</p>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button class="px-5 py-2.5 rounded-full bg-white text-slate-700 font-semibold border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition text-sm shadow-sm flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Télécharger PDF
+        </button>
+        <button class="px-5 py-2.5 rounded-full bg-white text-slate-700 font-semibold border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition text-sm shadow-sm flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          Envoyer au client
+        </button>
+        <button class="px-5 py-2.5 rounded-full bg-emerald-600 text-white font-bold hover:bg-emerald-700 transition text-sm shadow-sm flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Transmettre à la DGI
+        </button>
+      </div>
+    </div>
+
+    <!-- Invoice Paper -->
+    <div class="invoice-paper rounded-3xl p-10 max-w-3xl mx-auto">
+      <!-- Header -->
+      <div class="flex items-start justify-between mb-10 border-b border-slate-200 pb-8">
+        <div>
+          <div class="text-3xl font-extrabold text-emerald-600 mb-1">FactureX</div>
+          <p class="text-xs text-slate-500">Facturation électronique — République Démocratique du Congo</p>
+        </div>
+        <div class="text-right">
+          <div class="text-2xl font-extrabold text-slate-900 font-mono">FAC-2026-0047</div>
+          <p class="text-sm text-slate-500 mt-1">Date : 23 avril 2026</p>
+          <p class="text-sm text-slate-500">Échéance : 23 mai 2026</p>
+        </div>
+      </div>
+
+      <!-- Parties -->
+      <div class="grid grid-cols-2 gap-8 mb-10">
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Émetteur</p>
+          <p class="text-base font-bold text-slate-900">Coccinelle SARL</p>
+          <p class="text-sm text-slate-600">NIF : 1-23-A00001</p>
+          <p class="text-sm text-slate-600">RCCM : CD/KIN/2024/00123</p>
+          <p class="text-sm text-slate-600">Kinshasa, République Démocratique du Congo</p>
+        </div>
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Client</p>
+          <p class="text-base font-bold text-slate-900">Mining Corp</p>
+          <p class="text-sm text-slate-600">NIF : 1-89-A12345</p>
+          <p class="text-sm text-slate-600">Avenue du Commerce</p>
+          <p class="text-sm text-slate-600">Kinshasa, RDC</p>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <table class="w-full mb-8">
+        <thead>
+          <tr class="border-b-2 border-slate-900">
+            <th class="text-left text-xs font-black text-slate-700 uppercase tracking-wider pb-2">Désignation</th>
+            <th class="text-center text-xs font-black text-slate-700 uppercase tracking-wider pb-2">Qté</th>
+            <th class="text-right text-xs font-black text-slate-700 uppercase tracking-wider pb-2">P.U. HT</th>
+            <th class="text-right text-xs font-black text-slate-700 uppercase tracking-wider pb-2">Total HT</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <tr>
+            <td class="py-3 text-sm text-slate-800">Installation système GPS FL960 — forfait complet</td>
+            <td class="py-3 text-sm text-slate-600 text-center">5</td>
+            <td class="py-3 text-sm text-slate-600 text-right">$1.200,00</td>
+            <td class="py-3 text-sm font-bold text-slate-900 text-right">$6.000,00</td>
+          </tr>
+          <tr>
+            <td class="py-3 text-sm text-slate-800">Formation utilisateurs (2 jours)</td>
+            <td class="py-3 text-sm text-slate-600 text-center">1</td>
+            <td class="py-3 text-sm text-slate-600 text-right">$800,00</td>
+            <td class="py-3 text-sm font-bold text-slate-900 text-right">$800,00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Totals -->
+      <div class="flex justify-end mb-10">
+        <div class="w-72">
+          <div class="flex justify-between py-2 text-sm"><span class="text-slate-600">Total HT</span><span class="font-bold text-slate-900">$6.800,00</span></div>
+          <div class="flex justify-between py-2 text-sm"><span class="text-slate-600">TVA (18%)</span><span class="font-bold text-slate-900">$1.224,00</span></div>
+          <div class="flex justify-between py-3 border-t-2 border-slate-900 mt-2">
+            <span class="text-base font-black text-slate-900">Total TTC</span>
+            <span class="text-xl font-black text-emerald-600">$8.024,00 USD</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer compliance -->
+      <div class="border-t border-slate-200 pt-6 grid grid-cols-2 gap-8">
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Mentions obligatoires</p>
+          <p class="text-xs text-slate-500">TVA applicable : 18% · NIF émetteur : 1-23-A00001 · RCCM : CD/KIN/2024/00123</p>
+          <p class="text-xs text-slate-500 mt-1">La présente facture est conforme aux exigences de la Direction Générale des Impôts (DGI) de la République Démocratique du Congo.</p>
+        </div>
+        <div class="text-right">
+          <!-- QR Code -->
+          <div class="inline-block bg-slate-100 rounded-xl p-3">
+            <svg class="w-16 h-16 text-slate-700 mx-auto" viewBox="0 0 100 100" fill="currentColor">
+              <rect x="5" y="5" width="25" height="25" rx="2"/><rect x="35" y="5" width="10" height="10" rx="1"/><rect x="50" y="5" width="10" height="10" rx="1"/><rect x="70" y="5" width="25" height="25" rx="2"/>
+              <rect x="5" y="35" width="10" height="10" rx="1"/><rect x="20" y="35" width="10" height="10" rx="1"/>
+              <rect x="5" y="50" width="25" height="25" rx="2"/><rect x="35" y="35" width="25" height="25" rx="1"/>
+              <rect x="70" y="35" width="10" height="15" rx="1"/><rect x="85" y="35" width="10" height="10" rx="1"/>
+              <rect x="70" y="55" width="10" height="10" rx="1"/>
+              <rect x="35" y="65" width="10" height="10" rx="1"/><rect x="50" y="65" width="10" height="10" rx="1"/>
+              <rect x="35" y="80" width="25" height="15" rx="2"/><rect x="65" y="80" width="15" height="15" rx="1"/>
+              <rect x="85" y="85" width="10" height="10" rx="1"/>
+            </svg>
+            <p class="text-[10px] text-slate-500 mt-1 font-mono">DGI-AUTH-2026-047</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 bg-slate-50 rounded-xl p-3 text-center">
+        <p class="text-xs font-mono font-bold text-slate-600">Code d'authentification DGI : DGI-AUTH-2026-047-A8F3 · Signature numérique vérifiable</p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

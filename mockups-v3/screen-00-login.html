@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Manrope','sans-serif'] } } } }</script>
+  <style>
+    body { font-family: 'Manrope', sans-serif; }
+    .glass { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.3); }
+    .blob { position: absolute; filter: blur(80px); z-index: -1; opacity: 0.4; animation: move 10s infinite alternate; }
+    @keyframes move { from { transform: translate(0,0) scale(1); } to { transform: translate(20px,-20px) scale(1.1); } }
+    .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .hover-lift:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+    .login-blob { position: absolute; filter: blur(100px); z-index: 0; opacity: 0.3; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased overflow-x-hidden min-h-screen flex">
+  <!-- Left panel — emerald brand -->
+  <div class="hidden lg:flex lg:w-2/5 bg-emerald-600 relative overflow-hidden items-center justify-center min-h-screen">
+    <div class="login-blob bg-emerald-300 w-80 h-80 rounded-full -top-20 -left-20"></div>
+    <div class="login-blob bg-lime-300 w-64 h-64 rounded-full bottom-0 right-0"></div>
+    <div class="login-blob bg-teal-200 w-48 h-48 rounded-full top-1/2 right-10"></div>
+    <!-- DRC Map silhouette SVG -->
+    <svg class="absolute bottom-0 left-0 w-full opacity-10" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 250 L80 200 L120 210 L150 180 L200 190 L250 160 L280 170 L300 140 L280 120 L320 100 L350 110 L380 90 L370 70 L340 60 L310 80 L280 70 L250 80 L220 60 L190 70 L160 50 L130 60 L100 40 L70 50 L40 80 L20 120 L10 160 L20 200 L50 250Z" fill="white"/>
+    </svg>
+    <div class="relative z-10 text-center px-12">
+      <div class="text-5xl font-extrabold text-white mb-6">FactureX</div>
+      <div class="text-emerald-100 text-lg font-medium mb-2">Facturation électronique</div>
+      <div class="text-emerald-200 text-base font-semibold mb-12">conforme DGI — République Démocratique du Congo</div>
+      <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+        <div class="text-white text-sm font-medium mb-3">Avec FactureX :</div>
+        <div class="space-y-2 text-left">
+          <div class="flex items-center gap-2 text-emerald-100 text-sm"><svg class="w-4 h-4 text-emerald-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Émission de factures conformes</div>
+          <div class="flex items-center gap-2 text-emerald-100 text-sm"><svg class="w-4 h-4 text-emerald-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Transmission automatique à la DGI</div>
+          <div class="flex items-center gap-2 text-emerald-100 text-sm"><svg class="w-4 h-4 text-emerald-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Suivi en temps réel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Right panel — login form -->
+  <div class="flex-1 flex items-center justify-center px-6 py-12 relative">
+    <div class="blob bg-emerald-300 w-72 h-72 rounded-full -top-20 -right-20 mix-blend-multiply"></div>
+    <div class="blob bg-lime-300 w-64 h-64 rounded-full bottom-10 left-10 mix-blend-multiply" style="animation-delay:2s"></div>
+    <div class="w-full max-w-md relative z-10">
+      <!-- Mobile logo -->
+      <div class="lg:hidden text-center mb-8">
+        <div class="text-3xl font-extrabold text-emerald-600 mb-1">FactureX</div>
+        <div class="text-slate-500 text-sm">Facturation électronique — RDC</div>
+      </div>
+      <div class="bg-white rounded-3xl shadow-2xl ring-1 ring-slate-900/5 p-8 lg:p-10">
+        <div class="mb-8">
+          <h1 class="text-2xl font-extrabold text-slate-900 mb-1">Bienvenue</h1>
+          <p class="text-slate-500 text-sm">Connectez-vous à votre espace FactureX</p>
+        </div>
+        <form class="space-y-5">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-2">Adresse email ou NIF</label>
+            <input type="text" placeholder="entreprise@exemple.cd" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-2">Mot de passe</label>
+            <input type="password" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition" />
+          </div>
+          <div class="flex items-center justify-between">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
+              <span class="text-sm text-slate-600">Se souvenir de moi</span>
+            </label>
+            <a href="#" class="text-sm text-emerald-600 font-semibold hover:text-emerald-700 transition">Mot de passe oublié ?</a>
+          </div>
+          <button type="button" class="w-full py-3.5 rounded-full bg-emerald-600 text-white font-bold hover:bg-emerald-700 transition shadow-lg shadow-emerald-600/30 hover-lift">
+            Se connecter
+          </button>
+        </form>
+        <div class="mt-6 text-center">
+          <span class="text-slate-500 text-sm">Pas encore de compte ?</span>
+          <a href="#" class="text-emerald-600 font-bold text-sm hover:text-emerald-700 transition ml-1">Créer un compte</a>
+        </div>
+      </div>
+      <div class="mt-6 text-center">
+        <p class="text-slate-400 text-xs">© 2026 FactureX — Conforme DGI République Démocratique du Congo</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

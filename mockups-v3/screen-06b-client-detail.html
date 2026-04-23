@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mining Corp — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Manrope','sans-serif'] } } } }</script>
+  <style>
+    body { font-family: 'Manrope', sans-serif; }
+    .glass { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.3); }
+    .blob { position: absolute; filter: blur(80px); z-index: -1; opacity: 0.4; animation: move 10s infinite alternate; }
+    @keyframes move { from { transform: translate(0,0) scale(1); } to { transform: translate(20px,-20px) scale(1.1); } }
+    .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .hover-lift:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased overflow-x-hidden min-h-screen">
+  <div class="blob bg-emerald-300 w-96 h-96 rounded-full top-0 left-0 mix-blend-multiply"></div>
+  <div class="blob bg-lime-300 w-96 h-96 rounded-full top-0 right-0 mix-blend-multiply" style="animation-delay:2s"></div>
+  <div class="blob bg-teal-100 w-96 h-96 rounded-full bottom-0 left-20 mix-blend-multiply" style="animation-delay:4s"></div>
+
+  <header class="fixed w-full top-0 z-50 glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18">
+        <a href="#" class="text-2xl font-extrabold text-emerald-600">FactureX</a>
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#" class="text-slate-600 hover:text-emerald-600 font-medium transition">Tableau de bord</a>
+          <a href="#" class="text-slate-600 hover:text-emerald-600 font-medium transition">Factures</a>
+          <a href="#" class="text-emerald-600 font-semibold transition">Clients</a>
+          <a href="#" class="text-slate-600 hover:text-emerald-600 font-medium transition">Rapports</a>
+          <a href="#" class="text-slate-600 hover:text-emerald-600 font-medium transition">Paramètres</a>
+        </nav>
+        <div class="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center">
+          <span class="text-emerald-700 font-bold text-sm">JM</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <!-- Header -->
+    <div class="flex items-center gap-3 mb-8">
+      <a href="#" class="p-2 rounded-xl bg-white shadow-sm hover:bg-slate-50 transition">
+        <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </a>
+      <div class="flex-1">
+        <h1 class="text-2xl font-extrabold text-slate-900">Mining Corp</h1>
+        <p class="text-sm text-slate-500">NIF: 1-89-A12345 · Client depuis jan. 2025</p>
+      </div>
+      <span class="inline-flex items-center gap-1 text-sm font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full">Actif</span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Main info -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- Factures du client -->
+        <div class="bg-white rounded-2xl shadow-xl ring-1 ring-slate-900/5 overflow-hidden">
+          <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+            <h2 class="text-lg font-bold text-slate-900">Factures (18)</h2>
+            <button class="px-4 py-2 rounded-full bg-emerald-600 text-white text-sm font-bold hover:bg-emerald-700 transition">+ Nouvelle facture</button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="border-b border-slate-100">
+                  <th class="px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase">N°</th>
+                  <th class="px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase">Date</th>
+                  <th class="px-6 py-3 text-right text-xs font-bold text-slate-500 uppercase">Montant</th>
+                  <th class="px-6 py-3 text-right text-xs font-bold text-slate-500 uppercase">Statut</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr class="hover:bg-slate-50 transition cursor-pointer">
+                  <td class="px-6 py-4 font-mono text-sm font-bold text-slate-800">FAC-2026-0047</td>
+                  <td class="px-6 py-4 text-sm text-slate-600">23 avr. 2026</td>
+                  <td class="px-6 py-4 text-sm font-bold text-slate-800 text-right">$8.024</td>
+                  <td class="px-6 py-4 text-right"><span class="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Validée</span></td>
+                </tr>
+                <tr class="hover:bg-slate-50 transition cursor-pointer">
+                  <td class="px-6 py-4 font-mono text-sm font-bold text-slate-800">FAC-2026-0040</td>
+                  <td class="px-6 py-4 text-sm text-slate-600">15 avr. 2026</td>
+                  <td class="px-6 py-4 text-sm font-bold text-slate-800 text-right">$12.800</td>
+                  <td class="px-6 py-4 text-right"><span class="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Validée</span></td>
+                </tr>
+                <tr class="hover:bg-slate-50 transition cursor-pointer">
+                  <td class="px-6 py-4 font-mono text-sm font-bold text-slate-800">FAC-2026-0031</td>
+                  <td class="px-6 py-4 text-sm text-slate-600">1 avr. 2026</td>
+                  <td class="px-6 py-4 text-sm font-bold text-slate-800 text-right">$6.400</td>
+                  <td class="px-6 py-4 text-right"><span class="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Validée</span></td>
+                </tr>
+                <tr class="hover:bg-slate-50 transition cursor-pointer">
+                  <td class="px-6 py-4 font-mono text-sm font-bold text-slate-800">FAC-2026-0022</td>
+                  <td class="px-6 py-4 text-sm text-slate-600">18 mars 2026</td>
+                  <td class="px-6 py-4 text-sm font-bold text-slate-800 text-right">$9.200</td>
+                  <td class="px-6 py-4 text-right"><span class="inline-flex items-center gap-1 text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">En attente</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="p-4 border-t border-slate-100 text-center">
+            <a href="#" class="text-sm text-emerald-600 font-semibold hover:text-emerald-700 transition">Voir les 18 factures →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="space-y-6">
+        <div class="bg-white rounded-2xl shadow-xl ring-1 ring-slate-900/5 p-6">
+          <h3 class="font-bold text-slate-900 mb-4">Informations</h3>
+          <div class="space-y-3">
+            <div>
+              <p class="text-xs text-slate-400">NIF</p>
+              <p class="text-sm font-bold text-slate-800">1-89-A12345</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400">Email</p>
+              <p class="text-sm font-semibold text-slate-800">comptabilite@miningcorp.cd</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400">Téléphone</p>
+              <p class="text-sm font-semibold text-slate-800">+243 81 987 6543</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400">Adresse</p>
+              <p class="text-sm text-slate-700">Avenue du Commerce, Kinshasa</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-xl ring-1 ring-slate-900/5 p-6">
+          <h3 class="font-bold text-slate-900 mb-4">Résumé financier</h3>
+          <div class="space-y-3">
+            <div class="flex justify-between"><span class="text-sm text-slate-500">Total facturé</span><span class="text-sm font-bold text-slate-900">$86.400</span></div>
+            <div class="flex justify-between"><span class="text-sm text-slate-500">Payé</span><span class="text-sm font-bold text-emerald-700">$74.000</span></div>
+            <div class="flex justify-between"><span class="text-sm text-slate-500">En attente</span><span class="text-sm font-bold text-amber-700">$12.400</span></div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-xl ring-1 ring-slate-900/5 p-6">
+          <button class="w-full py-2.5 rounded-full bg-emerald-600 text-white font-bold hover:bg-emerald-700 transition text-sm mb-2">Nouvelle facture</button>
+          <button class="w-full py-2.5 rounded-full bg-white text-slate-700 font-semibold border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition text-sm">Modifier le client</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

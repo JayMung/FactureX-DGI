@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rapports fiscaux — FactureX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Manrope','sans-serif'] } } } }</script>
+  <style>
+    body { font-family: 'Manrope', sans-serif; }
+    .glass { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.3); }
+    .blob { position: absolute; filter: blur(80px); z-index: -1; opacity: 0.4; animation: move 10s infinite alternate; }
+    @keyframes move { from { transform: translate(0,0) scale(1); } to { transform: translate(20px,-20px) scale(1.1); } }
+    .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .hover-lift:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased overflow-x-hidden min-h-screen">
+  <div class="blob bg-emerald-300 w-96 h-96 rounded-full top-0 left-0 mix-blend-multiply"></div>
+  <div class="blob bg-lime-300 w-96 h-96 rounded-full top-0 right-0 mix-blend-multiply" style="animation-delay:2s"></div>
+  <div class="blob bg-teal-100 w-96 h-96 rounded-full bottom-0 left-20 mix-blend-multiply" style="animation-delay:4s"></div>
+
+  <header class="fixed w-full top-0 z-50 glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18">
+        <a href="#" class="text-2xl font-extrabold text-emerald-600">FactureX</a>
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#" class="text-slate-600 hover:text-emerald-600 font-medium transition">Tableau de bord</a>
+          <a href="#" class="text-slate-600 hover:text-emerald-600 font-medium transition">Factures</a>
+          <a href="#" class="text-slate-600 hover:text-emerald-600 font-medium transition">Clients</a>
+          <a href="#" class="text-emerald-600 font-semibold transition">Rapports</a>
+          <a href="#" class="text-slate-600 hover:text-emerald-600 font-medium transition">Paramètres</a>
+        </nav>
+        <div class="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center">
+          <span class="text-emerald-700 font-bold text-sm">JM</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="mb-8">
+      <h1 class="text-3xl font-extrabold text-slate-900">Rapports fiscaux</h1>
+      <p class="text-slate-500">TVA collectée, récupérable et déclarations DGI</p>
+    </div>
+
+    <!-- Period selector -->
+    <div class="bg-white rounded-2xl shadow-xl ring-1 ring-slate-900/5 p-4 mb-6 flex flex-wrap items-center gap-3">
+      <span class="text-sm font-semibold text-slate-600">Période :</span>
+      <button class="px-4 py-2 rounded-xl bg-emerald-600 text-white text-sm font-bold">Jan 2026 — Avr 2026</button>
+      <input type="month" value="2026-01" class="px-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+      <span class="text-slate-400">→</span>
+      <input type="month" value="2026-04" class="px-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+      <button class="ml-auto px-5 py-2.5 rounded-full bg-emerald-600 text-white text-sm font-bold hover:bg-emerald-700 transition shadow-sm">Appliquer</button>
+    </div>
+
+    <!-- Stats cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-white rounded-2xl shadow-xl ring-1 ring-slate-900/5 p-6 hover-lift">
+        <p class="text-sm text-slate-500 mb-2">TVA collectée (total)</p>
+        <p class="text-3xl font-extrabold text-emerald-600 mb-1">$33.561 <span class="text-base font-medium text-slate-400">USD</span></p>
+        <p class="text-xs text-slate-400">Sur 242 factures émises</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-xl ring-1 ring-slate-900/5 p-6 hover-lift">
+        <p class="text-sm text-slate-500 mb-2">TVA récupérable</p>
+        <p class="text-3xl font-extrabold text-slate-600 mb-1">$8.240 <span class="text-base font-medium text-slate-400">USD</span></p>
+        <p class="text-xs text-slate-400">Sur 18 achats déductibles</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-xl ring-1 ring-slate-900/5 p-6 hover-lift">
+        <p class="text-sm text-slate-500 mb-2">TVA nette due</p>
+        <p class="text-3xl font-extrabold text-slate-900 mb-1">$25.321 <span class="text-base font-medium text-slate-400">USD</span></p>
+        <p class="text-xs text-slate-400">À déclarer auprès de la DGI</p>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white rounded-2xl shadow-xl ring-1 ring-slate-900/5 overflow-hidden mb-8">
+      <div class="p-6 border-b border-slate-100">
+        <h2 class="text-lg font-bold text-slate-900">Détail par mois</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-slate-100">
+              <th class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase">Mois</th>
+              <th class="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase">Factures émises</th>
+              <th class="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase">CA HT (USD)</th>
+              <th class="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase">TVA collectée</th>
+              <th class="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase">TVA récupérable</th>
+              <th class="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase">Net dû (USD)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="hover:bg-slate-50">
+              <td class="px-6 py-4 text-sm font-semibold text-slate-800">Janvier 2026</td>
+              <td class="px-6 py-4 text-sm text-slate-600 text-right">38</td>
+              <td class="px-6 py-4 text-sm text-slate-600 text-right">$68.400</td>
+              <td class="px-6 py-4 text-sm font-bold text-emerald-700 text-right">$12.312</td>
+              <td class="px-6 py-4 text-sm text-slate-600 text-right">$1.840</td>
+              <td class="px-6 py-4 text-sm font-bold text-slate-900 text-right">$10.472</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="px-6 py-4 text-sm font-semibold text-slate-800">Février 2026</td>
+              <td class="px-6 py-4 text-sm text-slate-600 text-right">42</td>
+              <td class="px-6 py-4 text-sm text-slate-600 text-right">$74.200</td>
+              <td class="px-6 py-4 text-sm font-bold text-emerald-700 text-right">$13.356</td>
+              <td class="px-6 py-4 text-sm text-slate-600 text-right">$2.180</td>
+              <td class="px-6 py-4 text-sm font-bold text-slate-900 text-right">$11.176</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="px-6 py-4 text-sm font-semibold text-slate-800">Mars 2026</td>
+              <td class="px-6 py-4 text-sm text-slate-600 text-right">51</td>
+              <td class="px-6 py-4 text-sm text-slate-600 text-right">$88.600</td>
+              <td class="px-6 py-4 text-sm font-bold text-emerald-700 text-right">$15.948</td>
+              <td class="px-6 py-4 text-sm text-slate-600 text-right">$2.640</td>
+              <td class="px-6 py-4 text-sm font-bold text-slate-900 text-right">$13.308</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="px-6 py-4 text-sm font-semibold text-slate-800">Avril 2026</td>
+              <td class="px-6 py-4 text-sm text-slate-600 text-right">47</td>
+              <td class="px-6 py-4 text-sm text-slate-600 text-right">$79.800</td>
+              <td class="px-6 py-4 text-sm font-bold text-emerald-700 text-right">$14.364</td>
+              <td class="px-6 py-4 text-sm text-slate-600 text-right">$1.580</td>
+              <td class="px-6 py-4 text-sm font-bold text-slate-900 text-right">$12.784</td>
+            </tr>
+            <tr class="border-t-2 border-slate-200 bg-slate-50">
+              <td class="px-6 py-4 text-sm font-extrabold text-slate-900">Total</td>
+              <td class="px-6 py-4 text-sm font-extrabold text-slate-900 text-right">178</td>
+              <td class="px-6 py-4 text-sm font-extrabold text-slate-900 text-right">$311.000</td>
+              <td class="px-6 py-4 text-sm font-extrabold text-emerald-700 text-right">$55.980</td>
+              <td class="px-6 py-4 text-sm font-extrabold text-slate-900 text-right">$8.240</td>
+              <td class="px-6 py-4 text-sm font-extrabold text-slate-900 text-right">$47.740</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Export -->
+    <div class="flex flex-wrap gap-3 justify-end">
+      <button class="px-6 py-3 rounded-full bg-white text-slate-700 font-semibold border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition text-sm shadow-sm flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Exporter PDF
+      </button>
+      <button class="px-6 py-3 rounded-full bg-emerald-600 text-white font-bold hover:bg-emerald-700 transition shadow-sm flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Exporter XML — DGI
+      </button>
+    </div>
+  </main>
+</body>
+</html>
