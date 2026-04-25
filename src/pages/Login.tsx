@@ -163,13 +163,13 @@ const LoginForm = ({ onSwitch }: { onSwitch: () => void }) => {
         setError('');
         const user = await initiateOAuthMock(provider);
         // In mock mode, sign in with the mock email
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data: signInData, error } = await supabase.auth.signInWithPassword({
           email: user.email,
           password: '__mock_oauth__',
         });
         if (error) {
           // Mock user doesn't exist in Supabase yet — create them
-          const { data, error: signUpError } = await supabase.auth.signUp({
+          const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
             email: user.email,
             password: '__mock_oauth__',
             options: {
@@ -177,14 +177,14 @@ const LoginForm = ({ onSwitch }: { onSwitch: () => void }) => {
             },
           });
           if (signUpError) throw signUpError;
-          if (data.session) {
-            await sessionManager.createSession(data.session, data.user!);
+          if (signUpData.session) {
+            await sessionManager.createSession(signUpData.session, signUpData.user!);
             await sessionManager.regenerateSession();
             await logLoginSuccess(user.email);
             navigate('/');
           }
-        } else if (data.session) {
-          await sessionManager.createSession(data.session, data.user);
+        } else if (signInData.session) {
+          await sessionManager.createSession(signInData.session, signInData.user);
           await sessionManager.regenerateSession();
           await logLoginSuccess(user.email);
           navigate('/');

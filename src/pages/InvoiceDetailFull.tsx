@@ -97,7 +97,6 @@ const InvoiceDetailFull: React.FC = () => {
   const statutCfg = facture ? (STATUT_CONFIG[facture.statut] || STATUT_CONFIG.brouillon) : null;
 
   const handlePrint = () => { window.print(); };
-  handleDownloadPDF;
   const handleSendEmail = async () => {
     if (!clientInfo?.email) { showError('Email client non disponible'); return; }
     showSuccess(`Facture envoyee a ${clientInfo.email}`);

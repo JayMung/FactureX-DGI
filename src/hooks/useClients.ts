@@ -3,7 +3,7 @@ import { supabaseService } from '@/services/supabase';
 import { supabase } from '@/integrations/supabase/client';
 import { activityLogger } from '@/services/activityLogger';
 import { fieldLevelSecurityService } from '@/lib/security/field-level-security';
-import type { Client, ClientFilters, CreateClientData, ApiResponse } from '@/types';
+import type { Client, ClientFilters, CreateClientData, ApiResponse, PaginatedResponse } from '@/types';
 import { showSuccess, showError } from '@/utils/toast';
 
 // ============================================
@@ -13,11 +13,11 @@ import { showSuccess, showError } from '@/utils/toast';
 /**
  * Crée un hook CRUD générique pour éviter la duplication de code
  */
-function createGenericCrudHook<T, CreateData>(
+function createGenericCrudHook<T extends { id: string }, CreateData>(
   options: {
     tableName: string;
     entityName: string;
-    getAll: (page: number, pageSize: number, filters?: Record<string, any>) => Promise<ApiResponse<T[]>>;
+    getAll: (page: number, pageSize: number, filters?: Record<string, any>) => Promise<ApiResponse<PaginatedResponse<T>>>;
     getById: (id: string) => Promise<ApiResponse<T>>;
     create: (data: CreateData) => Promise<ApiResponse<T>>;
     update: (id: string, data: Partial<T>) => Promise<ApiResponse<T>>;
