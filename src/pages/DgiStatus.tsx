@@ -134,7 +134,7 @@ const DgiStatusPage: React.FC = () => {
           .from('dgi_transmissions')
           .update({
             status: result.status,
-            validated_at: result.status === 'validated' ? new Date().toISOString() : null,
+            validated_at: result.status === 'accepted' ? new Date().toISOString() : null,
           })
           .eq('id', transmission.id);
         showSuccess(`Statut DGI mis a jour: ${result.status}`);
