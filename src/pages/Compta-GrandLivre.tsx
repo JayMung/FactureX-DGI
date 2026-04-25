@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Download, ChevronLeft } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useGrandLivre, usePlanComptable, JOURNAL_COLORS } from "@/hooks/useComptabiliteOHADA";
 
 interface GLEntry {
   date: string;
@@ -101,7 +104,60 @@ export default function ComptaGrandLivre() {
   const [selectedAccount, setSelectedAccount] = useState("4111");
   const [month, setMonth] = useState("Avril 2026");
 
-  const data = glData[selectedAccount] || glData["4111"];
+  // Get companyId from current user's profile
+  const { data: currentProfile } = useQuery({
+    queryKey: ['my-profile'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return null;
+      const { data } = await supabase
+        .from('team_members')
+        .select('company_id')
+        .eq('user_id', user.id)
+        .single();
+      return data;
+    },
+  });
+
+  const companyId = currentProfile?.company_id;
+  const { data: planComptes = [] } = usePlanComptable(companyId);
+  const { data: grandLivre, isLoading: glLoading } = useGrandLivre(companyId, selectedAccount);
+
+  // Build account list from plan comptable
+  const accounts = planComptes.map((p) => ({ code: p.code, label: p.label || p.code }));
+
+  // Build GL entries from grand livre data
+  const entries = (grandLivre?.entries || []).map((e) => {
+    const color = { bg: "bg-gray-100", text: "text-gray-400" }; // fallback
+    return {
+      id: e.id,
+      date: e.date_ecriture ? new Date(e.date_ecriture).toLocaleDateString('fr-FR') : '',
+      piece: e.piece_numero || '—',
+      journal: typeof e.journaux_comptables === 'object' && e.journaux_comptables !== null
+        ? (e.journaux_comptables as { nom?: string }).nom || '—'
+        : '—',
+      journalColor: color,
+      libelle: e.libelle,
+      lettre: e.lettrage || '—',
+      debit: e.debit,
+      credit: e.credit,
+      solde: 0, // computed below
+    };
+  });
+
+  // Compute running saldo for each entry
+  let runningSolde = 0;
+  const entriesWithSolde = entries.map((e) => {
+    runningSolde += e.debit - e.credit;
+    return { ...e, solde: runningSolde };
+  });
+
+  const data = grandLivre ? {
+    totalDebit: grandLivre.total_debit,
+    totalCredit: grandLivre.total_credit,
+    solde: grandLivre.solde,
+    entries: entriesWithSolde,
+  } : { totalDebit: 0, totalCredit: 0, solde: 0, entries: [] as typeof entriesWithSolde };
 
   return (
     <div className="min-h-screen bg-gray-50">

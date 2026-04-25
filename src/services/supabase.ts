@@ -157,6 +157,44 @@ export class SupabaseService {
     }
   }
 
+  async getClientFacturesStats(clientId: string): Promise<ApiResponse<{
+    totalFacture: number;
+    totalPaye: number;
+    totalAttente: number;
+    countFactures: number;
+    countPaye: number;
+    countAttente: number;
+  }>> {
+    try {
+      const { data, error } = await supabase
+        .from('factures')
+        .select('statut, total_general, devise')
+        .eq('client_id', clientId);
+
+      if (error) throw error;
+
+      const factures = data || [];
+      const totalFacture = factures.reduce((sum, f) => sum + (f.total_general || 0), 0);
+      const payees = factures.filter(f => f.statut === 'payee' || f.statut === 'validee' || f.statut === 'Validée' || f.statut === 'Payée');
+      const attente = factures.filter(f => f.statut === 'envoyee' || f.statut === 'envoyée' || f.statut === 'Envoyée' || f.statut === 'en_attente' || f.statut === 'En attente' || f.statut === 'brouillon' || f.statut === 'Brouillon');
+      const totalPaye = payees.reduce((sum, f) => sum + (f.total_general || 0), 0);
+      const totalAttente = attente.reduce((sum, f) => sum + (f.total_general || 0), 0);
+
+      return {
+        data: {
+          totalFacture,
+          totalPaye,
+          totalAttente,
+          countFactures: factures.length,
+          countPaye: payees.length,
+          countAttente: attente.length,
+        }
+      };
+    } catch (error: any) {
+      return { error: error.message };
+    }
+  }
+
   async createClient(clientData: CreateClientData): Promise<ApiResponse<Client>> {
     try {
       const { data, error } = await supabase

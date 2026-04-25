@@ -3,233 +3,193 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Journal de Caisse — Facture Smart</title>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>Journal de Caisse - FactureSmart</title>
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Manrope', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
-          colors: {
-            primary: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#059669', 800: '#065f46', 900: '#064e3b' },
-            fx: { gray: '#F8FAFC', 'gray-100': '#F1F5F9', 'gray-200': '#E2E8F0', 'gray-300': '#CBD5E1', 'gray-500': '#64748B', 'gray-700': '#334155', 'gray-900': '#0F172A', success: '#10b981', warning: '#F59E0B', danger: '#EF4444' }
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body { font-family: 'Manrope', sans-serif; }
-    .rdc-bg { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect width='40' height='40' fill='%2310B981' fill-opacity='0.025'/%3E%3Crect x='40' y='40' width='40' height='40' fill='%2310B981' fill-opacity='0.025'/%3E%3C/svg%3E"); background-size: 80px 80px; }
-  </style>
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
-<body class="bg-gray-50 min-h-screen rdc-bg">
+<body class="bg-gray-50 font-sans">
 
-  <header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-    <div class="flex items-center justify-between px-6 py-3">
-      <div class="flex items-center gap-3">
-        <a href="index.html" class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-fx-gray-500 hover:bg-gray-200 transition-colors">
-          <i class="ri-arrow-left-line text-lg"></i>
-        </a>
+  <div class="flex min-h-screen">
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-20"><!-- sidebar omitted for brevity --></aside>
+
+    <main class="ml-64 flex-1 p-6">
+
+      <!-- Breadcrumb -->
+      <div class="flex items-center gap-2 text-sm text-gray-400 mb-6">
+        <a href="#" class="hover:text-gray-600">Caisse</a>
+        <i class="ri-arrow-right-s-line"></i>
+        <span class="text-gray-700 font-medium">Journal de Caisse</span>
+      </div>
+
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Journal de Caisse</h1>
+          <p class="text-sm text-gray-500 mt-1">Historique des mouvements de la caisse</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">
+            <i class="ri-filter-3-line"></i>
+            Filtres
+          </button>
+          <button class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700">
+            <i class="ri-printer-line"></i>
+            Exporter
+          </button>
+        </div>
+      </div>
+
+      <!-- Filtres rapides -->
+      <div class="bg-white rounded-xl border border-gray-200 p-4 mb-6 flex items-center gap-4 flex-wrap">
         <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center shadow-sm">
-            <i class="ri-money-dollar-circle-line text-white text-sm"></i>
-          </div>
-          <span class="text-base font-extrabold text-fx-gray-900">Facture<span class="text-primary-600">X</span></span>
-          <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">Caisse</span>
+          <i class="ri-calendar-line text-gray-400 text-sm"></i>
+          <input type="date" value="2025-01-15" class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500" />
         </div>
-      </div>
-      <div class="flex items-center gap-3">
-        <div class="text-xs text-fx-gray-500 font-mono bg-gray-100 px-3 py-1.5 rounded-lg">23/04/2026</div>
-        <div class="flex items-center gap-1.5 text-xs font-semibold text-green-600 bg-green-50 px-3 py-1.5 rounded-lg">
-          <i class="ri-checkbox-circle-line"></i>
-          Session ouverte
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <div class="p-4 md:p-6 space-y-5">
-
-    <!-- Live balance -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-      <div class="bg-white rounded-2xl border-2 border-green-200 p-4 shadow-sm">
-        <div class="text-xs text-fx-gray-500 mb-1">Solde actuel</div>
-        <div class="text-xl font-extrabold text-green-600 font-mono">247 350 CDF</div>
-        <div class="text-xs text-fx-gray-400 mt-1">En temps réel</div>
-      </div>
-      <div class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
-        <div class="text-xs text-fx-gray-500 mb-1">Ventes du jour</div>
-        <div class="text-xl font-extrabold text-fx-gray-900 font-mono">189 400 CDF</div>
-        <div class="text-xs text-fx-gray-400 mt-1">34 transactions</div>
-      </div>
-      <div class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
-        <div class="text-xs text-fx-gray-500 mb-1">Retraits</div>
-        <div class="text-xl font-extrabold text-red-600 font-mono">-12 050 CDF</div>
-        <div class="text-xs text-fx-gray-400 mt-1">5 retraits</div>
-      </div>
-      <div class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
-        <div class="text-xs text-fx-gray-500 mb-1">Ouverture</div>
-        <div class="text-xl font-extrabold text-fx-gray-900 font-mono">70 000 CDF</div>
-        <div class="text-xs text-fx-gray-400 mt-1">Fonds initial</div>
-      </div>
-    </div>
-
-    <!-- Totals by payment mode -->
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-      <div class="text-sm font-bold text-fx-gray-900 mb-3">Totaux par mode de paiement</div>
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
-        <div class="bg-green-50 rounded-xl p-3 text-center">
-          <div class="text-2xl mb-1">💵</div>
-          <div class="text-xs text-fx-gray-500 mb-1">Espèces</div>
-          <div class="text-lg font-extrabold text-green-700 font-mono">142 800 CDF</div>
-        </div>
-        <div class="bg-blue-50 rounded-xl p-3 text-center">
-          <div class="text-2xl mb-1">📱</div>
-          <div class="text-xs text-fx-gray-500 mb-1">M-Pesa</div>
-          <div class="text-lg font-extrabold text-blue-700 font-mono">28 400 CDF</div>
-        </div>
-        <div class="bg-orange-50 rounded-xl p-3 text-center">
-          <div class="text-2xl mb-1">📲</div>
-          <div class="text-xs text-fx-gray-500 mb-1">Airtel Money</div>
-          <div class="text-lg font-extrabold text-orange-700 font-mono">12 200 CDF</div>
-        </div>
-        <div class="bg-purple-50 rounded-xl p-3 text-center">
-          <div class="text-2xl mb-1">🏦</div>
-          <div class="text-xs text-fx-gray-500 mb-1">Virement</div>
-          <div class="text-lg font-extrabold text-purple-700 font-mono">6 000 CDF</div>
-        </div>
-        <div class="bg-gray-100 rounded-xl p-3 text-center">
-          <div class="text-2xl mb-1">🔄</div>
-          <div class="text-xs text-fx-gray-500 mb-1">Mixte</div>
-          <div class="text-lg font-extrabold text-fx-gray-700 font-mono">0 CDF</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Filters -->
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-      <div class="flex flex-wrap gap-3 items-center">
-        <div class="flex items-center gap-2 text-sm font-semibold text-fx-gray-700">
-          <i class="ri-filter-3-line text-primary-500"></i>
-          Filtrer
-        </div>
-        <select class="px-3 py-2 rounded-xl border border-gray-200 text-xs font-medium text-fx-gray-700 bg-white">
-          <option>Toutes opérations</option>
+        <span class="text-gray-300">—</span>
+        <input type="date" value="2025-01-15" class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500" />
+        
+        <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+          <option>Tous les types</option>
           <option>Ventes</option>
-          <option>Retraits</option>
-          <option>Dépôts</option>
-          <option>Remboursements</option>
+          <option>Entrées</option>
+          <option>Sorties</option>
+          <option>Transferts</option>
         </select>
-        <select class="px-3 py-2 rounded-xl border border-gray-200 text-xs font-medium text-fx-gray-700 bg-white">
-          <option>Jean-Pierre K.</option>
-          <option>Marie L.</option>
-          <option>Tous opérateurs</option>
-        </select>
-        <button class="ml-auto px-4 py-2 rounded-xl border border-gray-200 text-fx-gray-600 text-xs font-semibold flex items-center gap-2 hover:bg-gray-50 transition-colors">
-          <i class="ri-download-line"></i>
-          Exporter
-        </button>
-      </div>
-    </div>
 
-    <!-- Operations list -->
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-      <div class="overflow-x-auto">
-        <table class="w-full text-xs">
+        <div class="ml-auto text-sm text-gray-500">
+          <span class="font-medium text-gray-900">24</span> mouvements
+        </div>
+      </div>
+
+      <!-- Session info -->
+      <div class="bg-green-50 border border-green-200 rounded-xl p-3 mb-6 flex items-center gap-3 text-sm">
+        <i class="ri-information-line text-green-600"></i>
+        <span class="text-green-700">Session ouverte depuis 08:30 — Solde actuel: <strong>385 000 FC</strong></span>
+      </div>
+
+      <!-- Table -->
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <table class="w-full">
           <thead>
-            <tr class="bg-gray-50 border-b border-gray-100 text-fx-gray-400 uppercase tracking-wider text-[10px] font-bold">
-              <th class="text-left px-4 py-3">Heure</th>
-              <th class="text-left px-4 py-3">Type</th>
-              <th class="text-left px-4 py-3">Référence</th>
-              <th class="text-left px-4 py-3">Libellé</th>
-              <th class="text-center px-4 py-3">Mode</th>
-              <th class="text-right px-4 py-3">Entrée ($)</th>
-              <th class="text-right px-4 py-3">Sortie ($)</th>
-              <th class="text-right px-4 py-3">Solde ($)</th>
+            <tr class="bg-gray-50 border-b border-gray-200">
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Date / Heure</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Type</th>
+              <th class="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Description</th>
+              <th class="text-right px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Entrées</th>
+              <th class="text-right px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Sorties</th>
+              <th class="text-right px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Solde</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-50">
-            <!-- Opening -->
-            <tr class="bg-gray-50">
-              <td colspan="8" class="px-4 py-2 text-[10px] font-bold text-fx-gray-400 uppercase tracking-wider">— Ouverture de caisse 08:00 · Jean-Pierre K. · Solde: 70 000 CDF</td>
-            </tr>
+          <tbody class="divide-y divide-gray-100">
+            <!-- Ligne 1 -->
             <tr class="hover:bg-gray-50 transition-colors">
-              <td class="px-4 py-3 font-mono font-semibold text-fx-gray-900 whitespace-nowrap">08:12</td>
-              <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-700">Vente</span></td>
-              <td class="px-4 py-3 font-mono text-fx-gray-500">FAC-0145</td>
-              <td class="px-4 py-3 text-fx-gray-700 max-w-[150px] truncate">Paiement Mme NKosi — Articles divers</td>
-              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-50 text-green-700">💵 Esp.</span></td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-green-600">4 200</td>
-              <td class="px-4 py-3 text-right font-mono text-fx-gray-400">—</td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-fx-gray-900">74 200</td>
+              <td class="px-4 py-3">
+                <p class="text-sm font-medium text-gray-900">15/01/2025</p>
+                <p class="text-xs text-gray-400">10:30</p>
+              </td>
+              <td class="px-4 py-3">
+                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-700">
+                  <i class="ri-shopping-cart-line"></i>
+                  Vente
+                </span>
+              </td>
+              <td class="px-4 py-3">
+                <p class="text-sm text-gray-700">Facture FACT-2025-001</p>
+                <p class="text-xs text-gray-400">Client: Jean Kazadi</p>
+              </td>
+              <td class="px-4 py-3 text-right text-sm font-medium text-green-600">+ 45 000 FC</td>
+              <td class="px-4 py-3 text-right text-sm text-gray-400">—</td>
+              <td class="px-4 py-3 text-right text-sm font-medium text-gray-900">335 000 FC</td>
             </tr>
+            <!-- Ligne 2 -->
             <tr class="hover:bg-gray-50 transition-colors">
-              <td class="px-4 py-3 font-mono font-semibold text-fx-gray-900 whitespace-nowrap">08:34</td>
-              <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-700">Vente</span></td>
-              <td class="px-4 py-3 font-mono text-fx-gray-500">FAC-0146</td>
-              <td class="px-4 py-3 text-fx-gray-700 max-w-[150px] truncate">Mr Kabongo — Accessoires téléphone</td>
-              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700">📱 M-Pesa</span></td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-green-600">8 500</td>
-              <td class="px-4 py-3 text-right font-mono text-fx-gray-400">—</td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-fx-gray-900">82 700</td>
+              <td class="px-4 py-3">
+                <p class="text-sm font-medium text-gray-900">15/01/2025</p>
+                <p class="text-xs text-gray-400">11:15</p>
+              </td>
+              <td class="px-4 py-3">
+                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-green-50 text-green-700">
+                  <i class="ri-funds-line"></i>
+                  Entrée
+                </span>
+              </td>
+              <td class="px-4 py-3">
+                <p class="text-sm text-gray-700">Remboursement fournisseur</p>
+                <p class="text-xs text-gray-400">Espèces</p>
+              </td>
+              <td class="px-4 py-3 text-right text-sm font-medium text-green-600">+ 15 000 FC</td>
+              <td class="px-4 py-3 text-right text-sm text-gray-400">—</td>
+              <td class="px-4 py-3 text-right text-sm font-medium text-gray-900">350 000 FC</td>
             </tr>
+            <!-- Ligne 3 -->
             <tr class="hover:bg-gray-50 transition-colors">
-              <td class="px-4 py-3 font-mono font-semibold text-fx-gray-900 whitespace-nowrap">09:05</td>
-              <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-700">Retrait</span></td>
-              <td class="px-4 py-3 font-mono text-fx-gray-500">RET-0042</td>
-              <td class="px-4 py-3 text-fx-gray-700 max-w-[150px] truncate">Approvisionnement rawbank</td>
-              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-50 text-red-700">💸 Retrait</span></td>
-              <td class="px-4 py-3 text-right font-mono text-fx-gray-400">—</td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-red-600">5 000</td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-fx-gray-900">77 700</td>
+              <td class="px-4 py-3">
+                <p class="text-sm font-medium text-gray-900">15/01/2025</p>
+                <p class="text-xs text-gray-400">14:00</p>
+              </td>
+              <td class="px-4 py-3">
+                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-red-50 text-red-700">
+                  <i class="ri-funds-line ri-flip-h"></i>
+                  Sortie
+                </span>
+              </td>
+              <td class="px-4 py-3">
+                <p class="text-sm text-gray-700">Petites dépenses</p>
+                <p class="text-xs text-gray-400">Transport</p>
+              </td>
+              <td class="px-4 py-3 text-right text-sm text-gray-400">—</td>
+              <td class="px-4 py-3 text-right text-sm font-medium text-red-600">- 15 000 FC</td>
+              <td class="px-4 py-3 text-right text-sm font-medium text-gray-900">335 000 FC</td>
             </tr>
+            <!-- Ligne 4 -->
             <tr class="hover:bg-gray-50 transition-colors">
-              <td class="px-4 py-3 font-mono font-semibold text-fx-gray-900 whitespace-nowrap">10:22</td>
-              <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-700">Vente</span></td>
-              <td class="px-4 py-3 font-mono text-fx-gray-500">FAC-0147</td>
-              <td class="px-4 py-3 text-fx-gray-700 max-w-[150px] truncate">Asbl Renaissance — Fournitures bureau</td>
-              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-50 text-orange-700">📲 Airtel</span></td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-green-600">12 200</td>
-              <td class="px-4 py-3 text-right font-mono text-fx-gray-400">—</td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-fx-gray-900">89 900</td>
-            </tr>
-            <tr class="hover:bg-gray-50 transition-colors">
-              <td class="px-4 py-3 font-mono font-semibold text-fx-gray-900 whitespace-nowrap">11:45</td>
-              <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-700">Dépôt</span></td>
-              <td class="px-4 py-3 font-mono text-fx-gray-500">DEP-0018</td>
-              <td class="px-4 py-3 text-fx-gray-700 max-w-[150px] truncate">Dépôt Rawbank — dépôt espèces</td>
-              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 text-purple-700">🏦 Virement</span></td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-green-600">6 000</td>
-              <td class="px-4 py-3 text-right font-mono text-fx-gray-400">—</td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-fx-gray-900">95 900</td>
-            </tr>
-            <tr class="hover:bg-gray-50 transition-colors">
-              <td class="px-4 py-3 font-mono font-semibold text-fx-gray-900 whitespace-nowrap">12:30</td>
-              <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-700">Retrait</span></td>
-              <td class="px-4 py-3 font-mono text-fx-gray-500">RET-0043</td>
-              <td class="px-4 py-3 text-fx-gray-700 max-w-[150px] truncate">Achat fournisseur — Tropic Shop</td>
-              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-50 text-red-700">💸 Retrait</span></td>
-              <td class="px-4 py-3 text-right font-mono text-fx-gray-400">—</td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-red-600">7 050</td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-fx-gray-900">88 850</td>
+              <td class="px-4 py-3">
+                <p class="text-sm font-medium text-gray-900">15/01/2025</p>
+                <p class="text-xs text-gray-400">08:30</p>
+              </td>
+              <td class="px-4 py-3">
+                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-purple-50 text-purple-700">
+                  <i class="ri-arrow-left-right-line"></i>
+                  Transfert
+                </span>
+              </td>
+              <td class="px-4 py-3">
+                <p class="text-sm text-gray-700">Dépôt banque</p>
+                <p class="text-xs text-gray-400">Vers compte BCDC</p>
+              </td>
+              <td class="px-4 py-3 text-right text-sm text-gray-400">—</td>
+              <td class="px-4 py-3 text-right text-sm font-medium text-red-600">- 100 000 FC</td>
+              <td class="px-4 py-3 text-right text-sm font-medium text-gray-900">235 000 FC</td>
             </tr>
           </tbody>
+          <tfoot class="bg-gray-50 border-t-2 border-gray-200">
+            <tr>
+              <td colspan="3" class="px-4 py-3 text-sm font-semibold text-gray-700">Totaux</td>
+              <td class="px-4 py-3 text-right text-sm font-semibold text-green-600">+ 60 000 FC</td>
+              <td class="px-4 py-3 text-right text-sm font-semibold text-red-600">- 115 000 FC</td>
+              <td class="px-4 py-3 text-right text-sm font-bold text-gray-900">385 000 FC</td>
+            </tr>
+          </tfoot>
         </table>
       </div>
-      <div class="px-4 py-3 border-t border-gray-100 flex items-center justify-between">
-        <span class="text-xs text-fx-gray-400">34 opérations aujourd'hui</span>
+
+      <!-- Pagination -->
+      <div class="flex items-center justify-between mt-4">
+        <p class="text-sm text-gray-500">Page 1 sur 3</p>
         <div class="flex items-center gap-2">
-          <button class="px-3 py-1.5 rounded-lg bg-gray-100 text-fx-gray-400 text-xs font-semibold">Préc.</button>
-          <button class="px-3 py-1.5 rounded-lg bg-primary-500 text-white text-xs font-bold">1</button>
-          <button class="px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-fx-gray-600 text-xs font-semibold">2</button>
-          <button class="px-3 py-1.5 rounded-lg bg-gray-100 text-fx-gray-600 text-xs font-semibold">Suiv.</button>
+          <button class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm text-gray-500 hover:bg-gray-50 disabled:opacity-50" disabled>
+            <i class="ri-arrow-left-s-line"></i>
+          </button>
+          <button class="px-3 py-1.5 bg-green-600 text-white rounded-lg text-sm font-medium">1</button>
+          <button class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50">2</button>
+          <button class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50">3</button>
+          <button class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm text-gray-500 hover:bg-gray-50">
+            <i class="ri-arrow-right-s-line"></i>
+          </button>
         </div>
       </div>
-    </div>
 
+    </main>
   </div>
 
 </body>

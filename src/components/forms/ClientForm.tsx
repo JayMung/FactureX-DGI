@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, Save, X } from 'lucide-react';
+import { Loader2, Save, X, Mail, StickyNote } from 'lucide-react';
 import type { Client, CreateClientData } from '@/types';
 import { useClients } from '@/hooks/useClients';
 import { showSuccess, showError } from '@/utils/toast';
@@ -35,9 +35,11 @@ const ClientForm: React.FC<ClientFormProps> = ({
   const [formData, setFormData] = useState<CreateClientData>({
     nom: client?.nom || '',
     telephone: client?.telephone || '',
+    email: client?.email || '',
     ville: client?.ville || '',
     adresse: client?.adresse || '',
     nif: client?.nif || '',
+    notes: client?.notes || '',
     type: client?.type || 'particulier'
   });
   
@@ -53,18 +55,22 @@ const ClientForm: React.FC<ClientFormProps> = ({
       setFormData({
         nom: client.nom || '',
         telephone: client.telephone || '',
+        email: client.email || '',
         ville: client.ville || '',
         adresse: client.adresse || '',
         nif: client.nif || '',
+        notes: client.notes || '',
         type: client.type || 'particulier'
       });
     } else {
       setFormData({
         nom: '',
         telephone: '',
+        email: '',
         ville: '',
         adresse: '',
         nif: '',
+        notes: '',
         type: 'particulier'
       });
     }
@@ -115,13 +121,21 @@ const ClientForm: React.FC<ClientFormProps> = ({
       }
     }
 
+    // Email validation (optional but if provided, must be valid format)
+    if (formData.email && formData.email.trim()) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email.trim())) {
+        newErrors.email = 'Format email invalide';
+      }
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     try {
@@ -129,9 +143,11 @@ const ClientForm: React.FC<ClientFormProps> = ({
       const dataToSave = {
         nom: sanitizeClientName(capitalizeWords(formData.nom.trim())),
         telephone: sanitizePhoneNumber(formData.telephone.trim()),
+        ...(formData.email && { email: formData.email.trim().toLowerCase() }),
         ville: sanitizeCityName(formData.ville.trim()),
         ...(formData.adresse && { adresse: formData.adresse.trim() }),
         ...(formData.nif && { nif: formData.nif.trim() }),
+        ...(formData.notes && { notes: formData.notes.trim() }),
         ...(formData.type && { type: formData.type })
       };
 
@@ -140,11 +156,11 @@ const ClientForm: React.FC<ClientFormProps> = ({
       } else {
         await createClient(dataToSave);
       }
-      
+
       onSuccess?.();
       onClose();
       // Reset form
-      setFormData({ nom: '', telephone: '', ville: '', adresse: '', nif: '', type: 'particulier' });
+      setFormData({ nom: '', telephone: '', email: '', ville: '', adresse: '', nif: '', notes: '', type: 'particulier' });
       setErrors({});
     } catch (error: any) {
       // Gestion spécifique pour les doublons
@@ -223,6 +239,25 @@ const ClientForm: React.FC<ClientFormProps> = ({
             </div>
 
             <div className="space-y-2">
+              <Label htmlFor="email" className="flex items-center gap-2">
+                <Mail className="h-4 w-4 opacity-50" />
+                Email (optionnel)
+              </Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="contact@exemple.cd"
+                className={errors.email ? 'border-red-500' : ''}
+              />
+              {errors.email && (
+                <p className="text-sm text-red-600">{errors.email}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="type">Type de client</Label>
               <select
                 id="type"
@@ -277,6 +312,22 @@ const ClientForm: React.FC<ClientFormProps> = ({
               {errors.ville && (
                 <p className="text-sm text-red-600">{errors.ville}</p>
               )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="notes" className="flex items-center gap-2">
+                <StickyNote className="h-4 w-4 opacity-50" />
+                Notes (optionnel)
+              </Label>
+              <textarea
+                id="notes"
+                name="notes"
+                value={formData.notes}
+                onChange={handleChange as any}
+                placeholder="Notes internes sur ce client..."
+                rows={3}
+                className="w-full border rounded-md px-3 py-2 text-sm bg-background resize-none"
+              />
             </div>
 
             <div className="flex space-x-3 pt-4">

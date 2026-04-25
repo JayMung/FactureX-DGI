@@ -1,32 +1,13 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Eye, Download, Filter, ChevronLeft, ChevronRight } from "lucide-react";
-
-interface JournalEntry {
-  date: string;
-  piece: string;
-  compte: string;
-  compteLabel: string;
-  libelle: string;
-  journal: string;
-  journalColor: { bg: string; text: string };
-  debit: number;
-  credit: number;
-}
-
-const journalEntries: JournalEntry[] = [
-  { date: "23/04/2026", piece: "FAC-2026-0142", compte: "4111", compteLabel: "Clients — facturas", libelle: "Facture n° FAC-2026-0142 — Congo Tech SARL", journal: "Ventes", journalColor: { bg: "bg-blue-50", text: "text-blue-700" }, debit: 1463.20, credit: 0 },
-  { date: "23/04/2026", piece: "FAC-2026-0142", compte: "7011", compteLabel: "Ventes de marchandises", libelle: "TVA collectée sur FAC-2026-0142", journal: "Ventes", journalColor: { bg: "bg-blue-50", text: "text-blue-700" }, debit: 0, credit: 1463.20 },
-  { date: "23/04/2026", piece: "ACH-2026-0089", compte: "6011", compteLabel: "Achats stockés", libelle: "Achat fournisseur — Congo Distribution", journal: "Achats", journalColor: { bg: "bg-orange-50", text: "text-orange-700" }, debit: 850.00, credit: 0 },
-  { date: "23/04/2026", piece: "ACH-2026-0089", compte: "4011", compteLabel: "Fournisseurs", libelle: "TVA récupérable sur ACH-2026-0089", journal: "Achats", journalColor: { bg: "bg-orange-50", text: "text-orange-700" }, debit: 153.00, credit: 0 },
-  { date: "23/04/2026", piece: "ACH-2026-0089", compte: "4011", compteLabel: "Fournisseurs", libelle: "Dette fournisseur Congo Distribution", journal: "Achats", journalColor: { bg: "bg-orange-50", text: "text-orange-700" }, debit: 0, credit: 1003.00 },
-  { date: "22/04/2026", piece: "OD-2026-0045", compte: "6351", compteLabel: "Impôts et taxes", libelle: "Liquidation TVA mensuelle — Mars 2026", journal: "OD", journalColor: { bg: "bg-indigo-50", text: "text-indigo-700" }, debit: 12450.00, credit: 0 },
-  { date: "22/04/2026", piece: "OD-2026-0045", compte: "4452", compteLabel: "TVA due", libelle: "Crédit TVA à reporter — Avril 2026", journal: "OD", journalColor: { bg: "bg-indigo-50", text: "text-indigo-700" }, debit: 0, credit: 12450.00 },
-  { date: "21/04/2026", piece: "TRESO-0089", compte: "5711", compteLabel: "Caisse principale", libelle: "Encaissement M-Pesa — Client Kin Import", journal: "Trésorerie", journalColor: { bg: "bg-green-50", text: "text-green-700" }, debit: 14520.00, credit: 0 },
-  { date: "21/04/2026", piece: "TRESO-0089", compte: "4111", compteLabel: "Clients", libelle: "Règlement Kin Import SARL — M-Pesa", journal: "Trésorerie", journalColor: { bg: "bg-green-50", text: "text-green-700" }, debit: 0, credit: 14520.00 },
-  { date: "20/04/2026", piece: "FAC-2026-0141", compte: "4111", compteLabel: "Clients — facturas", libelle: "Facture n° FAC-2026-0141 — Africaplast SPRL", journal: "Ventes", journalColor: { bg: "bg-blue-50", text: "text-blue-700" }, debit: 8900.00, credit: 0 },
-  { date: "20/04/2026", piece: "FAC-2026-0141", compte: "7011", compteLabel: "Ventes de marchandises", libelle: "TVA collectée FAC-2026-0141", journal: "Ventes", journalColor: { bg: "bg-blue-50", text: "text-blue-700" }, debit: 0, credit: 1602.00 },
-  { date: "20/04/2026", piece: "FAC-2026-0141", compte: "4451", compteLabel: "TVA collectée", libelle: "TVA collectée FAC-2026-0141", journal: "Ventes", journalColor: { bg: "bg-blue-50", text: "text-blue-700" }, debit: 0, credit: 8900.00 },
-];
+import { supabase } from "@/integrations/supabase/client";
+import {
+  useEcrituresComptables,
+  useJournauxComptables,
+  useExerciceCourant,
+  JOURNAL_COLORS,
+} from "@/hooks/useComptabiliteOHADA";
 
 const PAGE_SIZE = 8;
 
@@ -34,15 +15,60 @@ function fmt(n: number) {
   return n.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
+function getJournalColor(journalType?: string): { bg: string; text: string } {
+  if (!journalType) return { bg: "bg-gray-50", text: "text-gray-600" };
+  const colors = JOURNAL_COLORS[journalType];
+  return colors ? { bg: colors.bg, text: colors.text } : { bg: "bg-gray-50", text: "text-gray-600" };
+}
+
 export default function ComptaJournal() {
   const [month, setMonth] = useState("Avril 2026");
-  const [journalType, setJournalType] = useState("Tous les journaux");
+  const [journalFilter, setJournalFilter] = useState("Tous les journaux");
   const [pieceFilter, setPieceFilter] = useState("");
   const [page, setPage] = useState(1);
 
+  // Get companyId from current user's profile
+  const { data: currentProfile } = useQuery({
+    queryKey: ['my-profile'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return null;
+      const { data } = await supabase
+        .from('team_members')
+        .select('company_id')
+        .eq('user_id', user.id)
+        .single();
+      return data;
+    },
+  });
+
+  const companyId = currentProfile?.company_id;
+  const { data: ecritures = [], isLoading: ecrituresLoading } = useEcrituresComptables(companyId);
+  const { data: journaux = [] } = useJournauxComptables();
+
+  // Map ecritures to display entries with journal colors
+  const journalEntries = ecritures.map((e) => {
+    const journal = journaux.find((j) => j.id === e.journal_id);
+    const color = getJournalColor(journal?.type);
+    return {
+      id: e.id,
+      date: e.date_ecriture ? new Date(e.date_ecriture).toLocaleDateString('fr-FR') : '',
+      piece: e.piece_numero,
+      compte: e.compte_code,
+      compteLabel: typeof e.plan_comptable === 'object' && e.plan_comptable !== null
+        ? (e.plan_comptable as { label?: string }).label || e.compte_code
+        : e.compte_code,
+      libelle: e.libelle,
+      journal: journal?.nom || e.journal_id,
+      journalColor: color,
+      debit: e.debit,
+      credit: e.credit,
+    };
+  });
+
   const filtered = journalEntries.filter((e) => {
     const matchPiece = !pieceFilter || e.piece.toLowerCase().includes(pieceFilter.toLowerCase());
-    const matchJournal = journalType === "Tous les journaux" || e.journal === journalType;
+    const matchJournal = journalFilter === "Tous les journaux" || e.journal === journalFilter;
     return matchPiece && matchJournal;
   });
 
@@ -50,6 +76,8 @@ export default function ComptaJournal() {
   const totalCredit = filtered.reduce((s, e) => s + e.credit, 0);
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  const journalOptions = ["Tous les journaux", ...journaux.map((j) => j.nom)];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -69,77 +97,50 @@ export default function ComptaJournal() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center gap-1.5 text-xs text-gray-500 bg-gray-100 px-3 py-1.5 rounded-lg">
-              <i className="ri-shield-check-line text-indigo-500" />
-              <span className="font-semibold">Conforme SYSCOHADA</span>
-            </div>
-            <button className="px-4 py-2 rounded-xl bg-green-600 text-white text-sm font-bold flex items-center gap-2 hover:bg-green-700 transition-colors shadow-sm">
-              <i className="ri-add-line" />
-              Nouvelle écriture
+            <button className="px-4 py-2 rounded-xl border border-gray-200 text-gray-600 text-xs font-semibold flex items-center gap-2 hover:bg-gray-50 transition-colors">
+              <Download className="w-4 h-4" />
+              Exporter
             </button>
           </div>
         </div>
       </header>
 
       <div className="p-6 space-y-6">
-        {/* Summary */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { label: "Total débit", value: `${fmt(totalDebit)} $` },
-            { label: "Total crédit", value: `${fmt(totalCredit)} $` },
-            { label: "Écritures (exercice)", value: "1 428" },
-            { label: "Période", value: "Jan — Déc 2026" },
-          ].map((s) => (
-            <div key={s.label} className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
-              <div className="text-xs text-gray-500 mb-1">{s.label}</div>
-              <div className="text-xl font-extrabold text-gray-900 font-mono">{s.value}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Filters */}
+        {/* Filter bar */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
           <div className="flex flex-wrap gap-3 items-center">
             <div className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-              <Filter className="w-4 h-4 text-green-600" />
+              <i className="ri-filter-3-line text-green-600" />
               Filtres
             </div>
             <select
               value={month}
               onChange={(e) => setMonth(e.target.value)}
-              className="px-3 py-2.5 rounded-xl border border-gray-200 text-xs font-medium text-gray-700 bg-white"
+              className="px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-bold text-gray-900 bg-white"
             >
-              {["Janvier 2026", "Février 2026", "Mars 2026", "Avril 2026"].map((m) => (
-                <option key={m}>{m}</option>
+              {["Janvier 2026", "Février 2026", "Mars 2026", "Avril 2026"].map((p) => (
+                <option key={p}>{p}</option>
               ))}
             </select>
             <select
-              value={journalType}
-              onChange={(e) => setJournalType(e.target.value)}
-              className="px-3 py-2.5 rounded-xl border border-gray-200 text-xs font-medium text-gray-700 bg-white"
+              value={journalFilter}
+              onChange={(e) => { setJournalFilter(e.target.value); setPage(1); }}
+              className="px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-700 bg-white"
             >
-              {["Tous les journaux", "Journal des ventes", "Journal des achats", "Journal de trésorerie", "Journal OD"].map((j) => (
+              {journalOptions.map((j) => (
                 <option key={j}>{j}</option>
               ))}
             </select>
-            <input
-              type="text"
-              placeholder="N° de pièce..."
-              value={pieceFilter}
-              onChange={(e) => setPieceFilter(e.target.value)}
-              className="px-3 py-2.5 rounded-xl border border-gray-200 text-xs font-medium text-gray-700 bg-white w-36"
-            />
-            <button
-              onClick={() => setPage(1)}
-              className="px-4 py-2.5 rounded-xl bg-green-50 text-green-700 text-xs font-bold flex items-center gap-2 hover:bg-green-100 transition-colors"
-            >
-              <Filter className="w-3 h-3" />
-              Appliquer
-            </button>
-            <button className="ml-auto px-4 py-2.5 rounded-xl border border-gray-200 text-gray-600 text-xs font-semibold flex items-center gap-2 hover:bg-gray-50 transition-colors">
-              <Download className="w-4 h-4" />
-              Exporter
-            </button>
+            <div className="flex-1 min-w-[200px] relative">
+              <Filter className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <input
+                type="text"
+                placeholder="Filtrer par n° pièce..."
+                value={pieceFilter}
+                onChange={(e) => { setPieceFilter(e.target.value); setPage(1); }}
+                className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm bg-white"
+              />
+            </div>
           </div>
         </div>
 
@@ -151,85 +152,91 @@ export default function ComptaJournal() {
                 <tr className="bg-gray-50 border-b border-gray-100 text-gray-400 uppercase tracking-wider text-[10px] font-bold">
                   <th className="text-left px-4 py-3">Date</th>
                   <th className="text-left px-4 py-3">N° Pièce</th>
+                  <th className="text-left px-4 py-3">Journal</th>
                   <th className="text-left px-4 py-3">Compte</th>
                   <th className="text-left px-4 py-3">Libellé</th>
-                  <th className="text-left px-4 py-3">Journal</th>
-                  <th className="text-right px-4 py-3">Débit ($)</th>
-                  <th className="text-right px-4 py-3">Crédit ($)</th>
-                  <th className="text-center px-4 py-3">Actions</th>
+                  <th className="text-right px-4 py-3">Débit</th>
+                  <th className="text-right px-4 py-3">Crédit</th>
+                  <th className="text-center px-4 py-3">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
-                {paginated.map((entry, idx) => (
-                  <tr
-                    key={`${entry.piece}-${entry.compte}-${idx}`}
-                    className={`hover:bg-gray-50 transition-colors ${idx % 2 === 1 ? "bg-gray-50/50" : ""}`}
-                  >
-                    <td className="px-4 py-3 font-mono font-semibold text-gray-900 whitespace-nowrap">{entry.date}</td>
-                    <td className="px-4 py-3 font-mono text-gray-600">{entry.piece}</td>
-                    <td className="px-4 py-3">
-                      <div className="font-mono font-semibold text-gray-900">{entry.compte}</div>
-                      <div className="text-[10px] text-gray-400">{entry.compteLabel}</div>
-                    </td>
-                    <td className="px-4 py-3 text-gray-700 max-w-xs truncate">{entry.libelle}</td>
-                    <td className="px-4 py-3">
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${entry.journalColor.bg} ${entry.journalColor.text}`}>
-                        {entry.journal}
-                      </span>
-                    </td>
-                    <td className={`px-4 py-3 text-right font-mono font-bold ${entry.debit > 0 ? "text-gray-900" : "text-gray-300"}`}>
-                      {entry.debit > 0 ? fmt(entry.debit) : "—"}
-                    </td>
-                    <td className={`px-4 py-3 text-right font-mono font-bold ${entry.credit > 0 ? "text-gray-900" : "text-gray-300"}`}>
-                      {entry.credit > 0 ? fmt(entry.credit) : "—"}
-                    </td>
-                    <td className="px-4 py-3 text-center">
-                      <button className="text-gray-400 hover:text-green-600">
-                        <Eye className="w-4 h-4" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-                {paginated.length === 0 && (
+                {ecrituresLoading ? (
                   <tr>
-                    <td colSpan={8} className="py-8 text-center text-gray-400 text-sm">
-                      Aucune écriture trouvée
+                    <td colSpan={8} className="py-12 text-center text-gray-400">
+                      <div className="flex justify-center"><div className="animate-spin h-6 w-6 border-2 border-green-500 border-t-transparent rounded-full" /></div>
                     </td>
                   </tr>
+                ) : paginated.length === 0 ? (
+                  <tr>
+                    <td colSpan={8} className="py-8 text-center text-gray-400 text-sm">Aucune écriture trouvée</td>
+                  </tr>
+                ) : (
+                  paginated.map((e) => (
+                    <tr key={e.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-4 py-3 text-gray-700 font-medium">{e.date}</td>
+                      <td className="px-4 py-3 font-mono font-bold text-gray-900">{e.piece}</td>
+                      <td className="px-4 py-3">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${e.journalColor.bg} ${e.journalColor.text}`}>
+                          {e.journal}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="font-mono font-bold text-gray-900">{e.compte}</span>
+                        <span className="ml-2 text-gray-400 text-[10px]">{e.compteLabel}</span>
+                      </td>
+                      <td className="px-4 py-3 text-gray-700">{e.libelle}</td>
+                      <td className={`px-4 py-3 text-right font-mono font-semibold ${e.debit > 0 ? "text-gray-900" : "text-gray-300"}`}>
+                        {e.debit > 0 ? fmt(e.debit) : "—"}
+                      </td>
+                      <td className={`px-4 py-3 text-right font-mono font-semibold ${e.credit > 0 ? "text-gray-900" : "text-gray-300"}`}>
+                        {e.credit > 0 ? fmt(e.credit) : "—"}
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        <button className="text-gray-400 hover:text-green-600">
+                          <Eye className="w-4 h-4" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
                 )}
               </tbody>
+              <tfoot className="bg-gray-50 border-t-2 border-gray-200">
+                <tr>
+                  <td colSpan={5} className="px-4 py-3 text-xs font-extrabold text-gray-900">TOTAUX</td>
+                  <td className="px-4 py-3 text-right font-mono font-extrabold text-gray-900">{fmt(totalDebit)}</td>
+                  <td className="px-4 py-3 text-right font-mono font-extrabold text-gray-900">{fmt(totalCredit)}</td>
+                  <td />
+                </tr>
+              </tfoot>
             </table>
           </div>
-          <div className="px-4 py-3 border-t border-gray-100 flex items-center justify-between">
-            <span className="text-xs text-gray-400">
-              Page {page}/{totalPages} — {filtered.length} écritures affichées
-            </span>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-                disabled={page === 1}
-                className="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-400 text-xs font-semibold disabled:cursor-not-allowed hover:bg-gray-200"
-              >
-                Préc.
-              </button>
-              {[1, 2, 3].map((p) => (
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="px-4 py-3 border-t border-gray-100 flex items-center justify-between">
+              <span className="text-xs text-gray-400">
+                Affichage {(page - 1) * PAGE_SIZE + 1}-{Math.min(page * PAGE_SIZE, filtered.length)} sur {filtered.length} écritures
+              </span>
+              <div className="flex items-center gap-2">
                 <button
-                  key={p}
-                  onClick={() => setPage(p)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold ${p === page ? "bg-green-600 text-white" : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"}`}
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={page === 1}
+                  className="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-400 text-xs font-semibold disabled:cursor-not-allowed hover:bg-gray-200"
                 >
-                  {p}
+                  Préc.
                 </button>
-              ))}
-              <button
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                disabled={page === totalPages}
-                className="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 text-xs font-semibold disabled:cursor-not-allowed hover:bg-gray-200"
-              >
-                Suiv.
-              </button>
+                <span className="px-3 py-1.5 text-xs font-bold text-gray-900">{page} / {totalPages}</span>
+                <button
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={page === totalPages}
+                  className="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 text-xs font-semibold disabled:cursor-not-allowed hover:bg-gray-200"
+                >
+                  Suiv.
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

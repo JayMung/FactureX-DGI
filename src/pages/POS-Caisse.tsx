@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, ShoppingCart, Trash2, Plus, Minus, CreditCard, Banknote, Printer, User, X, Check, Smartphone, Grid3X3, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -47,6 +48,7 @@ export default function POSCaisse() {
   const [dgiInfo, setDgiInfo] = useState<{ numero_dgi: string; code_auth: string } | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const receiptRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const { articles, isLoading: articlesLoading } = useAllArticles(articleSearch);
 
@@ -177,6 +179,20 @@ export default function POSCaisse() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Non authentifié');
 
+      // ── COD-76: Fetch open caisse_session before creating facture ──────────
+      let openSession: any = null;
+      try {
+        const { data: session } = await supabase
+          .from('caisse_sessions')
+          .select('id, total_ventes, total_especes, total_carte, total_mobile')
+          .eq('opened_by', user.id)
+          .eq('statut', 'ouverte')
+          .single();
+        openSession = session;
+      } catch (sessionErr) {
+        console.warn('[COD-76] caisse_session lookup failed:', sessionErr);
+      }
+
       // Generate invoice number
       const year = new Date().getFullYear();
       const { data: countData } = await supabase
@@ -186,7 +202,7 @@ export default function POSCaisse() {
       const seqNum = ((countData?.count ?? 0) + 1).toString().padStart(4, '0');
       const factureNumber = `FV-${year}-${seqNum}`;
 
-      // Create facture
+      // Create facture (with mode_paiement + session_id for COD-76)
       const { data: facture, error: factureError } = await supabase
         .from('factures')
         .insert({
@@ -197,8 +213,13 @@ export default function POSCaisse() {
           mode_livraison: 'aerien',
           devise: 'USD',
           subtotal: subtotal,
+          montant_ht: subtotal,
+          montant_tva: 0,
+          montant_ttc: subtotal,
           frais: 0,
           total_general: subtotal,
+          mode_paiement: cart.mode_paiement,
+          session_id: openSession?.id || null,
           date_emission: new Date().toISOString(),
           date_validation: new Date().toISOString(),
           valide_par: user.id,
@@ -208,6 +229,28 @@ export default function POSCaisse() {
         .single();
 
       if (factureError) throw factureError;
+
+      // ── COD-76: Update open caisse_session totals ──────────────────────────
+      if (openSession) {
+        try {
+          const updateFields: Record<string, number> = {
+            total_ventes: (parseFloat(String(openSession.total_ventes)) || 0) + subtotal,
+          };
+          if (cart.mode_paiement === 'cash') {
+            updateFields.total_especes = (parseFloat(String(openSession.total_especes)) || 0) + subtotal;
+          } else if (cart.mode_paiement === 'card') {
+            updateFields.total_carte = (parseFloat(String(openSession.total_carte)) || 0) + subtotal;
+          } else if (cart.mode_paiement === 'mobile') {
+            updateFields.total_mobile = (parseFloat(String(openSession.total_mobile || '0')) || 0) + subtotal;
+          }
+          await supabase
+            .from('caisse_sessions')
+            .update(updateFields)
+            .eq('id', openSession.id);
+        } catch (updateErr) {
+          console.warn('[COD-76] caisse_session update failed:', updateErr);
+        }
+      }
 
       // Create facture items
       const itemsToInsert = cart.items.map((item, idx) => ({
@@ -319,8 +362,11 @@ export default function POSCaisse() {
             <div className="hidden md:flex items-center gap-1.5 text-xs text-gray-500 bg-gray-100 px-3 py-1.5 rounded-lg">
               <span id="pos-clock" className="font-mono font-medium">--:--</span>
             </div>
-            <button className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors">
+            <button onClick={() => navigate('/pos/settings')} className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors">
               <span className="text-lg"><i className="ri-settings-3-line" /></span>
+            </button>
+            <button onClick={() => navigate('/pos/historique')} className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors">
+              <span className="text-lg"><i className="ri-file-chart-line" /></span>
             </button>
             <button className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors">
               <span className="text-lg"><i className="ri-notification-3-line" /></span>

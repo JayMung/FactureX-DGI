@@ -23,7 +23,7 @@ class ServerRateLimiter {
     if (!supabaseUrl) {
       throw new Error('VITE_SUPABASE_URL is not configured');
     }
-    this.edgeFunctionUrl = `${supabaseUrl}/functions/v1/rate-limit`;
+    this.edgeFunctionUrl = `${supabaseUrl}/functions/v1/rate-limit-login`;
   }
 
   async check(action: 'login' | 'signup', identifier: string): Promise<RateLimitResponse> {

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { usePageSetup } from '../hooks/use-page-setup';
 import { Button } from '@/components/ui/button';
@@ -27,7 +28,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 import SortableHeader from '../components/ui/sortable-header';
 import BulkActions from '../components/ui/bulk-actions';
 import ClientForm from '../components/forms/ClientForm';
-import ClientHistoryModal from '../components/clients/ClientHistoryModal';
 import MergeClientsDialog from '../components/clients/MergeClientsDialog';
 import ConfirmDialog from '@/components/ui/confirm-dialog';
 import PermissionGuard from '../components/auth/PermissionGuard';
@@ -74,14 +74,13 @@ const ClientsProtected: React.FC = () => {
   ]);
 
   // États pour les modales
-  const [historyModalOpen, setHistoryModalOpen] = useState(false);
-  const [clientForHistory, setClientForHistory] = useState<Client | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
   const [clientToDelete, setClientToDelete] = useState<Client | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isMergeDialogOpen, setIsMergeDialogOpen] = useState(false);
   const { isAdmin } = usePermissions();
+  const navigate = useNavigate();
 
   const {
     clients,
@@ -179,9 +178,7 @@ const ClientsProtected: React.FC = () => {
   };
 
   const handleViewClientHistory = (client: Client) => {
-    console.log('👁️ Opening history for:', client.nom);
-    setClientForHistory(client);
-    setHistoryModalOpen(true);
+    navigate(`/clients/${client.id}`);
   };
 
   const formatCurrency = (amount: number) => {
@@ -201,11 +198,13 @@ const ClientsProtected: React.FC = () => {
       : sortedData;
 
     const csv = [
-      ['nom', 'telephone', 'ville', 'total_paye', 'created_at'],
+      ['nom', 'email', 'telephone', 'ville', 'adresse', 'total_paye', 'created_at'],
       ...dataToExport.map((client: Client) => [
         sanitizeCSV(client.nom || ''),
+        sanitizeCSV(client.email || ''),
         sanitizeCSV(client.telephone || ''),
         sanitizeCSV(client.ville || ''),
+        sanitizeCSV(client.adresse || ''),
         sanitizeCSV(client.total_paye?.toString() || '0'),
         sanitizeCSV(client.created_at || '')
       ])
@@ -580,12 +579,6 @@ const ClientsProtected: React.FC = () => {
             isOpen={isFormOpen}
             onClose={() => setIsFormOpen(false)}
             onSuccess={handleFormSuccess}
-          />
-
-          <ClientHistoryModal
-            client={clientForHistory}
-            open={historyModalOpen}
-            onOpenChange={setHistoryModalOpen}
           />
 
           <MergeClientsDialog

@@ -30,6 +30,16 @@ docs/
 │   ├── DISCORD_CHANNELS_SETUP.md         # Configuration Discord
 │   └── N8N_INTEGRATION_GUIDE.md          # Intégration n8n
 │
+├── 📁 notifications/                     # Hub Notifications 🔔 (NOUVEAU)
+│   └── NOTIFICATION_HUB_GUIDE.md         # Guide complet notifications push
+│
+├── 📁 dgi/                               # Conformité DGI 🇨🇩 (NOUVEAU)
+│   ├── DGI_OVERVIEW.md                   # Vue d'ensemble conformité
+│   └── DGI_TECHNICAL_DOCUMENTATION.md    # Documentation technique DGI
+│
+├── 📁 auth/                              # Auth & Onboarding (NOUVEAU)
+│   └── AUTH_ONBOARDING_GUIDE.md          # Auth, RBAC, Setup Wizard
+│
 ├── 📁 security/                          # Sécurité
 ├── 📁 permissions/                       # Système de permissions
 ├── 📁 features/                          # Fonctionnalités
@@ -43,6 +53,7 @@ docs/
 ├── 📁 statistics/                        # Statistiques
 ├── 📁 optimizations/                     # Optimisations
 ├── 📁 troubleshooting/                   # Dépannage
+├── 📁 recruitment/                       # Recrutement / Briefs
 └── 📁 archive/                           # Archives
 ```
 
@@ -55,12 +66,24 @@ docs/
 1. **API REST** : Commencez par [`api/API_README.md`](./api/API_README.md)
 2. **Webhooks** : Consultez [`webhooks/WEBHOOKS_GUIDE.md`](./webhooks/WEBHOOKS_GUIDE.md)
 3. **Sécurité** : Lisez [`security/`](./security/)
+4. **Notifications Push** : [`notifications/NOTIFICATION_HUB_GUIDE.md`](./notifications/NOTIFICATION_HUB_GUIDE.md)
+5. **DGI Compliance** : [`dgi/DGI_OVERVIEW.md`](./dgi/DGI_OVERVIEW.md)
 
 ### Pour les Utilisateurs
 
 1. **Guide d'utilisation** : [`guides/`](./guides/)
 2. **Configuration Discord** : [`integrations/DISCORD_CHANNELS_SETUP.md`](./integrations/DISCORD_CHANNELS_SETUP.md)
 3. **Permissions** : [`permissions/`](./permissions/)
+4. **Onboarding** : [`auth/AUTH_ONBOARDING_GUIDE.md`](./auth/AUTH_ONBOARDING_GUIDE.md)
+
+### Nouveautés (Avril 2026)
+
+- 🔔 **Notification Hub** — Centre de notifications, Service Worker PWA, push
+- 🇨🇩 **DGI Compliance** — API proxy, soumission/validation conforme
+- 🔐 **Auth & Onboarding** — Nouveau login, register, Setup Wizard, RBAC
+- 📄 **Devis** — Pages devis, aperçu impression
+- 📥 **Import CSV** — Import clients, transactions, rapport
+- 🎨 **Mockups v2** — 50+ maquettes haute-fidélité (Design System Emerald)
 
 ---
 
@@ -107,6 +130,62 @@ docs/
 
 ---
 
+### 🔔 Notifications Hub (NOUVEAU)
+
+**Documentation** :
+- [`NOTIFICATION_HUB_GUIDE.md`](./notifications/NOTIFICATION_HUB_GUIDE.md) - Guide complet
+
+**Composants** :
+- `NotificationCenter` - Centre de notifications (panneau latéral)
+- `NotificationCard` - Carte notification individuelle
+- `NotificationSettingsTab` - Paramètres par type de notification
+
+**Services** :
+- `notificationService.ts` - CRUD notifications (base de données)
+- `notificationSender.ts` - Envoi push via Service Worker
+
+**PWA** :
+- Service Worker activé (`public/sw.js`)
+- Push subscriptions stockées en base
+- Manifest PWA (`public/manifest.json`)
+
+---
+
+### 🇨🇩 DGI Compliance (NOUVEAU)
+
+**Documentation** :
+- [`DGI_OVERVIEW.md`](./dgi/DGI_OVERVIEW.md) - Vue d'ensemble
+- [`DGI_TECHNICAL_DOCUMENTATION.md`](./dgi/DGI_TECHNICAL_DOCUMENTATION.md) - Documentation technique
+
+**Edge Functions** :
+- `api-dgi-proxy` - Proxy avec rate limiter
+- `api-dgi-submit` - Soumission factures
+- `api-dgi-validate` - Validation format
+- `mock-dgi-*` - Mock pour développement
+
+**Pages associées** :
+- `DgiStatus.tsx` - Suivi statut en temps réel
+- Dashboard DGI — Indicateurs conformité
+
+---
+
+### 🔐 Auth & Onboarding (NOUVEAU)
+
+**Documentation** :
+- [`AUTH_ONBOARDING_GUIDE.md`](./auth/AUTH_ONBOARDING_GUIDE.md) - Guide complet
+
+**Pages** :
+- `Login.tsx` - Connexion redessinée
+- `Register.tsx` - Inscription multi-étapes
+- `Onboarding.tsx` - Processus onboarding complet
+- `SetupWizard.tsx` - Assistant configuration entreprise
+
+**RBAC** :
+- Rôles : Super Admin, Admin, Opérateur, Comptable, Déclarant
+- `ProtectedRoute.tsx`, `ProtectedRouteEnhanced.tsx`
+
+---
+
 ### 🔗 Intégrations
 
 **Discord** :
@@ -126,7 +205,7 @@ docs/
 ### 🔒 Sécurité
 
 **Documentation disponible dans** [`security/`](./security/) :
-- Audit de sécurité
+- Audit de sécurité (COD-56)
 - RLS (Row Level Security)
 - Multi-tenancy
 - Rate limiting
@@ -139,7 +218,7 @@ docs/
 
 **Documentation disponible dans** [`permissions/`](./permissions/) :
 - Système de permissions granulaires
-- Rôles prédéfinis (Super Admin, Admin, Opérateur)
+- Rôles prédéfinis (Super Admin, Admin, Opérateur, Comptable, Déclarant)
 - Permissions par module
 - Configuration et gestion
 
@@ -152,6 +231,8 @@ docs/
 - Système de notifications
 - Rapports financiers
 - Optimisations de performance
+- Import CSV (nouveau)
+- Devis (nouveau)
 
 ---
 
@@ -162,6 +243,11 @@ docs/
 - Tutoriels pas à pas
 - Bonnes pratiques
 - FAQ
+- DGI API Credentials Access
+- Mobile Money Merchant Access
+- Migration Guide
+- PRD (Product Requirements Document)
+- Séparation Transactions / Opérations
 
 ---
 
@@ -169,10 +255,11 @@ docs/
 
 **Documentation disponible dans** [`technical/`](./technical/) :
 - Architecture système
-- Base de données
+- Base de données (SCHEMA_DB_V2)
 - Edge Functions
 - Hooks React
 - Services
+- **Nouveau :** Notification Hub, DGI Proxy, Auth/Onboarding
 
 ---
 
@@ -212,6 +299,11 @@ docs/
 | **Sécurité** | [`security/`](./security/) |
 | **Permissions** | [`permissions/`](./permissions/) |
 | **Factures PDF** | [`features/FACTURE_PDF_README.md`](./features/FACTURE_PDF_README.md) |
+| **Notifications Hub** | [`notifications/NOTIFICATION_HUB_GUIDE.md`](./notifications/NOTIFICATION_HUB_GUIDE.md) |
+| **DGI Compliance** | [`dgi/DGI_OVERVIEW.md`](./dgi/DGI_OVERVIEW.md) |
+| **Auth & Onboarding** | [`auth/AUTH_ONBOARDING_GUIDE.md`](./auth/AUTH_ONBOARDING_GUIDE.md) |
+| **Devis** | [`features/DEVIS_GUIDE.md`](./features/DEVIS_GUIDE.md) |
+| **Import CSV** | [`features/IMPORT_CSV_GUIDE.md`](./features/IMPORT_CSV_GUIDE.md) |
 
 ### Par Rôle
 
@@ -220,11 +312,14 @@ docs/
 - Webhooks : [`webhooks/`](./webhooks/)
 - Technique : [`technical/`](./technical/)
 - Implémentation : [`implementation/`](./implementation/)
+- Notifications : [`notifications/`](./notifications/)
+- DGI : [`dgi/`](./dgi/)
 
 **Administrateur** :
 - Permissions : [`permissions/`](./permissions/)
 - Sécurité : [`security/`](./security/)
 - Configuration : [`guides/`](./guides/)
+- Auth & Onboarding : [`auth/`](./auth/)
 
 **Utilisateur** :
 - Guides : [`guides/`](./guides/)
@@ -240,19 +335,32 @@ docs/
 | API | 6 fichiers |
 | Webhooks | 4 fichiers |
 | Intégrations | 2 fichiers |
-| Sécurité | 16 fichiers |
+| Notifications | 1 fichier (nouveau) |
+| DGI | 2 fichiers (nouveau) |
+| Auth | 1 fichier (nouveau) |
+| Sécurité | 17 fichiers |
 | Permissions | 8 fichiers |
-| Features | 4 fichiers |
-| Guides | 10 fichiers |
-| Technical | 12 fichiers |
+| Features | 6 fichiers |
+| Guides | 12 fichiers |
+| Technical | 13 fichiers |
 | Fixes | 14 fichiers |
-| **Total** | **100+ fichiers** |
+| **Total** | **110+ fichiers** |
 
 ---
 
 ## 🆕 Dernières Mises à Jour
 
-**13 novembre 2025** :
+### Avril 2026
+- ✅ **Notification Hub** (Phase 7) — Centre de notifications, Service Worker PWA, notifications push
+- ✅ **Conformité DGI** (Phase 3) — API proxy avec rate limiter, soumission/validation, mock DGI
+- ✅ **Auth & Onboarding** — Login/Register redesign, Onboarding, Setup Wizard, RBAC
+- ✅ **Devis** — Pages devis, aperçu impression
+- ✅ **Import CSV** — Import clients, transactions, rapport
+- ✅ **Design System v2** — 50+ maquettes haute-fidélité (Mockups v2, Emerald glassmorphism)
+- ✅ **Comptabilité OHADA** — Plan comptable, bilan, compte de résultat
+- ✅ **Sécurité** — Fix COD-56 : XSS, CSRF, rate limiting, audit RBAC
+
+### 13 novembre 2025
 - ✅ API REST complète (6 endpoints)
 - ✅ Système de webhooks avec enrichissement
 - ✅ Support des événements de suppression
@@ -281,6 +389,6 @@ Pour toute question :
 
 ---
 
-**Dernière mise à jour** : 13 novembre 2025, 21:30  
-**Version** : 2.0  
+**Dernière mise à jour** : Avril 2026  
+**Version** : 2.1  
 **Statut** : ✅ À jour

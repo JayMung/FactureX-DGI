@@ -98,6 +98,7 @@ const Step1Company = ({ data, onChange, onNext }: {
             <Building2 className="text-slate-400 w-4 h-4" />
           </div>
           <Input
+            name="companyName"
             value={data.companyName}
             onChange={update('companyName')}
             placeholder="SARL Pambu & Fils"
@@ -116,6 +117,7 @@ const Step1Company = ({ data, onChange, onNext }: {
             <Phone className="text-slate-400 w-4 h-4" />
           </div>
           <Input
+            name="phone"
             type="tel"
             value={data.phone}
             onChange={update('phone')}
@@ -134,6 +136,7 @@ const Step1Company = ({ data, onChange, onNext }: {
               <MapPin className="text-slate-400 w-4 h-4" />
             </div>
             <select
+              name="city"
               value={data.city}
               onChange={update('city')}
               required
@@ -153,6 +156,7 @@ const Step1Company = ({ data, onChange, onNext }: {
         <div>
           <Label className="text-sm font-medium text-slate-700 mb-1.5 block">Province</Label>
           <select
+            name="province"
             value={data.province}
             onChange={update('province')}
             className="pr-4 py-3 w-full border border-slate-200 rounded-xl text-sm text-slate-900 bg-white focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none appearance-none"
@@ -265,6 +269,7 @@ const Step2Nif = ({ data, onChange, onNext }: {
             <FileText className="text-slate-400 w-4 h-4" />
           </div>
           <Input
+            name="nif"
             value={data.nif}
             onChange={(e) => {
               update('nif')(e);
@@ -286,6 +291,7 @@ const Step2Nif = ({ data, onChange, onNext }: {
           RCCM / Numéro d'enregistrement
         </Label>
         <Input
+          name="rccm"
           value={data.rccm}
           onChange={update('rccm')}
           placeholder="CD/KIN/2024/XXXXX"
@@ -383,6 +389,7 @@ const Step3Creds = ({ data, onChange, onSubmit }: {
             <i className="ri-mail-line text-slate-400 w-4 h-4" />
           </div>
           <Input
+            name="email"
             type="email"
             value={data.email}
             onChange={update('email')}
@@ -400,6 +407,7 @@ const Step3Creds = ({ data, onChange, onSubmit }: {
             <i className="ri-lock-line text-slate-400 w-4 h-4" />
           </div>
           <Input
+            name="password"
             type={showPassword ? 'text' : 'password'}
             value={data.password}
             onChange={update('password')}
@@ -425,6 +433,7 @@ const Step3Creds = ({ data, onChange, onSubmit }: {
             <i className="ri-lock-line text-slate-400 w-4 h-4" />
           </div>
           <Input
+            name="confirmPassword"
             type={showPassword ? 'text' : 'password'}
             value={data.confirmPassword}
             onChange={update('confirmPassword')}

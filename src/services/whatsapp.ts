@@ -1,7 +1,9 @@
 // WhatsApp Business API Service — FactureSmart COD-46
 // Provider: WhatsApp Cloud API (Meta) — https://developers.facebook.com/docs/whatsapp
 //
-// Setup:
+// [COD-46] Fake API: VITE_USE_MOCK_WHATSAPP=true utilise mock-whatsapp (dev/test)
+//
+// Setup (real):
 // 1. Create a Meta Business app at https://developers.facebook.com
 // 2. Add WhatsApp product, get your Phone Number ID & Business Account ID
 // 3. Set VITE_WHATSAPP_PHONE_NUMBER_ID and VITE_WHATSAPP_BUSINESS_ACCOUNT_ID in .env
@@ -9,13 +11,13 @@
 //
 // API Reference: https://developers.facebook.com/docs/whatsapp/cloud-api/reference/messages
 
-import { WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_NUMBER_ID, WHATSAPP_BUSINESS_ACCOUNT_ID } from './constants';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from '@/lib/constants';
 
 const WHATSAPP_API_VERSION = 'v18.0';
 const WHATSAPP_API_BASE = `https://graph.facebook.com/${WHATSAPP_API_VERSION}`;
 
 export interface WhatsAppPhoneNumber {
-  formatted: string;  // "+243970746213"
+  formatted: string;  // "+243****6213"
   raw: string;        // "243970746213"
 }
 
@@ -27,7 +29,7 @@ export interface WhatsAppMessageResult {
 
 /**
  * Format a phone number for WhatsApp API
- * Accepts: +243970746213, 243970746213, 0970746213
+ * Accepts: +243****6213, 243970746213, 0970746213
  * Returns: 243970746213 (without leading + for API)
  */
 export function formatWhatsAppPhone(phone: string): WhatsAppPhoneNumber {
@@ -54,11 +56,18 @@ class WhatsAppService {
   private accessToken: string;
   private phoneNumberId: string;
   private businessAccountId: string;
+  private useMock: boolean;
+  private mockEndpoint: string;
 
   constructor() {
-    this.accessToken = WHATSAPP_ACCESS_TOKEN || process.env.WHATSAPP_ACCESS_TOKEN || '';
-    this.phoneNumberId = WHATSAPP_PHONE_NUMBER_ID || import.meta.env.VITE_WHATSAPP_PHONE_NUMBER_ID || '';
-    this.businessAccountId = WHATSAPP_BUSINESS_ACCOUNT_ID || import.meta.env.VITE_WHATSAPP_BUSINESS_ACCOUNT_ID || '';
+    // [COD-46] Fake API mode — utilise mock-whatsapp au lieu de l'API Meta
+    this.useMock = import.meta.env.VITE_USE_MOCK_WHATSAPP === 'true';
+    this.mockEndpoint = `${SUPABASE_URL}/functions/v1/mock-whatsapp`;
+
+    // Real WhatsApp API credentials (from env — not in constants since secrets)
+    this.accessToken = import.meta.env.VITE_WHATSAPP_ACCESS_TOKEN || '';
+    this.phoneNumberId = import.meta.env.VITE_WHATSAPP_PHONE_NUMBER_ID || '';
+    this.businessAccountId = import.meta.env.VITE_WHATSAPP_BUSINESS_ACCOUNT_ID || '';
   }
 
   private get headers(): HeadersInit {
@@ -68,21 +77,61 @@ class WhatsAppService {
     };
   }
 
-  /** Check if WhatsApp is configured */
+  /** Check if WhatsApp is configured (real or mock) */
   isConfigured(): boolean {
+    if (this.useMock) return true; // Mock always available
     return !!(this.accessToken && this.phoneNumberId);
   }
 
+  private async getAccessToken(): Promise<string> {
+    try {
+      const { supabase } = await import('@/integrations/supabase/client');
+      const { data: { session } } = await supabase.auth.getSession();
+      return session?.access_token || '';
+    } catch {
+      return '';
+    }
+  }
+
   /**
-   * Send a text message via WhatsApp Business API
+   * Send a text message via WhatsApp Business API (or mock)
    */
   async sendMessage(to: string, body: string): Promise<WhatsAppMessageResult> {
+    const phone = formatWhatsAppPhone(to);
+
+    // [COD-46] Mock mode
+    if (this.useMock) {
+      try {
+        const accessToken = await this.getAccessToken();
+        const response = await fetch(this.mockEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY || '',
+            'Authorization': `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            messaging_product: 'whatsapp',
+            to: phone.raw,
+            type: 'text',
+            text: { body },
+          }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          return { success: false, error: data.error?.message || 'Mock WhatsApp failed' };
+        }
+        return { success: true, message_id: data.messages?.[0]?.id };
+      } catch (err) {
+        return { success: false, error: `Network error: ${err}` };
+      }
+    }
+
     if (!this.isConfigured()) {
       console.warn('[WhatsAppService] Not configured — set WHATSAPP_ACCESS_TOKEN and VITE_WHATSAPP_PHONE_NUMBER_ID');
       return { success: false, error: 'WhatsApp service not configured' };
     }
-
-    const phone = formatWhatsAppPhone(to);
 
     try {
       const response = await fetch(`${WHATSAPP_API_BASE}/${this.phoneNumberId}/messages`, {
@@ -111,7 +160,7 @@ class WhatsAppService {
   }
 
   /**
-   * Send a document (PDF) via WhatsApp Business API
+   * Send a document (PDF) via WhatsApp Business API (or mock)
    * The PDF must be hosted on a public URL — use Supabase Storage
    */
   async sendDocument(
@@ -121,12 +170,45 @@ class WhatsAppService {
     fileName: string,
     mimeType: string = 'application/pdf'
   ): Promise<WhatsAppMessageResult> {
+    const phone = formatWhatsAppPhone(to);
+
+    // [COD-46] Mock mode
+    if (this.useMock) {
+      try {
+        const accessToken = await this.getAccessToken();
+        const response = await fetch(this.mockEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY || '',
+            'Authorization': `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            messaging_product: 'whatsapp',
+            to: phone.raw,
+            type: 'document',
+            document: {
+              link: documentUrl,
+              caption,
+              filename: fileName,
+            },
+          }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          return { success: false, error: data.error?.message || 'Mock WhatsApp failed' };
+        }
+        return { success: true, message_id: data.messages?.[0]?.id };
+      } catch (err) {
+        return { success: false, error: `Network error: ${err}` };
+      }
+    }
+
     if (!this.isConfigured()) {
       console.warn('[WhatsAppService] Not configured');
       return { success: false, error: 'WhatsApp service not configured' };
     }
-
-    const phone = formatWhatsAppPhone(to);
 
     try {
       const response = await fetch(`${WHATSAPP_API_BASE}/${this.phoneNumberId}/messages`, {

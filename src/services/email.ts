@@ -2,6 +2,7 @@
 // [COD-56] Refactorisé: RESEND_API_KEY supprimée du frontend
 // Appels via Edge Function /api-email-send (server-side)
 // La vraie clé Resend est stockée dans les environment variables Supabase
+// [COD-46] Fake API: VITE_USE_MOCK_EMAIL=true utilise mock-email (dev/test)
 
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './constants';
 
@@ -22,10 +23,13 @@ export interface EmailResult {
 class EmailService {
   private edgeFunctionUrl: string;
   private fromEmail: string;
+  private useMock: boolean;
 
   constructor() {
-    // Appelle l'Edge Function server-side — la clé API n'est jamais dans le frontend
-    this.edgeFunctionUrl = `${SUPABASE_URL}/functions/v1/api-email-send`;
+    // [COD-46] Fake API mode — utilise mock-email au lieu de api-email-send
+    this.useMock = import.meta.env.VITE_USE_MOCK_EMAIL === 'true';
+    const functionName = this.useMock ? 'mock-email' : 'api-email-send';
+    this.edgeFunctionUrl = `${SUPABASE_URL}/functions/v1/${functionName}`;
     this.fromEmail = 'FactureSmart <noreply@facturesmart.com>';
   }
 
@@ -153,6 +157,41 @@ class EmailService {
           <p><strong>Montant :</strong> ${amount}</p>
           <p><strong>Statut :</strong> ${status}</p>
           <a href="${import.meta.env.VITE_APP_URL}/factures" style="display: inline-block; background: #22c55e; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 16px 0;">Voir la facture</a>
+        </div>
+      `,
+    });
+  }
+
+  /**
+   * Send invoice email with PDF attachment [COD-46]
+   * Note: PDF attachment via email requires multipart form data.
+   * For now, sends with download link. Full PDF attach = future improvement.
+   */
+  async sendInvoiceWithPDF(
+    to: string,
+    invoiceNumber: string,
+    amount: string,
+    status: string,
+    _pdfBlob?: Blob,
+    fileName?: string,
+    downloadUrl?: string
+  ): Promise<EmailResult> {
+    // Since multipart email with binary attachment is complex via Edge Function,
+    // we send a rich email with download link as fallback
+    return this.send({
+      to,
+      subject: `Facture ${invoiceNumber} — ${status}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h1 style="color: #22c55e;">🧾 Votre facture</h1>
+          <p>Bonjour,</p>
+          <p>Votre facture <strong>${invoiceNumber}</strong> est disponible.</p>
+          <p><strong>Montant :</strong> ${amount}</p>
+          <p><strong>Statut :</strong> ${status}</p>
+          ${downloadUrl ? `<p><a href="${downloadUrl}" style="display: inline-block; background: #22c55e; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 16px 0;">📥 Télécharger la facture PDF</a></p>` : ''}
+          ${fileName ? `<p style="color: #666; font-size: 12px;">Pièce jointe: ${fileName}</p>` : ''}
+          <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;">
+          <p style="color: #6b7280; font-size: 12px; text-align: center;">© 2026 FactureSmart</p>
         </div>
       `,
     });

@@ -42,6 +42,7 @@ import Landing from "./pages/Landing";
 
 // Lazy-loaded pages
 const Index = lazy(() => import("./pages/Index-Protected"));
+const CompanyDashboard = lazy(() => import("./pages/CompanyDashboard"));
 const Clients = lazy(() => import("./pages/Clients-Protected"));
 const ClientDetail = lazy(() => import("./pages/ClientDetail"));
 const ClientsNew = lazy(() => import("./pages/Clients-New"));
@@ -58,6 +59,8 @@ const TVADeclarations = lazy(() => import("./pages/TVADeclarations"));
 const Settings = lazy(() => import("./pages/Settings"));
 const CompanySettings = lazy(() => import("./pages/CompanySettings"));
 const TwoFactorSetup = lazy(() => import("./pages/TwoFactorSetup"));
+const RBACManager = lazy(() => import("./pages/RBACManager"));
+const SubscriptionPlans = lazy(() => import("./pages/SubscriptionPlans"));
 
 const POSCaisse = lazy(() => import("./pages/POS-Caisse"));
 const POSSettings = lazy(() => import("./pages/POS-Settings"));
@@ -136,6 +139,11 @@ const App = () => (
                 <Route path="/" element={
                   <ProtectedRoute>
                     <Index />
+                  </ProtectedRoute>
+                } />
+                <Route path="/company-dashboard" element={
+                  <ProtectedRoute>
+                    <CompanyDashboard />
                   </ProtectedRoute>
                 } />
                 <Route path="/pos" element={
@@ -327,6 +335,16 @@ const App = () => (
                 <Route path="/settings/securite" element={
                   <ProtectedRoute allowedRoles={['admin']}>
                     <TwoFactorSetup />
+                  </ProtectedRoute>
+                } />
+                <Route path="/settings/rbac" element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <RBACManager />
+                  </ProtectedRoute>
+                } />
+                <Route path="/settings/abonnement" element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <SubscriptionPlans />
                   </ProtectedRoute>
                 } />
                 <Route path="/docs" element={

@@ -102,7 +102,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           )}
         </AnimatePresence>
 
-        <div className="flex-1 flex flex-col overflow-hidden w-full">
+        <div className="flex-1 flex flex-col overflow-hidden w-full ml-64">
           <Header
             title={getPageTitle()}
             subtitle={getPageTitle() === 'Tableau de bord' ? "Vue d'ensemble de votre activité" : undefined}

@@ -11,10 +11,12 @@ export interface Client {
   id: string;
   nom: string;
   telephone: string;
+  email?: string;
   ville: string;
   adresse?: string;
   pays?: string;
   nif?: string;           // Numéro d'Identification Fiscale (DGI)
+  notes?: string;
   type?: 'particulier' | 'entreprise';
   total_paye?: number;
   created_at: string;
@@ -30,9 +32,11 @@ export interface ClientFilters {
 export interface CreateClientData {
   nom: string;
   telephone: string;
+  email?: string;
   ville: string;
   adresse?: string;
   nif?: string;
+  notes?: string;
   type?: 'particulier' | 'entreprise';
 }
 

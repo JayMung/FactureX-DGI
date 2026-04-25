@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nouveau client — Facture Smart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            primary: { 50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac', 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d', 800: '#166534', 900: '#14532d' },
+            fx: { blue: '#10B981', 'blue-dark': '#15803d', 'blue-light': '#E8F0FE', gray: '#F8FAFC', 'gray-100': '#F1F5F9', 'gray-200': '#E2E8F0', 'gray-300': '#CBD5E1', 'gray-500': '#64748B', 'gray-700': '#334155', 'gray-900': '#0F172A', success: '#10B981', warning: '#F59E0B', danger: '#EF4444' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .sidebar-item:hover { background: #E8F0FE; }
+    .sidebar-item.active { background: #E8F0FE; color: #10B981; }
+    .sidebar-item.active .sidebar-icon { color: #10B981; }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-20">
+    <div class="px-6 py-5 border-b border-gray-100">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-green-600 rounded-xl flex items-center justify-center flex-shrink-0">
+          <i class="ri-file-paper-2-line text-white text-base"></i>
+        </div>
+        <div>
+          <span class="text-gray-900 text-base font-bold">Facture Smart</span>
+          <span class="block text-[10px] text-gray-400 font-medium -mt-0.5">DGI — RDC</span>
+        </div>
+      </div>
+    </div>
+    <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      <div class="px-3 py-2 mb-2"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Navigation</span></div>
+      <a href="screen-01-dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 sidebar-item">
+        <i class="ri-dashboard-line text-lg sidebar-icon text-gray-500"></i>
+        Dashboard
+      </a>
+      <a href="screen-02-factures.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 sidebar-item">
+        <i class="ri-file-list-3-line text-lg sidebar-icon text-gray-500"></i>
+        Factures
+      </a>
+      <a href="screen-09-devis.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 sidebar-item">
+        <i class="ri-file-text-line text-lg sidebar-icon text-gray-500"></i>
+        Devis
+      </a>
+      <a href="screen-06-clients.html" class="flex items-center gap-3 px-3 py-2.5 bg-green-50 rounded-xl text-sm font-semibold text-green-700 border-l-[3px] border-green-600 sidebar-item active">
+        <i class="ri-user-line text-lg sidebar-icon"></i>
+        Clients
+      </a>
+      <a href="screen-07-rapports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 sidebar-item">
+        <i class="ri-bar-chart-box-line text-lg sidebar-icon text-gray-500"></i>
+        Rapports
+      </a>
+      <a href="screen-08-settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 sidebar-item">
+        <i class="ri-settings-3-line text-lg sidebar-icon text-gray-500"></i>
+        Paramètres
+      </a>
+    </nav>
+    <!-- User profile -->
+    <div class="px-4 py-4 border-t border-gray-100">
+      <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-gray-50">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white text-xs font-bold">JD</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs font-semibold text-gray-900 truncate">Jean Dupont</p>
+          <p class="text-[10px] text-gray-400 truncate">Admin</p>
+        </div>
+        <button class="text-gray-400 hover:text-gray-600"><i class="ri-logout-box-r-line text-base"></i></button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="flex-1 ml-64 flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
+      <div class="flex items-center gap-4">
+        <a href="screen-06-clients.html" class="w-9 h-9 bg-gray-100 rounded-xl flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors">
+          <i class="ri-arrow-left-line text-lg"></i>
+        </a>
+        <div>
+          <h1 class="text-lg font-bold text-gray-900">Nouveau client</h1>
+          <p class="text-xs text-gray-400">Ajoutez un nouveau client à votre liste</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="px-5 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-2">
+          <i class="ri-close-line"></i> Annuler
+        </button>
+        <button class="px-5 py-2.5 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700 transition-colors shadow-sm flex items-center gap-2">
+          <i class="ri-save-line"></i> Enregistrer
+        </button>
+      </div>
+    </header>
+
+    <!-- Main form area -->
+    <main class="flex-1 p-8">
+      <div class="max-w-3xl mx-auto">
+
+        <!-- Progress indicator -->
+        <div class="flex items-center gap-0 mb-8">
+          <div class="flex items-center">
+            <div class="w-8 h-8 rounded-full bg-green-600 text-white text-xs font-bold flex items-center justify-center">1</div>
+            <span class="ml-2 text-sm font-semibold text-green-700">Informations</span>
+          </div>
+          <div class="flex-1 h-px bg-green-200 mx-4"></div>
+          <div class="flex items-center">
+            <div class="w-8 h-8 rounded-full bg-gray-100 text-gray-400 text-xs font-bold flex items-center justify-center border-2 border-gray-200">2</div>
+            <span class="ml-2 text-sm font-medium text-gray-400">Coordonnées</span>
+          </div>
+          <div class="flex-1 h-px bg-gray-200 mx-4"></div>
+          <div class="flex items-center">
+            <div class="w-8 h-8 rounded-full bg-gray-100 text-gray-400 text-xs font-bold flex items-center justify-center border-2 border-gray-200">3</div>
+            <span class="ml-2 text-sm font-medium text-gray-400">Vérification</span>
+          </div>
+        </div>
+
+        <!-- Form card -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden fade-in">
+
+          <!-- Section 1: Basic Info -->
+          <div class="p-6 border-b border-gray-100">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center">
+                <i class="ri-user-add-line text-green-600 text-lg"></i>
+              </div>
+              <div>
+                <h2 class="text-base font-bold text-gray-900">Informations de base</h2>
+                <p class="text-xs text-gray-400">Nom, type et identifiants du client</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-5">
+              <!-- Client type -->
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Type de client *</label>
+                <div class="relative">
+                  <select class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300 appearance-none cursor-pointer">
+                    <option value="particulier">Particulier</option>
+                    <option value="entreprise">Entreprise / SARL</option>
+                    <option value="gouvernement">Organisation gouvernementale</option>
+                    <option value="ong">ONG / Association</option>
+                  </select>
+                  <i class="ri-arrow-down-s-line absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg pointer-events-none"></i>
+                </div>
+              </div>
+
+              <!-- NIF -->
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">NIF (Numéro d'Identification Fiscale)</label>
+                <input type="text" placeholder="ex: 1 234 567-8-9-00012" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300 font-mono">
+              </div>
+
+              <!-- Name / Raison sociale -->
+              <div class="col-span-2">
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Nom / Raison sociale *</label>
+                <input type="text" placeholder="Nom complet du client ou raison sociale" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300">
+              </div>
+
+              <!-- RCCM (for companies) -->
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">RCCM</label>
+                <input type="text" placeholder="RCCM/KIN/2024/12345" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300 font-mono">
+              </div>
+
+              <!-- Email -->
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Email</label>
+                <input type="email" placeholder="contact@exemple.cd" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300">
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Contact Info -->
+          <div class="p-6 border-b border-gray-100 bg-gray-50/50">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
+                <i class="ri-contacts-line text-blue-600 text-lg"></i>
+              </div>
+              <div>
+                <h2 class="text-base font-bold text-gray-900">Coordonnées</h2>
+                <p class="text-xs text-gray-400">Adresse, téléphone et autres contacts</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-5">
+              <!-- Phone -->
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Téléphone *</label>
+                <div class="relative">
+                  <span class="absolute left-4 top-1/2 -translate-y-1/2 text-xs font-medium text-gray-400">+243</span>
+                  <input type="tel" placeholder="XX XXX XXXX" value="" class="w-full pl-14 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300">
+                </div>
+              </div>
+
+              <!-- WhatsApp -->
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">WhatsApp</label>
+                <div class="relative">
+                  <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"><i class="ri-whatsapp-line text-green-500"></i></span>
+                  <input type="tel" placeholder="XX XXX XXXX" class="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300">
+                </div>
+              </div>
+
+              <!-- City -->
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ville *</label>
+                <div class="relative">
+                  <select class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300 appearance-none cursor-pointer">
+                    <option value="">— Sélectionner —</option>
+                    <option value="kinshasa">Kinshasa</option>
+                    <option value="lubumbashi">Lubumbashi</option>
+                    <option value="mbuji-mayi">Mbuji-Mayi</option>
+                    <option value="kananga">Kananga</option>
+                    <option value="kisangani">Kisangani</option>
+                    <option value="goma">Goma</option>
+                    <option value="bukavu">Bukavu</option>
+                    <option value="matadi">Matadi</option>
+                    <option value="other">Autre</option>
+                  </select>
+                  <i class="ri-arrow-down-s-line absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg pointer-events-none"></i>
+                </div>
+              </div>
+
+              <!-- Commune -->
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Commune / Quartier</label>
+                <input type="text" placeholder="ex: Gombe, Commune de la Lukusa" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300">
+              </div>
+
+              <!-- Address -->
+              <div class="col-span-2">
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Adresse complète</label>
+                <input type="text" placeholder="Avenue, numéro, référence" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300">
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Additional Info -->
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+                <i class="ri-information-line text-amber-600 text-lg"></i>
+              </div>
+              <div>
+                <h2 class="text-base font-bold text-gray-900">Informations supplémentaires</h2>
+                <p class="text-xs text-gray-400">Notes et paramètres optionnels</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-5">
+              <!-- Category -->
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Catégorie</label>
+                <div class="relative">
+                  <select class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300 appearance-none cursor-pointer">
+                    <option value="standard">Standard</option>
+                    <option value="vip">VIP / Premium</option>
+                    <option value="new">Nouveau</option>
+                    <option value="inactive">Inactif</option>
+                  </select>
+                  <i class="ri-arrow-down-s-line absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg pointer-events-none"></i>
+                </div>
+              </div>
+
+              <!-- Internal ID -->
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">ID interne</label>
+                <input type="text" placeholder="Réf. interne optionnelle" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300">
+              </div>
+
+              <!-- Notes -->
+              <div class="col-span-2">
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Notes</label>
+                <textarea rows="3" placeholder="Notes internes sur ce client..." class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-300 resize-none"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form actions -->
+          <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+            <div class="text-xs text-gray-400">
+              <i class="ri-information-line mr-1"></i>
+              Les champs marqués d'un astérisque (*) sont obligatoires
+            </div>
+            <div class="flex items-center gap-3">
+              <button class="px-5 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors flex items-center gap-2">
+                <i class="ri-close-line"></i> Annuler
+              </button>
+              <button class="px-6 py-2.5 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700 transition-colors shadow-sm flex items-center gap-2">
+                <i class="ri-save-line"></i> Enregistrer le client
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Help text -->
+        <div class="mt-6 p-4 bg-blue-50 rounded-xl border border-blue-100">
+          <div class="flex items-start gap-3">
+            <i class="ri-lightbulb-line text-blue-500 text-lg mt-0.5"></i>
+            <div>
+              <p class="text-sm font-medium text-blue-900">Astuce</p>
+              <p class="text-xs text-blue-700 mt-1">Vous pouvez également ajouter un client directement depuis la création d'une facture ou d'un devis, en sélectionnant "Nouveau client" dans la liste déroulante.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

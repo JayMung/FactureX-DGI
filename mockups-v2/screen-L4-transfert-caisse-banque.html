@@ -3,213 +3,176 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Transfert Caisse ↔ Banque — Facture Smart</title>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>Transfert Caisse ↔ Banque - FactureSmart</title>
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Manrope', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
-          colors: {
-            primary: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#059669', 800: '#065f46', 900: '#064e3b' },
-            fx: { gray: '#F8FAFC', 'gray-100': '#F1F5F9', 'gray-200': '#E2E8F0', 'gray-300': '#CBD5E1', 'gray-500': '#64748B', 'gray-700': '#334155', 'gray-900': '#0F172A', success: '#10b981', warning: '#F59E0B', danger: '#EF4444' }
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body { font-family: 'Manrope', sans-serif; }
-    .rdc-bg { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect width='40' height='40' fill='%2310B981' fill-opacity='0.025'/%3E%3Crect x='40' y='40' width='40' height='40' fill='%2310B981' fill-opacity='0.025'/%3E%3C/svg%3E"); background-size: 80px 80px; }
-  </style>
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
-<body class="bg-gray-50 min-h-screen rdc-bg">
+<body class="bg-gray-50 font-sans">
 
-  <header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-    <div class="flex items-center justify-between px-6 py-3">
-      <div class="flex items-center gap-3">
-        <a href="index.html" class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-fx-gray-500 hover:bg-gray-200 transition-colors">
-          <i class="ri-arrow-left-line text-lg"></i>
-        </a>
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center shadow-sm">
-            <i class="ri-money-dollar-circle-line text-white text-sm"></i>
-          </div>
-          <span class="text-base font-extrabold text-fx-gray-900">Facture<span class="text-primary-600">X</span></span>
-          <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">Caisse</span>
+  <div class="flex min-h-screen">
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-20"><!-- sidebar omitted --></aside>
+
+    <main class="ml-64 flex-1 p-6">
+
+      <!-- Breadcrumb -->
+      <div class="flex items-center gap-2 text-sm text-gray-400 mb-6">
+        <a href="#" class="hover:text-gray-600">Caisse</a>
+        <i class="ri-arrow-right-s-line"></i>
+        <span class="text-gray-700 font-medium">Transfert Caisse ↔ Banque</span>
+      </div>
+
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Transfert Caisse ↔ Banque</h1>
+          <p class="text-sm text-gray-500 mt-1">Déplacez des fonds entre la caisse et les comptes bancaires</p>
+        </div>
+        <div class="flex items-center gap-2 text-sm text-gray-500">
+          <i class="ri-funds-line text-lg text-green-600"></i>
+          <span>Solde caisse: <strong class="text-gray-900">385 000 FC</strong></span>
         </div>
       </div>
-      <div class="flex items-center gap-3">
-        <div class="text-xs text-fx-gray-500 font-mono bg-gray-100 px-3 py-1.5 rounded-lg">23/04/2026</div>
-        <button class="px-4 py-2 rounded-xl bg-primary-500 text-white text-sm font-bold flex items-center gap-2 hover:bg-primary-600 transition-colors shadow-sm">
-          <i class="ri-add-line"></i>
-          Nouveau transfert
+
+      <!-- Tabs: Caisse → Banque / Banque → Caisse -->
+      <div class="flex gap-1 mb-6">
+        <button class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-semibold flex items-center gap-2">
+          <i class="ri-arrow-right-up-line"></i>
+          Caisse → Banque
+        </button>
+        <button class="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2">
+          <i class="ri-arrow-left-down-line"></i>
+          Banque → Caisse
         </button>
       </div>
-    </div>
-  </header>
 
-  <div class="p-4 md:p-6 space-y-5">
+      <!-- Grid -->
+      <div class="grid grid-cols-2 gap-6">
+        <!-- Left: Form -->
+        <div class="bg-white rounded-xl border border-gray-200 p-6">
+          <h3 class="text-sm font-semibold text-gray-900 mb-1">Nouveau transfert</h3>
+          <p class="text-xs text-gray-400 mb-6">Transférez de l'argent de la caisse vers le compte bancaire</p>
 
-    <!-- Balances -->
-    <div class="grid grid-cols-2 gap-4">
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center">
-        <div class="text-xs text-fx-gray-500 mb-1">Solde caisse</div>
-        <div class="text-3xl font-extrabold text-green-600 font-mono">247 350 CDF</div>
-        <div class="text-xs text-fx-gray-400 mt-1">34 opérations aujourd'hui</div>
-      </div>
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center">
-        <div class="text-xs text-fx-gray-500 mb-1">Solde banque (Rawbank)</div>
-        <div class="text-3xl font-extrabold text-blue-600 font-mono">234 100 CDF</div>
-        <div class="text-xs text-fx-gray-400 mt-1">Compte 5211</div>
-      </div>
-    </div>
+          <form class="space-y-5">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">Compte bancaire <span class="text-red-500">*</span></label>
+              <select class="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+                <option value="">Sélectionnez un compte</option>
+                <option>BCDC — Compte courant</option>
+                <option>Rawbank — Épargne</option>
+                <option>EquityBCDC — Business</option>
+              </select>
+            </div>
 
-    <!-- Action buttons -->
-    <div class="grid grid-cols-2 gap-4">
-      <button class="bg-white rounded-2xl border-2 border-green-200 p-5 text-center hover:bg-green-50 transition-colors shadow-sm group">
-        <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🏦</div>
-        <div class="text-base font-bold text-fx-gray-900 mb-1">Dépôt en banque</div>
-        <div class="text-xs text-fx-gray-400">Caisse → Banque</div>
-      </button>
-      <button class="bg-white rounded-2xl border-2 border-blue-200 p-5 text-center hover:bg-blue-50 transition-colors shadow-sm group">
-        <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">💵</div>
-        <div class="text-base font-bold text-fx-gray-900 mb-1">Retrait de banque</div>
-        <div class="text-xs text-fx-gray-400">Banque → Caisse</div>
-      </button>
-    </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">Montant <span class="text-red-500">*</span></label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-medium">FC</span>
+                <input type="number" value="100000" min="0" step="1000"
+                  class="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500" />
+              </div>
+            </div>
 
-    <!-- Deposit form (active) -->
-    <div class="bg-white rounded-2xl border-2 border-green-200 shadow-sm p-5">
-      <div class="flex items-center gap-2 mb-4">
-        <span class="text-2xl">🏦</span>
-        <div>
-          <div class="text-base font-bold text-fx-gray-900">Dépôt en banque — Rawbank</div>
-          <div class="text-xs text-fx-gray-400">Transfert caisse → compte bancaire</div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">Date</label>
+              <div class="relative">
+                <i class="ri-calendar-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                <input type="date" value="2025-01-15"
+                  class="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">Référence (optionnel)</label>
+              <input type="text" placeholder="N° de bordereau, récépissé..."
+                class="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500" />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">Pièce jointe (optionnel)</label>
+              <div class="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center hover:border-green-400 cursor-pointer transition-colors">
+                <i class="ri-upload-2-line text-2xl text-gray-300 mb-2"></i>
+                <p class="text-sm text-gray-500">Joindre un justificatif</p>
+                <p class="text-xs text-gray-400 mt-0.5">PDF, image — max 5 MB</p>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">Motif</label>
+              <textarea rows="2" placeholder="Description du transfert..."
+                class="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"></textarea>
+            </div>
+
+            <button type="submit"
+              class="w-full bg-green-600 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
+              <i class="ri-send-plane-line"></i>
+              Effectuer le transfert
+            </button>
+          </form>
         </div>
-      </div>
 
-      <div class="space-y-4">
-        <!-- Amount -->
-        <div>
-          <label class="text-xs font-bold text-fx-gray-500 uppercase tracking-wider block mb-2">Montant du dépôt (CDF)</label>
-          <input type="number" value="50000" class="w-full px-4 py-3 rounded-xl border-2 border-green-200 text-xl font-extrabold font-mono text-green-700 focus:outline-none focus:border-green-400 bg-green-50" placeholder="0">
-        </div>
+        <!-- Right: Activity -->
+        <div class="space-y-4">
+          <div class="bg-white rounded-xl border border-gray-200 p-6">
+            <h3 class="text-sm font-semibold text-gray-900 mb-4">Transferts récents</h3>
 
-        <!-- Bill breakdown -->
-        <div>
-          <label class="text-xs font-bold text-fx-gray-500 uppercase tracking-wider block mb-2">Billetage du dépôt</label>
-          <div class="grid grid-cols-5 gap-2">
-            <div class="flex flex-col items-center">
-              <div class="text-xs text-fx-gray-500 mb-1">10 000</div>
-              <input type="number" min="0" value="5" class="w-full h-10 rounded-lg border border-gray-200 text-center font-mono font-bold bg-gray-50 focus:outline-none focus:border-green-300">
-            </div>
-            <div class="flex flex-col items-center">
-              <div class="text-xs text-fx-gray-500 mb-1">5 000</div>
-              <input type="number" min="0" value="0" class="w-full h-10 rounded-lg border border-gray-200 text-center font-mono font-bold bg-gray-50 focus:outline-none focus:border-green-300">
-            </div>
-            <div class="flex flex-col items-center">
-              <div class="text-xs text-fx-gray-500 mb-1">2 000</div>
-              <input type="number" min="0" value="0" class="w-full h-10 rounded-lg border border-gray-200 text-center font-mono font-bold bg-gray-50 focus:outline-none focus:border-green-300">
-            </div>
-            <div class="flex flex-col items-center">
-              <div class="text-xs text-fx-gray-500 mb-1">1 000</div>
-              <input type="number" min="0" value="0" class="w-full h-10 rounded-lg border border-gray-200 text-center font-mono font-bold bg-gray-50 focus:outline-none focus:border-green-300">
-            </div>
-            <div class="flex flex-col items-center">
-              <div class="text-xs text-fx-gray-500 mb-1">500</div>
-              <input type="number" min="0" value="0" class="w-full h-10 rounded-lg border border-gray-200 text-center font-mono font-bold bg-gray-50 focus:outline-none focus:border-green-300">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between py-3 border-b border-gray-50">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 bg-purple-50 rounded-full flex items-center justify-center">
+                    <i class="ri-arrow-right-up-line text-purple-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-900">Dépôt BCDC</p>
+                    <p class="text-xs text-gray-400">15/01/2025 — Bordereau #1234</p>
+                  </div>
+                </div>
+                <span class="text-sm font-semibold text-gray-900">100 000 FC</span>
+              </div>
+              <div class="flex items-center justify-between py-3 border-b border-gray-50">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 bg-green-50 rounded-full flex items-center justify-center">
+                    <i class="ri-arrow-left-down-line text-green-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-900">Retrait Rawbank</p>
+                    <p class="text-xs text-gray-400">14/01/2025 — Approvisionnement</p>
+                  </div>
+                </div>
+                <span class="text-sm font-semibold text-green-600">+ 200 000 FC</span>
+              </div>
+              <div class="flex items-center justify-between py-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 bg-purple-50 rounded-full flex items-center justify-center">
+                    <i class="ri-arrow-right-up-line text-purple-600"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-900">Dépôt EquityBCDC</p>
+                    <p class="text-xs text-gray-400">13/01/2025 — Bordereau #1230</p>
+                  </div>
+                </div>
+                <span className="text-sm font-semibold text-gray-900">150 000 FC</span>
+              </div>
             </div>
           </div>
-          <div class="mt-2 bg-green-50 rounded-lg p-2 text-center">
-            <span class="text-xs text-green-600">Total billetage : </span>
-            <span class="text-sm font-extrabold text-green-700 font-mono">50 000 CDF</span>
+
+          <!-- Warning -->
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+            <div className="flex gap-3">
+              <i className="ri-information-line text-blue-500 text-xl flex-shrink-0 mt-0.5"></i>
+              <div>
+                <p className="text-sm font-semibold text-blue-800">À propos des transferts</p>
+                <p className="text-xs text-blue-700 mt-1">
+                  Les transferts Caisse → Banque réduisent le solde de caisse. 
+                  Les transferts Banque → Caisse l'augmentent. 
+                  Un justificatif est recommandé pour chaque opération.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-
-        <!-- Reference -->
-        <div>
-          <label class="text-xs font-bold text-fx-gray-500 uppercase tracking-wider block mb-2">N° bordereau / référence</label>
-          <input type="text" value="BOR-2026-0189" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-mono text-fx-gray-700 focus:outline-none focus:ring-2 focus:ring-green-100 bg-white">
-        </div>
-
-        <!-- Justification -->
-        <div>
-          <label class="text-xs font-bold text-fx-gray-500 uppercase tracking-wider block mb-2">Motif / note</label>
-          <textarea rows="2" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm text-fx-gray-700 focus:outline-none focus:ring-2 focus:ring-green-100 bg-white resize-none" placeholder="Ex: Dépôt espèces journalier">Dépôt espèces journalier — 23/04/2026</textarea>
-        </div>
-
-        <!-- Actions -->
-        <div class="flex gap-3 pt-2">
-          <button class="flex-1 py-3 rounded-xl bg-green-500 text-white text-sm font-extrabold hover:bg-green-600 transition-colors shadow-sm flex items-center justify-center gap-2">
-            <i class="ri-checkbox-circle-line"></i>
-            Confirmer dépôt
-          </button>
-          <button class="px-6 py-3 rounded-xl border border-gray-200 text-fx-gray-600 text-sm font-semibold hover:bg-gray-50 transition-colors">
-            Annuler
-          </button>
-        </div>
       </div>
-    </div>
 
-    <!-- Transfer history -->
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-      <div class="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
-        <span class="text-sm font-bold text-fx-gray-900">Historique des transferts</span>
-        <button class="text-xs text-primary-600 font-semibold hover:text-primary-700">Voir tout</button>
-      </div>
-      <div class="overflow-x-auto">
-        <table class="w-full text-xs">
-          <thead>
-            <tr class="bg-gray-50 border-b border-gray-100 text-fx-gray-400 uppercase tracking-wider text-[10px] font-bold">
-              <th class="text-left px-4 py-3">Date</th>
-              <th class="text-left px-4 py-3">Type</th>
-              <th class="text-left px-4 py-3">Référence</th>
-              <th class="text-left px-4 py-3">Compte destination</th>
-              <th class="text-right px-4 py-3">Montant</th>
-              <th class="text-center px-4 py-3">Statut</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-50">
-            <tr class="hover:bg-gray-50 transition-colors">
-              <td class="px-4 py-3 font-mono font-semibold text-fx-gray-900 whitespace-nowrap">18/04/2026</td>
-              <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-700">Dépôt</span></td>
-              <td class="px-4 py-3 font-mono text-fx-gray-500">BOR-2026-0175</td>
-              <td class="px-4 py-3 text-fx-gray-600">Rawbank — 5211</td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-green-600">85 000 CDF</td>
-              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-700">✓ Complété</span></td>
-            </tr>
-            <tr class="hover:bg-gray-50 transition-colors">
-              <td class="px-4 py-3 font-mono font-semibold text-fx-gray-900 whitespace-nowrap">15/04/2026</td>
-              <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700">Retrait</span></td>
-              <td class="px-4 py-3 font-mono text-fx-gray-500">RET-2026-0056</td>
-              <td class="px-4 py-3 text-fx-gray-600">Caisse — 5711</td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-red-600">30 000 CDF</td>
-              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-700">✓ Complété</span></td>
-            </tr>
-            <tr class="hover:bg-gray-50 transition-colors">
-              <td class="px-4 py-3 font-mono font-semibold text-fx-gray-900 whitespace-nowrap">12/04/2026</td>
-              <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-700">Dépôt</span></td>
-              <td class="px-4 py-3 font-mono text-fx-gray-500">BOR-2026-0168</td>
-              <td class="px-4 py-3 text-fx-gray-600">Rawbank — 5211</td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-green-600">120 000 CDF</td>
-              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-700">✓ Complété</span></td>
-            </tr>
-            <tr class="hover:bg-gray-50 transition-colors">
-              <td class="px-4 py-3 font-mono font-semibold text-fx-gray-900 whitespace-nowrap">09/04/2026</td>
-              <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700">Retrait</span></td>
-              <td class="px-4 py-3 font-mono text-fx-gray-500">RET-2026-0051</td>
-              <td class="px-4 py-3 text-fx-gray-600">Caisse — 5711</td>
-              <td class="px-4 py-3 text-right font-mono font-bold text-red-600">50 000 CDF</td>
-              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-700">✓ Complété</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
+    </main>
   </div>
 
 </body>
