@@ -133,14 +133,14 @@ export function formatTransactionForDiscord(transaction: any): DiscordWebhookPay
       }
     ],
     footer: {
-      text: 'FactureX API'
+      text: 'FactureSmart API'
     },
     timestamp: new Date().toISOString()
   };
 
   return {
     embeds: [embed],
-    username: 'FactureX Bot',
+    username: 'FactureSmart Bot',
   };
 }
 
@@ -178,14 +178,14 @@ export function formatFactureForDiscord(facture: any): DiscordWebhookPayload {
       }
     ],
     footer: {
-      text: 'FactureX API'
+      text: 'FactureSmart API'
     },
     timestamp: new Date().toISOString()
   };
 
   return {
     embeds: [embed],
-    username: 'FactureX Bot',
+    username: 'FactureSmart Bot',
   };
 }
 
@@ -216,20 +216,20 @@ export function formatClientForDiscord(client: any): DiscordWebhookPayload {
       }
     ],
     footer: {
-      text: 'FactureX API'
+      text: 'FactureSmart API'
     },
     timestamp: new Date().toISOString()
   };
 
   return {
     embeds: [embed],
-    username: 'FactureX Bot',
+    username: 'FactureSmart Bot',
   };
 }
 
 export function formatStatsForDiscord(stats: any): DiscordWebhookPayload {
   const embed: DiscordEmbed = {
-    title: '📊 Statistiques FactureX',
+    title: '📊 Statistiques FactureSmart',
     color: 3447003, // Blue
     fields: [
       {
@@ -264,14 +264,14 @@ export function formatStatsForDiscord(stats: any): DiscordWebhookPayload {
       }
     ],
     footer: {
-      text: 'FactureX API'
+      text: 'FactureSmart API'
     },
     timestamp: new Date().toISOString()
   };
 
   return {
     embeds: [embed],
-    username: 'FactureX Bot',
+    username: 'FactureSmart Bot',
   };
 }
 
@@ -318,7 +318,7 @@ export function formatColisForDiscord(colis: any): DiscordWebhookPayload {
       }
     ],
     footer: {
-      text: 'FactureX API'
+      text: 'FactureSmart API'
     },
     timestamp: new Date().toISOString()
   };
@@ -333,7 +333,7 @@ export function formatColisForDiscord(colis: any): DiscordWebhookPayload {
 
   return {
     embeds: [embed],
-    username: 'FactureX Bot',
+    username: 'FactureSmart Bot',
   };
 }
 
@@ -343,7 +343,7 @@ export function formatForN8n(data: any, eventType: string): any {
     timestamp: new Date().toISOString(),
     data: data,
     metadata: {
-      source: 'facturex-api',
+      source: 'facturesmart-api',
       version: '1.0'
     }
   };

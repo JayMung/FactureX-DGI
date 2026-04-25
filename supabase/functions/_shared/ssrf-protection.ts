@@ -214,7 +214,7 @@ export async function fetchImageSafely(
       signal: controller.signal,
       redirect: 'follow', // Follow redirects
       headers: {
-        'User-Agent': 'FactureX-ImageProxy/1.0',
+        'User-Agent': 'FactureSmart-ImageProxy/1.0',
         'Accept': 'image/*',
       },
     });

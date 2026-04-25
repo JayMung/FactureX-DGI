@@ -10,7 +10,7 @@
  * 4. Double-submit cookie pattern
  */
 
-const CSRF_TOKEN_KEY = 'facturex_csrf_token';
+const CSRF_TOKEN_KEY = 'facturesmart_csrf_token';
 const CSRF_TOKEN_HEADER = 'X-CSRF-Token';
 const CUSTOM_HEADER = 'X-Requested-With';
 

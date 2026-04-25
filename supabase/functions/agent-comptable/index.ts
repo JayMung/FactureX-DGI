@@ -81,7 +81,7 @@ async function handleMessage(chatId: string, text: string) {
         const emoji = result.type_transaction === 'revenue' ? '💰' : '💸';
         await sendTelegramMessage(
           chatId,
-          `${emoji} *Transaction enregistrée !*\n\n• ${result.montant} ${result.devise}\n• ${result.motif}\n\n✅ Sauvegardé dans FactureX`
+          `${emoji} *Transaction enregistrée !*\n\n• ${result.montant} ${result.devise}\n• ${result.motif}\n\n✅ Sauvegardé dans FactureSmart`
         );
       } else {
         await sendTelegramMessage(chatId, "⏰ Pas de transaction en attente. Envoie-moi un nouveau message.");
@@ -199,7 +199,7 @@ async function handleCallback(callbackQuery: any) {
           `${emoji} *Transaction enregistrée !*\n\n` +
           `• ${result.montant} ${result.devise}\n` +
           `• ${result.motif}\n\n` +
-          `✅ Sauvegardé dans FactureX`
+          `✅ Sauvegardé dans FactureSmart`
         );
       } else {
         await sendTelegramMessage(

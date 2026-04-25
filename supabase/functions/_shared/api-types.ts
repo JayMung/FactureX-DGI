@@ -1,5 +1,5 @@
 /**
- * API Types for FactureX External API
+ * API Types for FactureSmart External API
  * Shared types for all API endpoints
  */
 
