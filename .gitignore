@@ -69,3 +69,21 @@ secrets/
 *.key
 *.pem
 *.cert
+*.cookies.json
+*-cookies.json
+.buckydrop-cookies.json
+
+# Debug / scraping artefacts (ne pas committer ce qui sort des scripts d'exploration)
+*-screenshots/
+playwright-report/
+test-results/
+playwright/.cache/
+
+# Misc IDE / agents (note: .windsurf/ est volontairement tracké pour partager les rules)
+.cursor/
+.aider*
+
+# OS
+.AppleDouble
+.LSOverride
+
