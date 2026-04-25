@@ -185,7 +185,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             <span className="text-emerald-600 font-bold text-xl">F</span>
           </div>
           <div className="min-w-0 flex-1">
-            <h1 className="text-xl font-bold tracking-tight">FactureSmart</h1>
+            <h1 className="text-xl font-bold tracking-tight">FactureX</h1>
             <p className="text-xs text-emerald-200/80">Facturation simplifiée</p>
           </div>
         </div>

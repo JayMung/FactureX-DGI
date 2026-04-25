@@ -267,7 +267,7 @@ export interface Facture {
   id: string;
   facture_number: string;
   type: 'devis' | 'facture';
-  statut: 'brouillon' | 'en_attente' | 'validee' | 'payee' | 'annulee' | 'soumis' | 'accepte' | 'refuse';
+  statut: 'brouillon' | 'en_attente' | 'validee' | 'payee' | 'annulee';
   client_id: string;
   date_emission: string;
   date_validation?: string;

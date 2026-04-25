@@ -9,9 +9,11 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import { useComptabiliteAI } from '@/hooks/useComptabiliteAI';
 
 // Agent IA Comptabilite - runs silently inside providers
+// [COD-56] telegramBotToken supprimé du frontend — passe maintenant par Edge Function server-side
 const ComptabiliteAIAgent = () => {
   useComptabiliteAI({
-    telegramBotToken: import.meta.env.VITE_TELEGRAM_BOT_TOKEN,
+    // [COD-56] telegramChatId reste dans .env (n'est pas une clé secrète)
+    // telegramBotToken est stocké server-side dans l'Edge Function api-telegram-send
     telegramChatId: import.meta.env.VITE_TELEGRAM_CHAT_ID,
     maxDaysWithoutReconciliation: 3,
     maxUnrecordedExpenses: 3,
@@ -36,6 +38,7 @@ import UserEdit from "./pages/UserEdit";
 import UserInvite from "./pages/UserInvite";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
+import Landing from "./pages/Landing";
 
 // Lazy-loaded pages
 const Index = lazy(() => import("./pages/Index-Protected"));
@@ -46,8 +49,6 @@ const FacturesCreate = lazy(() => import("./pages/Factures-Create"));
 const FacturesView = lazy(() => import("./pages/Factures-View"));
 const FacturesPreview = lazy(() => import("./pages/Factures-Preview"));
 const DgiStatus = lazy(() => import("./pages/DgiStatus"));
-const InvoiceDetailFull = lazy(() => import("./pages/InvoiceDetailFull"));
-const InvoiceHistory = lazy(() => import("./pages/InvoiceHistory"));
 const Devis = lazy(() => import("./pages/Devis"));
 
 const Settings = lazy(() => import("./pages/Settings"));
@@ -105,6 +106,7 @@ const App = () => (
                 } />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/admin-invitation" element={<AdminInvitation />} />
+                <Route path="/landing" element={<Landing />} />
                 <Route path="/" element={
                   <ProtectedRoute>
                     <Index />
@@ -155,30 +157,16 @@ const App = () => (
                     <FacturesPreview />
                   </ProtectedRoute>
                 } />
-                <Route path="/devis" element={
-                  <ProtectedRoute>
-                    <Devis />
-                  </ProtectedRoute>
-                } />
-
                 <Route path="/factures/:id/dgi-status" element={
                   <ProtectedRoute>
                     <DgiStatus />
                   </ProtectedRoute>
                 } />
-
-                <Route path="/factures/:id/detail" element={
+                <Route path="/devis" element={
                   <ProtectedRoute>
-                    <InvoiceDetailFull />
+                    <Devis />
                   </ProtectedRoute>
                 } />
-
-                <Route path="/factures/:id/history" element={
-                  <ProtectedRoute>
-                    <InvoiceHistory />
-                  </ProtectedRoute>
-                } />
-
                 <Route path="/settings" element={
                   <ProtectedRoute allowedRoles={['admin']}>
                     <Settings />

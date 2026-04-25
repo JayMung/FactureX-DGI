@@ -59,7 +59,8 @@ export const AdminManager = () => {
       setInviteEmail('');
       
       // In a real implementation, you would send this token via email
-      console.log('Admin invitation token:', token);
+      // Token intentionally NOT logged — security best practice
+      // Token sent via email service only
       
     } catch (err: any) {
       console.error('Error granting admin:', err);

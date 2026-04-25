@@ -340,7 +340,7 @@ const Step3Confirm = ({ data, onConfirm, loading }: {
         ) : (
           <>
             <i className="ri-rocket-line" />
-            Accéder à FactureSmart
+            Accéder à FactureX
           </>
         )}
       </button>
@@ -421,7 +421,7 @@ const SetupWizard = () => {
             <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center">
               <i className="ri-file-paper-2-line text-white text-lg" />
             </div>
-            <span className="text-slate-900 text-xl font-bold">FactureSmart</span>
+            <span className="text-slate-900 text-xl font-bold">FactureX</span>
           </div>
           <h1 className="text-2xl font-extrabold text-slate-900">Configuration initiale</h1>
           <p className="text-slate-500 text-sm mt-1">Finalisez votre espace en 2 minutes</p>

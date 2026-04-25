@@ -40,7 +40,7 @@ const ClientForm: React.FC<ClientFormProps> = ({
   
   const [errors, setErrors] = useState<Record<string, string>>({});
   
-  const { createItem: createClient, updateItem: updateClient, isCreating, isUpdating } = useClients();
+  const { createClient, updateClient, isCreating, isUpdating } = useClients();
   const isEditing = !!client;
   const isLoading = isCreating || isUpdating;
 

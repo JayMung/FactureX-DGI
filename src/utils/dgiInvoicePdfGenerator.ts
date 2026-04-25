@@ -317,7 +317,7 @@ export async function generateDgiInvoicePDF(
   );
   doc.setFontSize(6.5);
   doc.text(
-    `Document généré par FactureSmart | Déclarant DGI`,
+    `Document généré par FactureX | Déclarant DGI`,
     PAGE_WIDTH / 2, y + 8,
     { align: 'center' }
   );

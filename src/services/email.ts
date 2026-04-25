@@ -1,9 +1,9 @@
 // Email Service — FactureSmart Sprint 1
-// Provider: Resend (https://resend.com) — Free tier: 100 emails/jour
+// [COD-56] Refactorisé: RESEND_API_KEY supprimée du frontend
+// Appels via Edge Function /api-email-send (server-side)
+// La vraie clé Resend est stockée dans les environment variables Supabase
 
-const RESEND_API_KEY = import.meta.env.VITE_RESEND_API_KEY || '';
-
-const RESEND_ENDPOINT = 'https://api.resend.com';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from './constants';
 
 export interface EmailOptions {
   to: string;
@@ -20,41 +20,56 @@ export interface EmailResult {
 }
 
 class EmailService {
-  private apiKey: string;
+  private edgeFunctionUrl: string;
   private fromEmail: string;
 
   constructor() {
-    this.apiKey = RESEND_API_KEY;
+    // Appelle l'Edge Function server-side — la clé API n'est jamais dans le frontend
+    this.edgeFunctionUrl = `${SUPABASE_URL}/functions/v1/api-email-send`;
     this.fromEmail = 'FactureSmart <noreply@facturesmart.com>';
   }
 
+  private async getAccessToken(): Promise<string> {
+    try {
+      const { supabase } = await import('@/integrations/supabase/client');
+      const { data: { session } } = await supabase.auth.getSession();
+      return session?.access_token || '';
+    } catch {
+      return '';
+    }
+  }
+
   /**
-   * Send a transactional email via Resend API
+   * Send a transactional email via Edge Function proxy
+   * [COD-56] — La clé RESEND_API_KEY n'est plus dans le frontend
    */
   async send(options: EmailOptions): Promise<EmailResult> {
-    if (!this.apiKey) {
-      console.warn('[EmailService] RESEND_API_KEY not configured — email not sent');
+    if (!this.edgeFunctionUrl || !SUPABASE_URL) {
+      console.warn('[EmailService] SUPABASE_URL not configured — email not sent');
       return { success: false, error: 'Email service not configured' };
     }
 
     try {
-      const response = await fetch(`${RESEND_ENDPOINT}/emails`, {
+      const accessToken = await this.getAccessToken();
+
+      const response = await fetch(this.edgeFunctionUrl, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${this.apiKey}`,
           'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY || '',
+          'Authorization': `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
-          from: options.from || this.fromEmail,
           to: options.to,
           subject: options.subject,
           html: options.html,
-          reply_to: options.replyTo,
+          from: options.from || this.fromEmail,
+          replyTo: options.replyTo,
         }),
       });
 
       if (!response.ok) {
-        const error = await response.json();
+        const error = await response.json().catch(() => ({ message: 'Failed to send email' }));
         console.error('[EmailService] Send failed:', error);
         return { success: false, error: error.message || 'Failed to send email' };
       }

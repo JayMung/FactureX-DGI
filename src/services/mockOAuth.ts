@@ -28,8 +28,8 @@ interface MockUser {
 
 // ─── Storage key ──────────────────────────────────────────────────────────────
 
-const MOCK_TOKEN_KEY = 'facturesmart_mock_oauth_token';
-const MOCK_USER_KEY = 'facturesmart_mock_oauth_user';
+const MOCK_TOKEN_KEY = 'facturex_mock_oauth_token';
+const MOCK_USER_KEY = 'facturex_mock_oauth_user';
 
 // ─── Mock OAuth flow ─────────────────────────────────────────────────────────
 

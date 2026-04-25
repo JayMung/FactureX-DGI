@@ -43,17 +43,6 @@ export const useComptesFinanciers = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
-      // Debug JWT contents
-      const { data: { session } } = await supabase.auth.getSession();
-      console.log('JWT token payload:', session?.access_token ? JSON.parse(atob(session.access_token.split('.')[1])) : 'No token');
-      console.log('User metadata:', user.user_metadata);
-      console.log('User app metadata:', user.app_metadata);
-      console.log('Organization ID from hook:', organizationId);
-      console.log('Creating compte with data:', {
-        ...data,
-        organization_id: organizationId,
-        created_by: user.id,
-      });
 
       const { data: newCompte, error } = await supabase
         .from('comptes_financiers')

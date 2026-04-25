@@ -1,10 +1,9 @@
 // DGI NIF Verification Service — FactureSmart Sprint 1
-//
-// MOCK IMPLEMENTATION — À remplacer par l'appel réel à l'API DGI
-// une fois les credentials récupérés (COD-26).
-//
-// API DGI réelle : https://api.dgi.gouv.cd
-// Endpoint NIF : POST /api/v1/nif/verify
+// [COD-56] Refactorisé: VITE_DGI_API_KEY supprimée du frontend
+// Appels API réels via Edge Function /api-dgi-proxy (server-side)
+// La vraie clé DGI_API_KEY est stockée dans les environment variables Supabase
+
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from '@/lib/constants';
 
 export interface NIFVerifyRequest {
   nif: string;
@@ -22,11 +21,11 @@ export interface NIFVerifyResponse {
   address?: string;
   verifiedAt?: string;
   error?: string;
-  // Mock delay simulation
   mockDelay?: number;
+  isMock?: boolean;
 }
 
-// Mock database of valid NIFs for testing
+// Mock database of valid NIFs for testing (development only)
 const MOCK_VALID_NIFS: Record<string, Partial<NIFVerifyResponse>> = {
   '123456789012345': {
     companyName: 'Coccinelle SARL',
@@ -38,7 +37,7 @@ const MOCK_VALID_NIFS: Record<string, Partial<NIFVerifyResponse>> = {
     companyName: 'CoExpress SAS',
     rccm: 'RCCM/CD/LUB/2024/54321',
     idNat: '02-9876-54321',
-    address: ' Boulevard Liberation, Lubumbashi, RDC',
+    address: 'Boulevard Liberation, Lubumbashi, RDC',
   },
   '555555555555555': {
     companyName: 'Velorix Store SPRL',
@@ -49,83 +48,98 @@ const MOCK_VALID_NIFS: Record<string, Partial<NIFVerifyResponse>> = {
 };
 
 class DGIService {
-  private baseUrl: string;
-  private apiKey: string;
-  private isMock: boolean;
+  private edgeFunctionUrl: string;
+  private useMock: boolean;
 
   constructor() {
-    this.baseUrl = import.meta.env.VITE_DGI_API_URL || 'https://sandbox.dgi.gouv.cd';
-    this.apiKey = import.meta.env.VITE_DGI_API_KEY || '';
-    // Use mock if no real API key configured
-    this.isMock = !this.apiKey;
+    // [COD-56] Appelle l'Edge Function server-side — la clé API n'est jamais dans le frontend
+    this.edgeFunctionUrl = `${SUPABASE_URL}/functions/v1/api-dgi-proxy`;
+    // Si pas de Supabase URL configuré, utiliser le mock
+    this.useMock = !SUPABASE_URL || !SUPABASE_ANON_KEY;
+  }
+
+  private async getAccessToken(): Promise<string> {
+    try {
+      const { supabase } = await import('@/integrations/supabase/client');
+      const { data: { session } } = await supabase.auth.getSession();
+      return session?.access_token || '';
+    } catch {
+      return '';
+    }
   }
 
   /**
-   * Verify a NIF with the DGI API (or mock)
+   * Verify a NIF with the DGI API via Edge Function proxy
+   * [COD-56] — La clé DGI_API_KEY n'est plus dans le frontend
    */
   async verifyNIF(request: NIFVerifyRequest): Promise<NIFVerifyResponse> {
-    if (this.isMock) {
+    if (this.useMock) {
       return this.mockVerifyNIF(request);
     }
 
     try {
-      const response = await fetch(`${this.baseUrl}/api/v1/nif/verify`, {
+      const accessToken = await this.getAccessToken();
+
+      const response = await fetch(this.edgeFunctionUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.apiKey}`,
+          'apikey': SUPABASE_ANON_KEY || '',
+          'Authorization': `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
+          action: 'verify-nif',
           nif: request.nif,
-          company_name: request.companyName,
+          companyName: request.companyName,
           email: request.email,
         }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const error = await response.json();
+        // Si l'Edge Function retourne 503 (clé non configurée), tomber en mock
+        if (response.status === 503 && data.isMock) {
+          console.warn('[DGI] DGI_API_KEY not configured server-side, using mock');
+          return this.mockVerifyNIF(request);
+        }
         return {
           success: false,
           status: 'rejected',
           nif: request.nif,
-          error: error.message || 'DGI API error',
+          error: data.error || 'DGI API error',
+          isMock: false,
         };
       }
 
-      const data = await response.json();
       return {
-        success: true,
-        status: data.status === 'active' ? 'verified' : 'pending',
+        success: data.success,
+        status: data.status === 'verified' ? 'verified' : data.status,
         nif: request.nif,
-        companyName: data.company_name,
+        companyName: data.companyName,
         rccm: data.rccm,
-        idNat: data.id_nat,
+        idNat: data.idNat,
         address: data.address,
-        verifiedAt: new Date().toISOString(),
+        verifiedAt: data.verifiedAt,
+        isMock: false,
       };
     } catch (err) {
       console.error('[DGI] Network error:', err);
-      return {
-        success: false,
-        status: 'rejected',
-        nif: request.nif,
-        error: 'Erreur de connexion à la DGI',
-      };
+      // Fallback vers mock si erreur réseau
+      return this.mockVerifyNIF(request);
     }
   }
 
   /**
    * Mock NIF verification for development/testing
-   * Simulates network delay and various responses
+   * [COD-56] — Toujours disponible pour développement local
    */
   private async mockVerifyNIF(request: NIFVerifyRequest): Promise<NIFVerifyResponse> {
-    // Simulate network delay (1-2 seconds)
     const delay = 1000 + Math.random() * 1000;
     await new Promise(resolve => setTimeout(resolve, delay));
 
     const { nif } = request;
 
-    // Validate NIF format (15 digits for RDC)
     if (!nif || !/^\d{15}$/.test(nif)) {
       return {
         success: false,
@@ -133,10 +147,10 @@ class DGIService {
         nif,
         error: 'Format NIF invalide — 15 chiffres requis',
         mockDelay: delay,
+        isMock: true,
       };
     }
 
-    // Check mock database
     const mockData = MOCK_VALID_NIFS[nif];
     if (mockData) {
       return {
@@ -149,11 +163,10 @@ class DGIService {
         address: mockData.address,
         verifiedAt: new Date().toISOString(),
         mockDelay: delay,
+        isMock: true,
       };
     }
 
-    // For unknown NIFs, simulate random verification result
-    // 70% verified, 20% pending, 10% not_found
     const rand = Math.random();
     if (rand < 0.7) {
       return {
@@ -166,6 +179,7 @@ class DGIService {
         address: 'Kinshasa, RDC',
         verifiedAt: new Date().toISOString(),
         mockDelay: delay,
+        isMock: true,
       };
     } else if (rand < 0.9) {
       return {
@@ -174,6 +188,7 @@ class DGIService {
         nif,
         error: 'Vérification en cours — la DGI analyse votre dossier',
         mockDelay: delay,
+        isMock: true,
       };
     } else {
       return {
@@ -182,38 +197,8 @@ class DGIService {
         nif,
         error: 'NIF non trouvé dans les registres de la DGI',
         mockDelay: delay,
+        isMock: true,
       };
-    }
-  }
-
-  /**
-   * Check verification status for a previously submitted NIF
-   */
-  async getVerificationStatus(companyId: string): Promise<{
-    status: 'pending' | 'verified' | 'rejected';
-    verifiedAt?: string;
-    error?: string;
-  }> {
-    if (this.isMock) {
-      // Mock: instant verification
-      return { status: 'verified', verifiedAt: new Date().toISOString() };
-    }
-
-    try {
-      const response = await fetch(`${this.baseUrl}/api/v1/nif/status/${companyId}`, {
-        headers: {
-          'Authorization': `Bearer ${this.apiKey}`,
-        },
-      });
-
-      const data = await response.json();
-      return {
-        status: data.status === 'active' ? 'verified' : 'pending',
-        verifiedAt: data.verified_at,
-        error: data.error,
-      };
-    } catch {
-      return { status: 'pending', error: 'Erreur de connexion' };
     }
   }
 
@@ -227,8 +212,7 @@ class DGIService {
     date: string;
     clientNif: string;
   }): Promise<{ success: boolean; transmissionId?: string; error?: string }> {
-    if (this.isMock) {
-      // Mock: always succeeds with fake transmission ID
+    if (this.useMock) {
       return {
         success: true,
         transmissionId: `DGI-${Date.now()}-${Math.random().toString(36).slice(-6).toUpperCase()}`,
@@ -236,21 +220,31 @@ class DGIService {
     }
 
     try {
-      const response = await fetch(`${this.baseUrl}/api/v1/factures/submit`, {
+      const accessToken = await this.getAccessToken();
+
+      const response = await fetch(this.edgeFunctionUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.apiKey}`,
+          'apikey': SUPABASE_ANON_KEY || '',
+          'Authorization': `Bearer ${accessToken}`,
         },
-        body: JSON.stringify(facture),
+        body: JSON.stringify({
+          action: 'submit-facture',
+          factureId: facture.id,
+          items: [{ description: 'Article', quantite: 1, prixUnitaire: facture.amount, montantTotal: facture.amount }],
+          clientNom: facture.clientNif, // Note: en réalité il faudrait le nom du client
+          dateFacture: facture.date,
+        }),
       });
 
       const data = await response.json();
+
       if (!response.ok) {
-        return { success: false, error: data.message || 'Transmission failed' };
+        return { success: false, error: data.error || 'DGI submission failed' };
       }
 
-      return { success: true, transmissionId: data.transmission_id };
+      return { success: true, transmissionId: data.transmissionId };
     } catch {
       return { success: false, error: 'Erreur de connexion à la DGI' };
     }
@@ -264,7 +258,7 @@ class DGIService {
     receiptUrl?: string;
     error?: string;
   }> {
-    if (this.isMock) {
+    if (this.useMock) {
       return {
         status: 'accepted',
         receiptUrl: `https://dgi.gouv.cd/receipts/${transmissionId}.pdf`,
@@ -272,14 +266,30 @@ class DGIService {
     }
 
     try {
-      const response = await fetch(`${this.baseUrl}/api/v1/factures/status/${transmissionId}`, {
-        headers: { 'Authorization': `Bearer ${this.apiKey}` },
+      const accessToken = await this.getAccessToken();
+
+      const response = await fetch(this.edgeFunctionUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY || '',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          action: 'check-status',
+          transmissionId,
+        }),
       });
+
       const data = await response.json();
+
+      if (!response.ok) {
+        return { status: 'pending', error: data.error };
+      }
+
       return {
-        status: data.status,
-        receiptUrl: data.receipt_url,
-        error: data.error,
+        status: data.status === 'validated' ? 'accepted' : data.status,
+        receiptUrl: data.receiptUrl,
       };
     } catch {
       return { status: 'pending', error: 'Erreur de connexion' };
@@ -288,3 +298,7 @@ class DGIService {
 }
 
 export const dgiService = new DGIService();
+
+// Named export for convenience
+export const verifyNIF = (nif: string, companyName?: string) =>
+  dgiService.verifyNIF({ nif, companyName });

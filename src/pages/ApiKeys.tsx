@@ -193,7 +193,7 @@ export default function ApiKeys() {
         <div>
           <h1 className="text-3xl font-bold">Clés API</h1>
           <p className="text-muted-foreground mt-2">
-            Gérez vos clés API pour accéder à l'API FactureSmart depuis n8n, Discord, ou d'autres applications
+            Gérez vos clés API pour accéder à l'API FactureX depuis n8n, Discord, ou d'autres applications
           </p>
         </div>
         <Button onClick={() => setIsCreateDialogOpen(true)}>

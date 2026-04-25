@@ -686,7 +686,9 @@ export class SupabaseService {
         email: user.email || '',
         first_name: user.user_metadata?.first_name || '',
         last_name: user.user_metadata?.last_name || '',
-        role: user.user_metadata?.role || 'admin',
+        // Default to 'operateur' for new profiles — role elevation handled by admin via profiles table
+        // NEVER default to 'admin' on signup to prevent privilege escalation
+        role: 'operateur',
         phone: user.user_metadata?.phone || '',
         is_active: true
       };

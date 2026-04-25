@@ -57,7 +57,7 @@ const LeftHeroPanel = () => (
           <i className="ri-file-paper-2-line text-white text-xl" />
         </div>
         <div>
-          <span className="text-white text-xl font-bold tracking-tight">FactureSmart</span>
+          <span className="text-white text-xl font-bold tracking-tight">FactureX</span>
           <span className="ml-2 text-xs font-bold px-2 py-0.5 bg-white/20 text-white rounded-full border border-white/30">RDC</span>
         </div>
       </div>
@@ -85,7 +85,7 @@ const LeftHeroPanel = () => (
 
       {/* Footer */}
       <div className="flex items-center justify-between text-emerald-200 text-xs">
-        <span>© 2026 FactureSmart — Solution officielle DGI</span>
+        <span>© 2026 FactureX — Solution officielle DGI</span>
         <span className="flex items-center gap-1">
           <i className="ri-shield-fill text-xs" />
           Certifié DGI
@@ -163,13 +163,13 @@ const LoginForm = ({ onSwitch }: { onSwitch: () => void }) => {
         setError('');
         const user = await initiateOAuthMock(provider);
         // In mock mode, sign in with the mock email
-        const { data: signInData, error } = await supabase.auth.signInWithPassword({
+        const { error } = await supabase.auth.signInWithPassword({
           email: user.email,
           password: '__mock_oauth__',
         });
         if (error) {
           // Mock user doesn't exist in Supabase yet — create them
-          const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+          const { data, error: signUpError } = await supabase.auth.signUp({
             email: user.email,
             password: '__mock_oauth__',
             options: {
@@ -177,14 +177,14 @@ const LoginForm = ({ onSwitch }: { onSwitch: () => void }) => {
             },
           });
           if (signUpError) throw signUpError;
-          if (signUpData.session) {
-            await sessionManager.createSession(signUpData.session, signUpData.user!);
+          if (data.session) {
+            await sessionManager.createSession(data.session, data.user!);
             await sessionManager.regenerateSession();
             await logLoginSuccess(user.email);
             navigate('/');
           }
-        } else if (signInData.session) {
-          await sessionManager.createSession(signInData.session, signInData.user);
+        } else if (data.session) {
+          await sessionManager.createSession(data.session, data.user);
           await sessionManager.regenerateSession();
           await logLoginSuccess(user.email);
           navigate('/');
@@ -522,7 +522,7 @@ const Login = () => {
             <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center">
               <i className="ri-file-paper-2-line text-white text-lg" />
             </div>
-            <span className="text-slate-900 text-xl font-bold">FactureSmart</span>
+            <span className="text-slate-900 text-xl font-bold">FactureX</span>
           </div>
 
           {/* Card */}

@@ -1,7 +1,7 @@
 /**
  * CSRF Protection Utility
  * 
- * Implements Cross-Site Request Forgery protection for FactureSmart
+ * Implements Cross-Site Request Forgery protection for FactureX
  * 
  * Protection Mechanisms:
  * 1. Custom headers (X-Requested-With, X-CSRF-Token)
@@ -10,7 +10,7 @@
  * 4. Double-submit cookie pattern
  */
 
-const CSRF_TOKEN_KEY = 'facturesmart_csrf_token';
+const CSRF_TOKEN_KEY = 'facturex_csrf_token';
 const CSRF_TOKEN_HEADER = 'X-CSRF-Token';
 const CUSTOM_HEADER = 'X-Requested-With';
 

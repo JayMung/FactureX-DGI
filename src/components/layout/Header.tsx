@@ -134,7 +134,7 @@ const Header: React.FC<HeaderProps> = ({
                       {displayName}
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                      {user?.email || 'admin@facturesmart.com'}
+                      {user?.email || 'admin@facturex.com'}
                     </p>
                   </div>
                   <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center overflow-hidden shadow-md ring-2 ring-white dark:ring-gray-800">

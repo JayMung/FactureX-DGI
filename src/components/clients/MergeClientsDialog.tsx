@@ -104,7 +104,7 @@ const MergeClientsDialog: React.FC<MergeClientsDialogProps> = ({
                 </DialogHeader>
 
                 <div className="space-y-4 py-4">
-                    <Alert className="bg-amber-50 border-amber-200 text-amber-900">
+                    <Alert variant="warning" className="bg-amber-50 border-amber-200 text-amber-900">
                         <AlertTriangle className="h-4 w-4 text-amber-600" />
                         <AlertTitle className="font-bold">Action irréversible</AlertTitle>
                         <AlertDescription className="text-sm">

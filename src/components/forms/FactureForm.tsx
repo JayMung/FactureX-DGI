@@ -42,7 +42,7 @@ const FactureForm: React.FC<FactureFormProps> = ({ isOpen, onClose, onSuccess, f
     client_id: '',
     type: 'devis' as 'devis' | 'facture',
     mode_livraison: 'aerien' as 'aerien' | 'maritime',
-    devise: 'USD' as 'USD' | 'CDF' | 'CNY',
+    devise: 'USD' as 'USD' | 'CDF',
     conditions_vente: '',
     notes: '',
     date_emission: new Date().toISOString().split('T')[0]
@@ -352,7 +352,7 @@ const FactureForm: React.FC<FactureFormProps> = ({ isOpen, onClose, onSuccess, f
               <Label>Devise</Label>
               <select
                 value={formData.devise}
-                onChange={(e) => setFormData(prev => ({ ...prev, devise: e.target.value as 'USD' | 'CDF' | 'CNY' }))}
+                onChange={(e) => setFormData(prev => ({ ...prev, devise: e.target.value as 'USD' | 'CDF' }))}
                 className="w-full p-2 border rounded"
               >
                 <option value="USD">USD</option>

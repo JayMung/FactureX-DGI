@@ -84,23 +84,19 @@ const ClientsProtected: React.FC = () => {
   const { isAdmin } = usePermissions();
 
   const {
-    items,
+    clients,
     pagination,
     isLoading,
     error,
     globalTotals,
-    createItem: createClient,
-    updateItem: updateClient,
-    deleteItem: deleteClient,
+    createClient,
+    updateClient,
+    deleteClient,
     refetch
   } = useClients(currentPage, {
     search: searchTerm || undefined,
     ville: cityFilter === 'all' ? undefined : cityFilter
   });
-
-  // The generic CRUD hook returns items as unknown[]; cast to Client[] here
-  // since useClients is parameterized with Client.
-  const clients = items as Client[];
 
   const { sortedData, sortConfig, handleSort } = useSorting(clients);
   const {

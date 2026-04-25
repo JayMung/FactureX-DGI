@@ -119,7 +119,7 @@ const AdminInvitation = () => {
                 Bienvenue Administrateur !
               </h2>
               <p className="text-gray-600 mb-4">
-                Vous avez accepté l'invitation et êtes maintenant administrateur de FactureSmart.
+                Vous avez accepté l'invitation et êtes maintenant administrateur de FactureX.
               </p>
               <p className="text-sm text-gray-500">
                 Vous allez être redirigé vers votre tableau de bord...
@@ -140,7 +140,7 @@ const AdminInvitation = () => {
           </div>
           <h2 className="text-3xl font-bold text-gray-900">Invitation Administrateur</h2>
           <p className="mt-2 text-sm text-gray-600">
-            Vous avez été invité à devenir administrateur de FactureSmart
+            Vous avez été invité à devenir administrateur de FactureX
           </p>
         </div>
 
