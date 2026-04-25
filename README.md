@@ -28,21 +28,8 @@ npm run build
 
 ## 📚 Documentation
 
-Toute la documentation technique se trouve dans le dossier `/docs` :
-
-### Guides Principaux
-- [Release Notes v1.0.3](docs/RELEASE_NOTES_v1.0.3.md)
-- [Release Deployment](docs/RELEASE_v1.0.3_DEPLOYED.md)
-- [Finances Permissions Guide](docs/FINANCES_PERMISSIONS_GUIDE.md)
-
-### Documentation Technique
-- [TypeScript Resolution](docs/TYPESCRIPT_FINAL_FIX.md)
-- [UI Types Solution](docs/UI_TYPES_SOLUTION.md)
-- [Security Audit](docs/RAPPORT_AUDIT_SECURITE_FACTUREX.md)
-
-### Fixes & Improvements
-- Voir le dossier `/docs/fixes/` pour les corrections spécifiques
-- Voir le dossier `/docs/guides/` pour les guides détaillés
+La documentation technique est en cours de restructuration.
+Pour l'instant, référez-vous aux maquettes UI dans `/mockups-v2/` et au code source dans `/src/`.
 
 ---
 
@@ -107,7 +94,7 @@ Propriétaire - Tous droits réservés
 
 ## 🤝 Support
 
-Pour toute question ou problème, consultez la documentation dans `/docs` ou contactez l'équipe de développement.
+Pour toute question ou problème, contactez l'équipe de développement.
 
 ---
 
