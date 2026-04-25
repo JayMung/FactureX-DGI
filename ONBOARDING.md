@@ -145,7 +145,6 @@ Détails complets : [`.github/CONTRIBUTING.md`](.github/CONTRIBUTING.md).
 ```
 FactureSmart/
 ├── .github/                # Workflows CI, templates PR, guide contribution
-├── docs/                   # Documentation produit / technique
 ├── mockups-v2/             # Maquettes HTML de référence (ne pas les modifier)
 ├── public/                 # Assets statiques servis tels quels
 ├── scripts/                # Scripts utilitaires
@@ -157,8 +156,6 @@ FactureSmart/
 ├── tsconfig.*.json
 └── vite.config.ts
 ```
-
-> ⚠️ **Attention** : la racine contient encore des fichiers résiduels (`buckydrop-*`, `scrape_leads*`, screenshots) hérités de l'ancien projet. **Ne pas les utiliser comme référence** ; un cleanup est planifié dans une PR séparée.
 
 ---
 
