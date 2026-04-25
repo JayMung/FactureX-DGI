@@ -127,9 +127,110 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
+// ============================
+// PUSH NOTIFICATIONS (Phase 7)
+// ============================
+
+self.addEventListener('push', (event) => {
+  console.log('[SW] Push received:', event);
+
+  let data = {
+    title: 'FactureSmart',
+    body: 'Nouvelle notification',
+    icon: '/favicon.ico',
+    badge: '/favicon.ico',
+    vibrate: [200, 100, 200],
+    data: {
+      url: '/',
+      dateOfArrival: Date.now(),
+    },
+  };
+
+  if (event.data) {
+    try {
+      const payload = event.data.json();
+      data = { ...data, ...payload };
+    } catch (e) {
+      // If not JSON, use text as body
+      data.body = event.data.text();
+    }
+  }
+
+  event.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: data.icon,
+      badge: data.badge,
+      vibrate: data.vibrate || [200, 100, 200],
+      tag: data.tag || 'facturesmart-notification',
+      renotify: data.renotify || false,
+      requireInteraction: data.priority === 'urgent',
+      actions: data.actions || [
+        {
+          action: 'open',
+          title: 'Ouvrir',
+        },
+        {
+          action: 'dismiss',
+          title: 'Ignorer',
+        },
+      ],
+      data: data.data || { url: '/' },
+    })
+  );
+});
+
+// Handle notification click
+self.addEventListener('notificationclick', (event) => {
+  console.log('[SW] Notification click:', event);
+
+  event.notification.close();
+
+  const urlToOpen = event.notification.data?.url || '/';
+  const action = event.action;
+
+  if (action === 'dismiss') {
+    return; // Just close the notification
+  }
+
+  // Open or focus the app
+  event.waitUntil(
+    clients.matchAll({
+      type: 'window',
+      includeUncontrolled: true,
+    })
+    .then((clientList) => {
+      // Check if there's already an open window
+      for (const client of clientList) {
+        if (client.url.includes(self.location.origin) && 'focus' in client) {
+          // Navigate to the target URL
+          if (urlToOpen !== '/') {
+            client.navigate(urlToOpen);
+          }
+          return client.focus();
+        }
+      }
+
+      // Open new window
+      if (clients.openWindow) {
+        return clients.openWindow(self.location.origin + urlToOpen);
+      }
+    })
+  );
+});
+
 // Handle messages from the app
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
+  }
+
+  // Handle push subscription updates
+  if (event.data && event.data.type === 'PUSH_SUBSCRIBED') {
+    console.log('[SW] Push subscription confirmed');
+  }
+
+  if (event.data && event.data.type === 'PUSH_UNSUBSCRIBED') {
+    console.log('[SW] Push subscription removed');
   }
 });

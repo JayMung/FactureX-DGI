@@ -14,6 +14,7 @@ import {
   User,
   ChevronDown
 } from 'lucide-react';
+import { NotificationCenter } from '@/components/notifications/NotificationCenter';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -114,13 +115,8 @@ const Header: React.FC<HeaderProps> = ({
 
           {/* Right side - Notifications and user menu */}
           <div className="flex items-center gap-1 sm:gap-3 flex-shrink-0">
-            {/* Notifications placeholder */}
-            <button
-              className="relative p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              aria-label="Notifications"
-            >
-              <Bell className="h-5 w-5 sm:h-6 sm:w-6" />
-            </button>
+            {/* Notifications bell with dropdown */}
+            <NotificationCenter />
 
             {/* User menu */}
             <DropdownMenu>

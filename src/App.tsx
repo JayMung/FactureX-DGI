@@ -43,6 +43,8 @@ import Landing from "./pages/Landing";
 // Lazy-loaded pages
 const Index = lazy(() => import("./pages/Index-Protected"));
 const Clients = lazy(() => import("./pages/Clients-Protected"));
+const ClientDetail = lazy(() => import("./pages/ClientDetail"));
+const ClientsNew = lazy(() => import("./pages/Clients-New"));
 const Transactions = lazy(() => import("./pages/Transactions-Protected"));
 const Factures = lazy(() => import("./pages/Factures-Protected"));
 const FacturesCreate = lazy(() => import("./pages/Factures-Create"));
@@ -50,11 +52,35 @@ const FacturesView = lazy(() => import("./pages/Factures-View"));
 const FacturesPreview = lazy(() => import("./pages/Factures-Preview"));
 const DgiStatus = lazy(() => import("./pages/DgiStatus"));
 const Devis = lazy(() => import("./pages/Devis"));
+const Rapports = lazy(() => import("./pages/Rapports"));
+const TVADeclarations = lazy(() => import("./pages/TVADeclarations"));
 
 const Settings = lazy(() => import("./pages/Settings"));
+const CompanySettings = lazy(() => import("./pages/CompanySettings"));
+const TwoFactorSetup = lazy(() => import("./pages/TwoFactorSetup"));
 
 const POSCaisse = lazy(() => import("./pages/POS-Caisse"));
+const POSSettings = lazy(() => import("./pages/POS-Settings"));
+const POSHistorique = lazy(() => import("./pages/POS-Historique"));
 const Declarants = lazy(() => import("./pages/Declarants"));
+const Articles = lazy(() => import("./pages/Articles"));
+const CaisseSessions = lazy(() => import("./pages/Caisse-Sessions"));
+const CaisseOuverture = lazy(() => import("./pages/Caisse-Ouverture"));
+const CaisseJournal = lazy(() => import("./pages/Caisse-Journal"));
+const CaisseFermeture = lazy(() => import("./pages/Caisse-Fermeture"));
+const CaisseTransfert = lazy(() => import("./pages/Caisse-Transfert"));
+
+// Pages comptables SYSCOHADA [COD-65/66/67]
+const ComptaPlanComptable = lazy(() => import("./pages/Compta-PlanComptable"));
+const ComptaJournal = lazy(() => import("./pages/Compta-Journal"));
+const ComptaGrandLivre = lazy(() => import("./pages/Compta-GrandLivre"));
+const ComptaBalance = lazy(() => import("./pages/Compta-Balance"));
+const ComptaEtatsFinanciers = lazy(() => import("./pages/Compta-EtatsFinanciers"));
+const ComptaTresorerie = lazy(() => import("./pages/Compta-K7-Tresorerie"));
+const ComptaReleveBancaire = lazy(() => import("./pages/Compta-K8-ReleveBancaire"));
+const ComptaExportOHADA = lazy(() => import("./pages/Compta-K9-ExportOhada"));
+const Documentation = lazy(() => import("./pages/Documentation"));
+const APIReference = lazy(() => import("./pages/APIReference"));
 const AdminSetup = lazy(() => import("./pages/AdminSetup"));
 const AdminInvitation = lazy(() => import("./pages/AdminInvitation"));
 
@@ -117,14 +143,59 @@ const App = () => (
                     <POSCaisse />
                   </ProtectedRoute>
                 } />
+                <Route path="/pos/settings" element={
+                  <ProtectedRoute>
+                    <POSSettings />
+                  </ProtectedRoute>
+                } />
+                <Route path="/pos/historique" element={
+                  <ProtectedRoute>
+                    <POSHistorique />
+                  </ProtectedRoute>
+                } />
                 <Route path="/declarants" element={
                   <ProtectedRoute allowedRoles={['admin', 'comptable']}>
                     <Declarants />
                   </ProtectedRoute>
                 } />
+                <Route path="/articles" element={
+                  <ProtectedRoute>
+                    <Articles />
+                  </ProtectedRoute>
+                } />
+                <Route path="/caisse" element={
+                  <ProtectedRoute>
+                    <CaisseSessions />
+                  </ProtectedRoute>
+                } />
+                <Route path="/caisse/ouverture" element={
+                  <ProtectedRoute>
+                    <CaisseOuverture />
+                  </ProtectedRoute>
+                } />
+                <Route path="/caisse/journal" element={
+                  <ProtectedRoute>
+                    <CaisseJournal />
+                  </ProtectedRoute>
+                } />
+                <Route path="/caisse/fermeture" element={
+                  <ProtectedRoute allowedRoles={['admin', 'comptable']}>
+                    <CaisseFermeture />
+                  </ProtectedRoute>
+                } />
+                <Route path="/caisse/transfert" element={
+                  <ProtectedRoute allowedRoles={['admin', 'comptable']}>
+                    <CaisseTransfert />
+                  </ProtectedRoute>
+                } />
                 <Route path="/clients" element={
                   <ProtectedRoute>
                     <Clients />
+                  </ProtectedRoute>
+                } />
+                <Route path="/clients/:id" element={
+                  <ProtectedRoute>
+                    <ClientDetail />
                   </ProtectedRoute>
                 } />
                 <Route path="/transactions" element={
@@ -165,6 +236,107 @@ const App = () => (
                 <Route path="/devis" element={
                   <ProtectedRoute>
                     <Devis />
+                  </ProtectedRoute>
+                } />
+                <Route path="/devis/new" element={
+                  <ProtectedRoute>
+                    <FacturesCreate />
+                  </ProtectedRoute>
+                } />
+                <Route path="/clients/new" element={
+                  <ProtectedRoute>
+                    <ClientsNew />
+                  </ProtectedRoute>
+                } />
+                <Route path="/rapports" element={
+                  <ProtectedRoute>
+                    <Rapports />
+                  </ProtectedRoute>
+                } />
+                <Route path="/rapports/tva" element={
+                  <ProtectedRoute>
+                    <TVADeclarations />
+                  </ProtectedRoute>
+                } />
+                <Route path="/pos-caisse" element={
+                  <ProtectedRoute>
+                    <POSCaisse />
+                  </ProtectedRoute>
+                } />
+                <Route path="/encaissements" element={
+                  <ProtectedRoute>
+                    <Transactions />
+                  </ProtectedRoute>
+                } />
+                <Route path="/settings/facture" element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <Settings />
+                  </ProtectedRoute>
+                } />
+                <Route path="/settings/permissions" element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <Settings />
+                  </ProtectedRoute>
+                } />
+                {/* Routes comptabilité SYSCOHADA [COD-65/66/67] */}
+                <Route path="/compta/plan-comptable" element={
+                  <ProtectedRoute allowedRoles={['admin', 'comptable']}>
+                    <ComptaPlanComptable />
+                  </ProtectedRoute>
+                } />
+                <Route path="/compta/journal" element={
+                  <ProtectedRoute allowedRoles={['admin', 'comptable']}>
+                    <ComptaJournal />
+                  </ProtectedRoute>
+                } />
+                <Route path="/compta/grand-livre" element={
+                  <ProtectedRoute allowedRoles={['admin', 'comptable']}>
+                    <ComptaGrandLivre />
+                  </ProtectedRoute>
+                } />
+                <Route path="/compta/balance" element={
+                  <ProtectedRoute allowedRoles={['admin', 'comptable']}>
+                    <ComptaBalance />
+                  </ProtectedRoute>
+                } />
+                <Route path="/compta/etats-financiers" element={
+                  <ProtectedRoute allowedRoles={['admin', 'comptable']}>
+                    <ComptaEtatsFinanciers />
+                  </ProtectedRoute>
+                } />
+                <Route path="/compta/tresorerie" element={
+                  <ProtectedRoute allowedRoles={['admin', 'comptable']}>
+                    <ComptaTresorerie />
+                  </ProtectedRoute>
+                } />
+                <Route path="/compta/releve-bancaire" element={
+                  <ProtectedRoute allowedRoles={['admin', 'comptable']}>
+                    <ComptaReleveBancaire />
+                  </ProtectedRoute>
+                } />
+                <Route path="/compta/export-ohada" element={
+                  <ProtectedRoute allowedRoles={['admin', 'comptable']}>
+                    <ComptaExportOHADA />
+                  </ProtectedRoute>
+                } />
+                <Route path="/settings/entreprise" element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <CompanySettings />
+                  </ProtectedRoute>
+                } />
+                <Route path="/settings/securite" element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <TwoFactorSetup />
+                  </ProtectedRoute>
+                } />
+                <Route path="/docs" element={
+                  <ProtectedRoute>
+                    <Documentation />
+                  </ProtectedRoute>
+                } />
+                <Route path="/api-reference" element={
+                  <ProtectedRoute>
+                    <APIReference />
                   </ProtectedRoute>
                 } />
                 <Route path="/settings" element={

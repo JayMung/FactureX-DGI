@@ -28,6 +28,7 @@ import {
   Truck,
   Key,
   Webhook,
+  Bell,
   ArrowLeft
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -70,6 +71,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { SettingsColis } from '@/components/settings/SettingsColis';
 import { SettingsTransitaires } from '@/components/settings/SettingsTransitaires';
 import { CompanySettings } from '@/components/settings/CompanySettings';
+import { NotificationSettingsTab } from '@/components/notifications/NotificationSettingsTab';
 import type { PaymentMethod } from '@/types';
 
 interface UserProfile {
@@ -697,6 +699,13 @@ const Settings = () => {
       adminOnly: true
     },
     {
+      id: 'notifications',
+      label: 'Notifications',
+      icon: <Bell className="h-5 w-5" />,
+      description: 'Préférences de notification et alertes',
+      adminOnly: false
+    },
+    {
       id: 'activity-logs',
       label: "Logs d'activité",
       icon: <FileText className="h-5 w-5" />,
@@ -1225,6 +1234,9 @@ const Settings = () => {
                   </CardContent>
                 </Card>
               )}
+
+              {/* Notifications Tab */}
+              {activeTab === 'notifications' && <NotificationSettingsTab />}
 
               {/* Webhooks Tab */}
               {activeTab === 'webhooks' && (
