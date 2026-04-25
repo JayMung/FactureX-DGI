@@ -79,6 +79,11 @@ playwright-report/
 test-results/
 playwright/.cache/
 
+# Anciens artefacts buckydrop / scraping (à ne plus committer)
+buckydrop-*
+scrape_leads*
+test-buckydrop.*
+
 # Misc IDE / agents (note: .windsurf/ est volontairement tracké pour partager les rules)
 .cursor/
 .aider*
