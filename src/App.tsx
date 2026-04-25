@@ -67,6 +67,15 @@ const APIReference = lazy(() => import("./pages/APIReference"));
 const AdminSetup = lazy(() => import("./pages/AdminSetup"));
 const AdminInvitation = lazy(() => import("./pages/AdminInvitation"));
 
+// Admin Backoffice [COD-99]
+const AdminLayout = lazy(() => import("./components/admin/layout/AdminLayout"));
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
+const AdminCompanies = lazy(() => import("./pages/admin/AdminCompanies"));
+const AdminFactures = lazy(() => import("./pages/admin/AdminFactures"));
+const AdminPaiements = lazy(() => import("./pages/admin/AdminPaiements"));
+const AdminConfig = lazy(() => import("./pages/admin/AdminConfig"));
+const AdminAudit = lazy(() => import("./pages/admin/AdminAudit"));
+const AdminSupport = lazy(() => import("./pages/admin/AdminSupport"));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -129,6 +138,20 @@ const App = () => (
                 } />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/admin-invitation" element={<AdminInvitation />} />
+                {/* Admin Backoffice [COD-99] — super_admin only */}
+                <Route path="/admin" element={
+                  <ProtectedRoute allowedRoles={['super_admin']}>
+                    <AdminLayout />
+                  </ProtectedRoute>
+                }>
+                  <Route index element={<AdminDashboard />} />
+                  <Route path="companies" element={<AdminCompanies />} />
+                  <Route path="factures" element={<AdminFactures />} />
+                  <Route path="paiements" element={<AdminPaiements />} />
+                  <Route path="config" element={<AdminConfig />} />
+                  <Route path="audit" element={<AdminAudit />} />
+                  <Route path="support" element={<AdminSupport />} />
+                </Route>
                 <Route path="/landing" element={<Landing />} />
                 <Route path="/" element={
                   <ProtectedRoute>
