@@ -132,7 +132,7 @@ export const ReportService = {
             // Title & Header
             doc.setFontSize(22);
             doc.setTextColor(16, 185, 129); // Emerald-600
-            doc.text('FACTUREX', 14, 20);
+            doc.text('FACTURESMART', 14, 20);
 
             doc.setFontSize(16);
             doc.setTextColor(31, 41, 55); // Gray-800
