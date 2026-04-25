@@ -1,7 +1,7 @@
 // Email Service — FactureSmart Sprint 1
 // Provider: Resend (https://resend.com) — Free tier: 100 emails/jour
 
-import { RESEND_API_KEY } from './constants';
+const RESEND_API_KEY = import.meta.env.VITE_RESEND_API_KEY || '';
 
 const RESEND_ENDPOINT = 'https://api.resend.com';
 
@@ -24,7 +24,7 @@ class EmailService {
   private fromEmail: string;
 
   constructor() {
-    this.apiKey = RESEND_API_KEY || process.env.RESEND_API_KEY || '';
+    this.apiKey = RESEND_API_KEY;
     this.fromEmail = 'FactureSmart <noreply@facturesmart.com>';
   }
 
